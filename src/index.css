@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    .theme-light {
+        /* --color-text-base */
+        --color-base: theme("colors.white");
+        --color-text-base: theme("colors.black");
+        --color-off-base: theme("colors.gray.50");
+    }
+    .theme-dark {
+        --color-base: theme("colors.gray.900");
+        --color-text-base: theme("colors.gray.100");
+        --color-off-base: theme("colors.gray.800");
+    }
+}
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+}
