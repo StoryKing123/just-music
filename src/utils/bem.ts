@@ -21,7 +21,7 @@ function genBem(name: string, mods?: Mods): string {
 }
 
 export function createBEM(name: string) {
-    return (el?: Mods, mods?: Mods): Mods => {
+    return (el?: Mods, mods?: Mods): string => {
         if (el && typeof el !== "string") {
             mods = el;
             el = "";
@@ -36,9 +36,6 @@ export function createBEM(name: string) {
 export type BEM = ReturnType<typeof createBEM>;
 
 export function createNamespace(name: string) {
-    const prefixedName = `van-${name}`;
-    return [
-        prefixedName,
-        createBEM(prefixedName)
-    ] as const;
+    const prefixedName = `${name}`;
+    return [prefixedName, createBEM(prefixedName)] as const;
 }

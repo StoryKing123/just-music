@@ -1,18 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { Routes, HashRouter as Router, Route } from "react-router-dom";
 import PlayList from "./pages/playlist";
 import Index from "./pages/index";
-import NavBar from "./components/navbar";
+import NavBar from "./components/Navbar";
+import Player from "./components/Player";
+import { useInitTheme, useTheme } from "./hooks";
 
 function App() {
-    const [count, setCount] = useState(0);
+    // const [count, setCount] = useState(0);
+    const initTheme = useInitTheme();
+    useEffect(() => {
+        initTheme();
+    }, []);
 
     return (
-        <div className="App theme-dark ">
-            <NavBar></NavBar>
+        <div id="App" className="App  bg-base text-base ">
             <Router>
+                <NavBar></NavBar>
+
+                {/* <Login></Login> */}
                 <Routes>
                     <Route path="/" element={<Index></Index>}></Route>
                     {/* <Route
@@ -24,6 +32,7 @@ function App() {
                     ></Route>
                 </Routes>
             </Router>
+            <Player></Player>
             {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>Hello Vite + React!</p>

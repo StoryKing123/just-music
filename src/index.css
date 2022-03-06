@@ -6,13 +6,29 @@
     .theme-light {
         /* --color-text-base */
         --color-base: theme("colors.white");
+        --color-base-sub: theme("colors.gray.300");
         --color-text-base: theme("colors.black");
+        --color-sub-text-base: theme("colors.gray.400");
         --color-off-base: theme("colors.gray.50");
+        --color-divide-color: theme("colors.gray.300");
+        --color-player: theme("colors.gray.500");
+        --color-progress-whole: theme("colors.gray.500");
+        --color-progress-current: theme("colors.gray.300");
+        --color-btn-bg: theme("colors.black");
+        --color-btn: theme("colors.white");
     }
     .theme-dark {
         --color-base: theme("colors.gray.900");
+        --color-base-sub: theme("colors.gray.600");
         --color-text-base: theme("colors.gray.100");
+        --color-sub-text-base: theme("colors.gray.300");
         --color-off-base: theme("colors.gray.800");
+        --color-divide: theme("colors.gray.700");
+        --color-player: theme("colors.gray.800");
+        --color-progress-whole: theme("colors.gray.500");
+        --color-progress-current: theme("colors.gray.300");
+        --color-btn-bg: theme("colors.white");
+        --color-btn: theme("colors.black");
     }
 }
 body {
