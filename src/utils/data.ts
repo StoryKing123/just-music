@@ -23,3 +23,11 @@ export const wrapPromise = (promise: any) => {
         },
     };
 };
+export const extractObjectArrayAttr = (arr: any[], attr: string) => {
+    const attrArr = arr.map((item) => {
+        if (item.hasOwnProperty(attr)) {
+            return item[attr];
+        }
+    });
+    return attrArr;
+};

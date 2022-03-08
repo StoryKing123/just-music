@@ -19,9 +19,11 @@ const NavBar: FC<NavBarProps> = () => {
     return (
         <div className="flex justify-center gap-4 text-xl font-bold p-4">
             <div>
-                <Link to="index"></Link> 首页
+                <Link to="/index">首页</Link>
             </div>
-            <div>探索</div>
+            <div>
+                <Link to="/playlist?id=138709164">探索</Link>
+            </div>
             <div>媒体库</div>
             <div>搜索</div>
             <Button onClick={handleLoginClick}>登录</Button>

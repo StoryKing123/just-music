@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import { Routes, HashRouter as Router, Route } from "react-router-dom";
+import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import PlayList from "./pages/playlist";
 import Index from "./pages/index";
 import NavBar from "./components/Navbar";

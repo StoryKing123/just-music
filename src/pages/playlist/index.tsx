@@ -5,14 +5,18 @@ import PlayListDetail from "@/components/PlayListDetail";
 import { PlayList as IPlayList } from "@/declare";
 import { getListInfo } from "@/services/song";
 
+let add = new URL(location.href);
+const id = add.searchParams.get("id");
 const Playlist: FC = () => {
     const [name, bem] = createNamespace("play-list");
     const [playlist, setPlaylist] = useState<
-        undefined | IPlayList["playlist"]
+        IPlayList["playlist"] | undefined
     >();
     const handleGetData = async () => {
-        const res = await getListInfo(24381616);
-        // console.log(res.playlist);
+        if (!id) {
+            return;
+        }
+        const res = await getListInfo(+id);
         setPlaylist(res.playlist);
     };
     useEffect(() => {
