@@ -7,10 +7,8 @@ type PlayerPlayListProps = {
 };
 const PlayerPlayList: FC<PlayerPlayListProps> = (props) => {
     const [name, bem] = createNamespace("player-play-list");
-    // console.log(props);
     const playList: { id: number }[] = [{ id: 523423 }];
     for (let i = 0; i < 31; i++) {
-        // const element = array[i];
         playList.push({ id: i });
     }
     return (

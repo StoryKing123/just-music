@@ -32,6 +32,9 @@ export const playAudio = async (src?: string) => {
 };
 export const pauseAudio = () => {
     // getAudio().pause();
+    // console.log('pause')
+    // console.log(audio);
+    // audio.pause();
     audio.pause();
 };
 

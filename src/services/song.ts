@@ -1,8 +1,8 @@
-import { PlayList } from "@/declare";
+import { PlayList, PlayListSong } from "@/declare";
 import axios from "./";
 
 export const getListSong = async (id: number) => {
-    return await axios.get<PlayList>(
+    return await axios.get<null, PlayListSong>(
         `playlist/track/all?id=${id}&limit=20&offset=1`
     );
 };

@@ -1,7 +1,7 @@
-import { PLAY_MODE } from "@/declare";
+import { PLAY_MODE, Song } from "@/declare";
 import { atom } from "recoil";
 export type MusicStateType = {
-    currentSong?: any;
+    currentSong?: Song;
     playList?: any;
     mode?: PLAY_MODE;
     isPlaying?: boolean;

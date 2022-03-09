@@ -1,10 +1,25 @@
+import { Song } from "@/declare";
 import appState from "@/store/app";
+import musicState from "@/store/music";
+import { pauseAudio, playAudio, toggleAudio } from "@/utils/audio";
 import { useRecoilState } from "recoil";
 
-export const useAudio = () => {
+export const useAudio = (): [
+    (song: Song, src: string) => void,
+    (isPlay: boolean) => void,
+    any
+] => {
     const [app, setApp] = useRecoilState(appState);
+    const [music, setMusic] = useRecoilState(musicState);
     const setDuration = () => {};
-    const setSrc = () => {};
-    const setPlayOrPause = () => {};
-    return [setDuration, setSrc, setPlayOrPause];
+    const playSong = (song: Song, src: string) => {
+        playAudio(src);
+        setMusic({ ...app, currentSong: song });
+    };
+    const setPlayOrPause = (isPlay: boolean) => {
+        // isPlay ? playAudio() : pauseAudio();
+        toggleAudio();
+        setMusic({ ...music, isPlaying: isPlay });
+    };
+    return [playSong, setPlayOrPause, setDuration];
 };
