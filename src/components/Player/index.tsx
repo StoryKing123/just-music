@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import nextSVG from "@/assets/icons/next-dark.svg";
-import pauseSVG from "@/assets/icons/pause.svg";
+import pauseSVG from "@/assets/icons/pause-dark.svg";
 import playSVG from "@/assets/icons/play-dark.svg";
 import previousSVG from "@/assets/icons/previous-dark.svg";
 import playlistSVG from "@/assets/icons/playlist.svg";
@@ -36,7 +36,7 @@ const Player: FC = (props) => {
 
     const handlePlayOrPause = () => {
         // console.log('sdf')
-        playOrPauseAudio(false);
+        playOrPauseAudio(music.isPlaying ? false : true);
     };
 
     useEffect(() => {
@@ -47,18 +47,18 @@ const Player: FC = (props) => {
     });
     // useEffect(() => {}, []);
     return (
-        <div className=" fixed h-16 bottom-0 w-screen bg-base-player ">
+        <div className="select-none fixed h-16 bottom-0 w-screen bg-base-player ">
             <Progress currentTime={currentTime}></Progress>
             <PlayerPlayList isShow={isShowPlayList}></PlayerPlayList>
             <div className="px-16 flex items-center h-full">
                 {music.currentSong && (
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 w-1/3 truncate">
                         <img
                             src={music.currentSong.al.picUrl}
                             alt=""
                             className="w-10 h-10 rounded-sm"
                         />
-                        <div className="text-left">
+                        <div className="text-left  ">
                             <div>
                                 {music.currentSong.name}{" "}
                                 <span>
@@ -73,18 +73,18 @@ const Player: FC = (props) => {
                                 {parseTimestampIntoMinute(currentTime)} /{" "}
                                 {parseTimestampIntoMinute(
                                     audio.duration * 1000
-                                )}
+                                ) ?? `00:00`}
                             </div>
                         </div>
                     </div>
                 )}
 
-                <div className="flex gap-2 m-auto">
+                <div className="flex gap-2 m-auto absolute left-1/2 -translate-x-1/2">
                     <img className="w-6" src={previousSVG} alt="" />
                     <img
                         className="w-10"
                         onClick={handlePlayOrPause}
-                        src={playSVG}
+                        src={music.isPlaying ? pauseSVG : playSVG}
                         alt=""
                     />
                     <img className="w-6" src={nextSVG} alt="" />

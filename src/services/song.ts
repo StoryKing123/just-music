@@ -13,6 +13,6 @@ export const getSongUrl = async (id: number) => {
     return await axios.get<
         null,
         { code: number; message: string; data: { size: number; url: "string" } }
-        // >(`http://localhost:4000/music/url/${id}`);
-    >(`https://fs-music-api.vercel.app/music/url/${id}`);
+        >(`http://localhost:4000/music/url/${id}`);
+    // >(`https://fs-music-api.vercel.app/music/url/${id}`);
 };

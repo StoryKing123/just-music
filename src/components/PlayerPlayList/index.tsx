@@ -1,5 +1,8 @@
-import { createNamespace } from "@/utils";
+import musicState from "@/store/music";
+import { createNamespace, extractObjectArrayAttr } from "@/utils";
+import { parseTimestampIntoMinute } from "@/utils/date";
 import { FC } from "react";
+import { useRecoilState } from "recoil";
 import "./index.less";
 
 type PlayerPlayListProps = {
@@ -7,6 +10,7 @@ type PlayerPlayListProps = {
 };
 const PlayerPlayList: FC<PlayerPlayListProps> = (props) => {
     const [name, bem] = createNamespace("player-play-list");
+    const [music] = useRecoilState(musicState);
     const playList: { id: number }[] = [{ id: 523423 }];
     for (let i = 0; i < 31; i++) {
         playList.push({ id: i });
@@ -24,13 +28,34 @@ const PlayerPlayList: FC<PlayerPlayListProps> = (props) => {
             <div className="p-2">
                 <div className="font-bold  text-lg ">当前播放</div>
                 <div className="text-base-sub text-sm my-2 flex ">
-                    <div>总32首</div>
+                    <div>总{music.playList?.length}首</div>
                     <div className="ml-auto">清空列表</div>
                 </div>
-            </div> 
-            <div className={`overflow-scroll  flex-1 ${bem("detail")}  `}>
-                {playList.map((item) => (
-                    <div key={item.id} className="flex h-7 px-2 hover:bg-base-sub text-sm items-center odd:bg-base-sub">
+            </div>
+            <div
+                className={`overflow-scroll text-left  flex-1 ${bem(
+                    "detail"
+                )}  `}
+            >
+                {music.playList?.map((item) => (
+                    <div
+                        key={item.id}
+                        className="flex h-7 px-2 hover:bg-base-sub  text-sm items-center odd:bg-base-sub"
+                    >
+                        <div className="w-1/2 truncate">{item.name}</div>
+                        <div className="ml-auto flex-1 text-left truncate text-base-sub text-xs">
+                            {extractObjectArrayAttr(item.ar, "name").join(" ")}
+                        </div>
+                        <div className=" ml-auto w-10 text-base-sub  text-xs">
+                            {parseTimestampIntoMinute(item.dt)}
+                        </div>
+                    </div>
+                ))}
+                {/* {playList.map((item) => (
+                    <div
+                        key={item.id}
+                        className="flex h-7 px-2 hover:bg-base-sub text-sm items-center odd:bg-base-sub"
+                    >
                         <div>左边</div>
                         <div className="ml-auto text-base-sub text-xs">
                             杨丞琳
@@ -39,7 +64,7 @@ const PlayerPlayList: FC<PlayerPlayListProps> = (props) => {
                             03:03
                         </div>
                     </div>
-                ))}
+                ))} */}
             </div>
             {/* playlist */}
         </div>

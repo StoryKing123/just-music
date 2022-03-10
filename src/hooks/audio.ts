@@ -14,11 +14,12 @@ export const useAudio = (): [
     const setDuration = () => {};
     const playSong = (song: Song, src: string) => {
         playAudio(src);
-        setMusic({ ...app, currentSong: song });
+        setMusic({ ...music, currentSong: song, isPlaying: true });
     };
     const setPlayOrPause = (isPlay: boolean) => {
-        // isPlay ? playAudio() : pauseAudio();
-        toggleAudio();
+        isPlay ? playAudio() : pauseAudio();
+        // pauseAudio()
+        // toggleAudio();
         setMusic({ ...music, isPlaying: isPlay });
     };
     return [playSong, setPlayOrPause, setDuration];

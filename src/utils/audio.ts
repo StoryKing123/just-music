@@ -23,16 +23,18 @@ export const setAudioSrc = (src: string) => {
 };
 
 export const playAudio = async (src?: string) => {
+    console.log(src);
     if (src) {
         audio.src = src;
         audio.play();
     } else {
         audio.play();
     }
+    console.log("play");
 };
 export const pauseAudio = () => {
     // getAudio().pause();
-    // console.log('pause')
+    console.log("pause");
     // console.log(audio);
     // audio.pause();
     audio.pause();
@@ -41,6 +43,7 @@ export const pauseAudio = () => {
 // export const ;
 
 export const toggleAudio = () => {
+    console.log("toggle");
     // getAudio().
     audio.paused ? audio.play() : audio.pause();
 };

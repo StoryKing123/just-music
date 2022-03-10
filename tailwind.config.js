@@ -24,7 +24,6 @@ module.exports = {
                 },
             },
         },
-
         textColor: {
             base: "var(--color-text-base)",
             "base-sub": "var(--color-sub-text-base)",

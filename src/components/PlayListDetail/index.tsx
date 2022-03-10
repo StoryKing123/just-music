@@ -6,44 +6,17 @@ import { getAudio, playAudio } from "@/utils/audio";
 import { parseTimestampIntoMinute } from "@/utils/date";
 import { FC, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-
-// const fetchData = (id: number) => {
-//     let dataPromise = getListInfo(id);
-//     let songListDataPromise = getListSong(id);
-//     return {
-//         list: wrapPromise(dataPromise),
-//         songList: wrapPromise(songListDataPromise),
-//     };
-// };
-// let resource: any;
-// let add = new URL(location.href);
-// const id = add.searchParams.get("id");
-// console.log(`id:${id}`);
-
-// if (id) {
-//     console.log(1);
-//     resource = fetchData(+id);
-// } else {
-//     console.log(2);
-// }
-
-type PlayListDetailProps = {};
+type PlayListDetailProps = {
+    songList: Song[];
+};
 const PlayListDetail: FC<PlayListDetailProps> = (props) => {
-    // update();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [songList, setSongList] = useState<Song[] | undefined>();
+    const { songList } = props;
     const [playSong] = useAudio();
 
-    useEffect(() => {
-        handleGetData();
-    }, []);
+    // useEffect(() => {
+    // }, []);
 
-    const handleGetData = async () => {
-        const id = searchParams.get("id");
-        if (!id) return;
-        const res = await getListSong(+id);
-        setSongList(res.songs);
-    };
     const handlePlaySong = async (song: Song) => {
         const url = await handleGetSongUrl(song.id);
         playSong(song, url);
