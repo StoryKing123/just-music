@@ -23,7 +23,7 @@ const PlayListDetail: FC<PlayListDetailProps> = (props) => {
     };
     const handleGetSongUrl = async (id: number) => {
         const res = await getSongUrl(id);
-        return res.data.url;
+        return res;
     };
     return (
         <>

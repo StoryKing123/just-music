@@ -1,3 +1,6 @@
+import { Song } from "@/declare";
+import { useAudio } from "@/hooks";
+import { getSongUrl } from "@/services/song";
 import musicState from "@/store/music";
 import { createNamespace, extractObjectArrayAttr } from "@/utils";
 import { parseTimestampIntoMinute } from "@/utils/date";
@@ -11,16 +14,22 @@ type PlayerPlayListProps = {
 const PlayerPlayList: FC<PlayerPlayListProps> = (props) => {
     const [name, bem] = createNamespace("player-play-list");
     const [music] = useRecoilState(musicState);
-    const playList: { id: number }[] = [{ id: 523423 }];
-    for (let i = 0; i < 31; i++) {
-        playList.push({ id: i });
-    }
+    const [playSong] = useAudio();
+    // const playList: { id: number }[] = [{ id: 523423 }];
+    // for (let i = 0; i < 31; i++) {
+    //     playList.push({ id: i });
+    // }
+    const handleGetSongUrl = async (id: number) => {
+        const res = await getSongUrl(id);
+        return res;
+    };
+    const handlePlaySong = async (song: Song) => {
+        const url = await handleGetSongUrl(song.id);
+        playSong(song, url);
+    };
     return (
         <div
-            // hidden={props.isShow}
             style={{
-                // visibility: props.isShow ? "visible" : "hidden",
-                // opacity: props.isShow ? "100%" : "0%",
                 height: props.isShow ? "40rem" : "0px",
             }}
             className={`w-80 text-left absolute right-10 h-100  overflow-hidden  flex flex-col  shadow-inner bottom-16 bg-progress-whole rounded-md ${name}`}
@@ -41,6 +50,7 @@ const PlayerPlayList: FC<PlayerPlayListProps> = (props) => {
                     <div
                         key={item.id}
                         className="flex h-7 px-2 hover:bg-base-sub  text-sm items-center odd:bg-base-sub"
+                        onClick={() => handlePlaySong(item)}
                     >
                         <div className="w-1/2 truncate">{item.name}</div>
                         <div className="ml-auto flex-1 text-left truncate text-base-sub text-xs">
@@ -71,3 +81,6 @@ const PlayerPlayList: FC<PlayerPlayListProps> = (props) => {
     );
 };
 export default PlayerPlayList;
+function handleGetSongUrl(id: number) {
+    throw new Error("Function not implemented.");
+}

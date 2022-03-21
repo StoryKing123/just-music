@@ -60,6 +60,46 @@ export interface Playlist {
     sharedUsers: null;
     historySharedUsers: null;
 }
+export interface SongUrl {
+    data: Datum[];
+    code: number;
+}
+
+export interface Datum {
+    id: number;
+    url: string;
+    br: number;
+    size: number;
+    md5: string;
+    code: number;
+    expi: number;
+    type: string;
+    gain: number;
+    fee: number;
+    uf: null;
+    payed: number;
+    flag: number;
+    canExtend: boolean;
+    freeTrialInfo: null;
+    level: null;
+    encodeType: null;
+    freeTrialPrivilege: FreeTrialPrivilege;
+    freeTimeTrialPrivilege: FreeTimeTrialPrivilege;
+    urlSource: number;
+}
+
+export interface FreeTimeTrialPrivilege {
+    resConsumable: boolean;
+    userConsumable: boolean;
+    type: number;
+    remainTime: number;
+}
+
+export interface FreeTrialPrivilege {
+    resConsumable: boolean;
+    userConsumable: boolean;
+    listenType: null;
+}
 
 export interface Creator {
     defaultAvatar: boolean;
@@ -330,3 +370,82 @@ export interface H {
     size: number;
     vd: number;
 }
+
+export interface Login {
+    loginType: number;
+    code: number;
+    account: Account;
+    token: string;
+    profile: Profile;
+    bindings: Binding[];
+    cookie: string;
+}
+
+export interface Account {
+    id: number;
+    userName: string;
+    type: number;
+    status: number;
+    whitelistAuthority: number;
+    createTime: number;
+    salt: string;
+    tokenVersion: number;
+    ban: number;
+    baoyueVersion: number;
+    donateVersion: number;
+    vipType: number;
+    viptypeVersion: number;
+    anonimousUser: boolean;
+    uninitialized: boolean;
+}
+
+export interface Binding {
+    userId: number;
+    url: string;
+    expired: boolean;
+    bindingTime: number;
+    tokenJsonStr: string;
+    expiresIn: number;
+    refreshTime: number;
+    id: number;
+    type: number;
+}
+
+export interface Profile {
+    followed: boolean;
+    backgroundUrl: string;
+    detailDescription: string;
+    avatarImgIdStr: string;
+    userId: number;
+    userType: number;
+    backgroundImgIdStr: string;
+    accountStatus: number;
+    gender: number;
+    vipType: number;
+    avatarImgId: number;
+    nickname: string;
+    backgroundImgId: number;
+    birthday: number;
+    city: number;
+    avatarUrl: string;
+    defaultAvatar: boolean;
+    province: number;
+    expertTags: null;
+    experts: Experts;
+    mutual: boolean;
+    remarkName: null;
+    authStatus: number;
+    djStatus: number;
+    description: string;
+    signature: string;
+    authority: number;
+    avatarImgId_str: string;
+    followeds: number;
+    follows: number;
+    eventCount: number;
+    avatarDetail: null;
+    playlistCount: number;
+    playlistBeSubscribedCount: number;
+}
+
+export interface Experts {}

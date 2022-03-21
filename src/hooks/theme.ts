@@ -1,6 +1,7 @@
 import { useRecoilState } from "recoil";
 import appState from "@/store/app";
 import { initTheme, setTheme, THEME } from "@/utils";
+import { useEffect } from "react";
 export type SetterOrUpdater<T> = (
     valOrUpdater: ((currVal: T) => T) | T
 ) => void;
@@ -16,6 +17,9 @@ export const useTheme = (): [THEME, (value: THEME) => void] => {
 
 export const useInitTheme = () => {
     const [app, setApp] = useRecoilState(appState);
+    // useEffect(() => {},[
+        
+    // ])
 
     const initFn = () => {
         const theme = initTheme();

@@ -1,5 +1,6 @@
 import { audioDir } from "@tauri-apps/api/path";
 
+
 export const initAudio = () => {};
 
 export const getAudio = (): HTMLAudioElement => {
@@ -31,6 +32,7 @@ export const playAudio = async (src?: string) => {
         audio.play();
     }
     console.log("play");
+
 };
 export const pauseAudio = () => {
     // getAudio().pause();

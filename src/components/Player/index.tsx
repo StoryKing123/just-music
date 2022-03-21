@@ -13,18 +13,15 @@ import { extractObjectArrayAttr } from "@/utils";
 import { parseTimestampIntoMinute } from "@/utils/date";
 import { getAudio } from "@/utils/audio";
 import { useAudio } from "@/hooks";
-
-// const AudioCurrentTime = () => {
-//     const [time, setTime] = useState("00:00");
-
-//     return <>{time}</>;
-// };
+import { Song } from "@/declare";
+import { getSongUrl } from "@/services/song";
 
 const Player: FC = (props) => {
     const [isShowPlayList, setShowPlayList] = useState(true);
     const [currentTime, setCurrentTime] = useState(0);
     const [music] = useRecoilState(musicState);
-    const [, playOrPauseAudio] = useAudio();
+    const [playSong, playOrPauseAudio] = useAudio();
+
     const handlePlayListClick = () => {
         setShowPlayList(!isShowPlayList);
     };
@@ -37,6 +34,52 @@ const Player: FC = (props) => {
     const handlePlayOrPause = () => {
         // console.log('sdf')
         playOrPauseAudio(music.isPlaying ? false : true);
+    };
+
+    const handlePlaySong = async (song: Song) => {
+        const url = await handleGetSongUrl(song.id);
+        playSong(song, url);
+    };
+    const handleGetSongUrl = async (id: number) => {
+        const res = await getSongUrl(id);
+        return res;
+    };
+
+    const getPlayIndex = (currentIndex: number, type: "next" | "previous") => {
+        if (!music.playList) {
+            return;
+        }
+        if (type === "previous") {
+            if (currentIndex <= 0) {
+                return music.playList.length - 1;
+            } else {
+                return currentIndex - 1;
+            }
+        } else {
+            if (currentIndex >= music.playList.length) {
+                return 0;
+            } else {
+                return currentIndex + 1;
+            }
+        }
+    };
+
+    let isProcessing = false;
+    const handlePlayPreviousOrNextSong = (type: "next" | "previous") => {
+        if (isProcessing) {
+            return;
+        }
+        if (!music.currentSong) {
+            return;
+        }
+        const isEqual = (item: Song) => item.id === music.currentSong?.id;
+        const currentIndex = music.playList?.findIndex(isEqual);
+        const playIndex = currentIndex && getPlayIndex(currentIndex, type);
+        // console.log(playIndex);
+        playIndex &&
+            music.playList &&
+            handlePlaySong(music.playList[playIndex]);
+        isProcessing = false;
     };
 
     useEffect(() => {
@@ -80,14 +123,24 @@ const Player: FC = (props) => {
                 )}
 
                 <div className="flex gap-2 m-auto absolute left-1/2 -translate-x-1/2">
-                    <img className="w-6" src={previousSVG} alt="" />
+                    <img
+                        className="w-6"
+                        src={previousSVG}
+                        onClick={() => handlePlayPreviousOrNextSong("previous")}
+                        alt=""
+                    />
                     <img
                         className="w-10"
                         onClick={handlePlayOrPause}
                         src={music.isPlaying ? pauseSVG : playSVG}
                         alt=""
                     />
-                    <img className="w-6" src={nextSVG} alt="" />
+                    <img
+                        className="w-6"
+                        onClick={() => handlePlayPreviousOrNextSong("next")}
+                        src={nextSVG}
+                        alt=""
+                    />
                 </div>
                 <div className="flex gap-4  ml-auto relative ">
                     <img
@@ -96,7 +149,12 @@ const Player: FC = (props) => {
                         src={playlistSVG}
                         alt=""
                     />
-                    <img className="w-4" src={voiceMeidaSVG} alt="" />
+                    <img
+                        className="w-4"
+                        onClick={() => handlePlayPreviousOrNextSong("next")}
+                        src={voiceMeidaSVG}
+                        alt=""
+                    />
                 </div>
             </div>
         </div>

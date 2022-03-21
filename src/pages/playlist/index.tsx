@@ -3,9 +3,10 @@ import { createNamespace } from "@/utils";
 import Button from "@/components/Button";
 import PlayListDetail from "@/components/PlayListDetail";
 import { PlayList as IPlayList, Song } from "@/declare";
-import { getListInfo, getListSong } from "@/services/song";
+import { getListInfo, getListSong, getSongUrl } from "@/services/song";
 import musicState from "@/store/music";
 import { useRecoilState } from "recoil";
+import { useAudio } from "@/hooks";
 
 let add = new URL(location.href);
 const id = add.searchParams.get("id");
@@ -16,6 +17,7 @@ const Playlist: FC = () => {
         IPlayList["playlist"] | undefined
     >();
     const [songList, setSongList] = useState<Song[]>();
+    const [playSong] = useAudio();
     const handleGetData = async () => {
         if (!id) {
             return;
@@ -24,14 +26,22 @@ const Playlist: FC = () => {
         const [infoRes, SongRes] = allRes;
         setPlaylist(infoRes.playlist);
         setSongList(SongRes.songs);
-        console.log(allRes);
+    };
 
-        // const res = await getListInfo(+id);
-        // setPlaylist(res.playlist);
-        // const songRes = await getListSong(+id);
+    const handlePlaySong = async (song: Song) => {
+        const url = await handleGetSongUrl(song.id);
+        playSong(song, url);
+    };
+    const handleGetSongUrl = async (id: number) => {
+        const res = await getSongUrl(id);
+        return res;
     };
     const handlePlayPlayList = async () => {
         setMusic({ ...music, playList: songList });
+        songList && handlePlaySong(songList[0]);
+
+        localStorage.setItem("playlist", JSON.stringify(songList));
+        // localStorage.set("aaa", "bbb");
     };
     // const handleGetData = async () => {
     //     const id = searchParams.get("id");

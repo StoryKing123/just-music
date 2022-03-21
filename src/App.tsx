@@ -7,16 +7,24 @@ import Index from "./pages/index";
 import NavBar from "./components/Navbar";
 import Player from "./components/Player";
 import { useInitTheme, useTheme } from "./hooks";
+import { useInitMusic } from "./hooks/music";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
     // const [count, setCount] = useState(0);
     const initTheme = useInitTheme();
+    const initMusic = useInitMusic();
+
     useEffect(() => {
         initTheme();
+        initMusic();
+        toast("Wow so easy!");
     }, []);
 
     return (
         <div id="App" className="App  bg-base text-base ">
+            <ToastContainer />
             <Router>
                 <NavBar></NavBar>
 
