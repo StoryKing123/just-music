@@ -17,7 +17,7 @@ import { Song } from "@/declare";
 import { getSongUrl } from "@/services/song";
 
 const Player: FC = (props) => {
-    const [isShowPlayList, setShowPlayList] = useState(true);
+    const [isShowPlayList, setShowPlayList] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [music] = useRecoilState(musicState);
     const [playSong, playOrPauseAudio] = useAudio();
@@ -151,7 +151,6 @@ const Player: FC = (props) => {
                     />
                     <img
                         className="w-4"
-                        onClick={() => handlePlayPreviousOrNextSong("next")}
                         src={voiceMeidaSVG}
                         alt=""
                     />

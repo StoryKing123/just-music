@@ -19,7 +19,7 @@ function App() {
     useEffect(() => {
         initTheme();
         initMusic();
-        toast("Wow so easy!");
+        toast("Music!");
     }, []);
 
     return (

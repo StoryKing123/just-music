@@ -18,9 +18,9 @@ export const useAudio = (): [
     };
     const setPlayOrPause = (isPlay: boolean) => {
         isPlay ? playAudio() : pauseAudio();
-        // pauseAudio()
-        // toggleAudio();
         setMusic({ ...music, isPlaying: isPlay });
     };
     return [playSong, setPlayOrPause, setDuration];
 };
+
+

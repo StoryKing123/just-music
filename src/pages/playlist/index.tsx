@@ -19,6 +19,7 @@ const Playlist: FC = () => {
     const [songList, setSongList] = useState<Song[]>();
     const [playSong] = useAudio();
     const handleGetData = async () => {
+        console.log(id)
         if (!id) {
             return;
         }

@@ -15,13 +15,12 @@ export const getSongUrl = async (id: number) => {
     const res = await axios.get<
         null,
         { code: number; message: string; data: { size: number; url: "string" } }
-    >(`http://192.168.8.231:4000/music/url/${id}`);
+    >(`http://localhost:4000/music/url/${id}`);
     if (res.code === 10001) {
         const urlRes = await axios.get<null, SongUrl>(`/song/url?id=${id}`);
         console.log(urlRes);
         if (urlRes.code === 200) {
             toast("歌曲不存在，播放原版歌曲");
-
             return urlRes.data[0].url;
         }
     }
