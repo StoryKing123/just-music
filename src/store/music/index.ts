@@ -10,6 +10,7 @@ const musicState = atom<MusicStateType>({
     key: "music",
     default: {
         isPlaying: false,
+        mode: PLAY_MODE.SEQUENCE,
     },
 });
 

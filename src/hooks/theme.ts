@@ -17,9 +17,6 @@ export const useTheme = (): [THEME, (value: THEME) => void] => {
 
 export const useInitTheme = () => {
     const [app, setApp] = useRecoilState(appState);
-    // useEffect(() => {},[
-        
-    // ])
 
     const initFn = () => {
         const theme = initTheme();

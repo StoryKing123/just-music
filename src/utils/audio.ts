@@ -37,6 +37,7 @@ export const pauseAudio = () => {
 };
 
 export const setAudioCurrentTime = (Proportion: number) => {
+    console.log(audio.duration * Proportion);
     audio.currentTime = audio.duration * Proportion;
 };
 

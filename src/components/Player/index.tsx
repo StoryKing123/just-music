@@ -13,7 +13,7 @@ import { extractObjectArrayAttr } from "@/utils";
 import { parseTimestampIntoMinute } from "@/utils/date";
 import { getAudio } from "@/utils/audio";
 import { useAudio } from "@/hooks";
-import { Song } from "@/declare";
+import { PLAY_MODE, Song } from "@/declare";
 import { getSongUrl } from "@/services/song";
 
 const Player: FC = (props) => {
@@ -75,17 +75,25 @@ const Player: FC = (props) => {
         const isEqual = (item: Song) => item.id === music.currentSong?.id;
         const currentIndex = music.playList?.findIndex(isEqual);
         const playIndex = currentIndex && getPlayIndex(currentIndex, type);
-        // console.log(playIndex);
         playIndex &&
             music.playList &&
             handlePlaySong(music.playList[playIndex]);
         isProcessing = false;
     };
 
+    const handleEnded = async () => {
+        console.log("end");
+        if (music.mode === PLAY_MODE.SEQUENCE) {
+            await handlePlayPreviousOrNextSong("next");
+        }
+    };
+
     useEffect(() => {
         audio.addEventListener("timeupdate", handleTimeUpEvent);
+        audio.addEventListener("ended", handleEnded);
         return () => {
             audio.removeEventListener("timeupdate", handleTimeUpEvent);
+            audio.removeEventListener("ended", handleEnded);
         };
     });
     // useEffect(() => {}, []);
@@ -149,11 +157,7 @@ const Player: FC = (props) => {
                         src={playlistSVG}
                         alt=""
                     />
-                    <img
-                        className="w-4"
-                        src={voiceMeidaSVG}
-                        alt=""
-                    />
+                    <img className="w-4" src={voiceMeidaSVG} alt="" />
                 </div>
             </div>
         </div>
