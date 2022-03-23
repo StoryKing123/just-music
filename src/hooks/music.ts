@@ -7,12 +7,16 @@ import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 
 export const useInitMusic = () => {
-    const [music, setMusic] = useRecoilState(musicState);
-    const initFn = () => {
-        const playlist = localStorage.getItem("playlist");
-        playlist && setMusic({ ...music, playList: JSON.parse(playlist) });
-    };
-    return initFn;
+  const [music, setMusic] = useRecoilState(musicState);
+  const initFn = () => {
+    const playlist = localStorage.getItem("playlist");
+    // console.log(playlist);
+
+    playlist &&
+      playlist !== "undefined" &&
+      setMusic({ ...music, playList: JSON.parse(playlist) });
+  };
+  return initFn;
 };
 
 // const handleGetSongUrl = async (id: number) => {
@@ -55,15 +59,15 @@ export const useInitMusic = () => {
 // };
 
 export const useEffectMusicRegister = () => {
-    const [music, setMusic] = useRecoilState(musicState);
-    const [app, setApp] = useRecoilState(appState);
-    const audio = getAudio();
-    const handleEnded = () => {
-        if (music.mode === PLAY_MODE.SEQUENCE) {
-        }
-    };
+  const [music, setMusic] = useRecoilState(musicState);
+  const [app, setApp] = useRecoilState(appState);
+  const audio = getAudio();
+  const handleEnded = () => {
+    if (music.mode === PLAY_MODE.SEQUENCE) {
+    }
+  };
 
-    useEffect(() => {
-        audio.addEventListener("ended", handleEnded);
-    }, []);
+  useEffect(() => {
+    audio.addEventListener("ended", handleEnded);
+  }, []);
 };

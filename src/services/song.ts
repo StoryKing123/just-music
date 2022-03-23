@@ -1,6 +1,5 @@
-import { SongUrl } from "./../declare.d";
 import { toast } from "react-toastify";
-import { PlayList, PlayListSong } from "@/declare";
+import { PlayList, PlayListSong,SongUrl } from "@/declare";
 import axios from "./";
 
 export const getListSong = async (id: number) => {
