@@ -11,7 +11,10 @@ type loginType = {
 // interface loginFn<loginType>(type:any):any;
 export const useAuth = () => {
     const [user, setUser] = useRecoilState(userState);
-    function login<K extends keyof loginType>(type: K, val: loginType[K]) {
+    function login<K extends keyof loginType>(
+        type: K,
+        val: loginType[K]
+    ): Login {
         const handleLoginRes = (res: Login) => {
             if (res.code === 200) {
                 toast.success("登录成功");
@@ -23,13 +26,15 @@ export const useAuth = () => {
             tel: async ({ tel, password }: loginType["tel"]) => {
                 const res = await loginByTel(tel, password);
                 handleLoginRes(res);
+                return res;
             },
             email: async ({ email, password }: loginType["email"]) => {
                 const res = await loginByEmail(email, password);
                 handleLoginRes(res);
+                return res;
             },
         };
-        loginFnObj[type](val);
+        return loginFnObj[type](val);
     }
 
     // login('tel',)

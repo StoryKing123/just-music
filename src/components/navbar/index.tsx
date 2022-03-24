@@ -1,13 +1,16 @@
-import { useTheme } from "@/hooks";
+import { useModal, useTheme } from "@/hooks";
 import { THEME } from "@/utils";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../Button";
 import Login from "../Login";
+import Search from "../Search";
 
 type NavBarProps = {};
 const NavBar: FC<NavBarProps> = () => {
     const [isShowLogin, setShowLogin] = useState(false);
+    const [isShowSearch, setShowSearch] = useState(false);
+    const { open, close } = useModal();
     const [theme, setTheme] = useTheme();
 
     const handleLoginClick = () => {
@@ -15,6 +18,10 @@ const NavBar: FC<NavBarProps> = () => {
     };
     const handleThemeClick = () => {
         setTheme(theme === THEME.LIGHT ? THEME.DARK : THEME.LIGHT);
+    };
+    const handleSearch = () => {
+        open();
+        // setShowSearch(!isShowSearch);
     };
     return (
         <div className="flex justify-center gap-4 text-xl font-bold p-4">
@@ -25,9 +32,10 @@ const NavBar: FC<NavBarProps> = () => {
                 <Link to="/playlist?id=138709164">探索</Link>
             </div>
             <div>媒体库</div>
-            <div>搜索</div>
+            <div onClick={handleSearch}>搜索</div>
             <Button onClick={handleLoginClick}>登录</Button>
             <Button onClick={handleThemeClick}>切换主题</Button>
+            <Search isShow={isShowSearch}></Search>
             <Login
                 isShow={isShowLogin}
                 onClose={() => setShowLogin(false)}

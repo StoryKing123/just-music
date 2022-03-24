@@ -27,7 +27,6 @@ function App() {
             <ToastContainer />
             <Router>
                 <NavBar></NavBar>
-
                 {/* <Login></Login> */}
                 <Routes>
                     <Route path="/" element={<Index></Index>}></Route>

@@ -1,3 +1,4 @@
+import { Login as ILogin } from "@/declare";
 import { useAuth } from "@/hooks/auth";
 import { loginByTel } from "@/services/auth";
 import { createNamespace } from "@/utils";
@@ -14,17 +15,19 @@ const Login: FC<LoginProps> = (props) => {
     const telInputRef = useRef<HTMLInputElement>(null);
     const passwordInputRef = useRef<HTMLInputElement>(null);
     const [login] = useAuth();
-    const handleLogin = () => {
+    const handleLogin = async () => {
         if (!(passwordInputRef.current && telInputRef.current)) {
             return;
         }
-        console.log(passwordInputRef.current.value);
-        console.log(telInputRef.current.value);
         // loginByTel(telInputRef.current.value, passwordInputRef.current.value);
-        login("tel", {
+        const res = (await login("tel", {
             tel: telInputRef.current.value,
             password: passwordInputRef.current.value,
-        });
+        })) as ILogin;
+        console.log(res);
+        if (res.code === 200) {
+            props.onClose();
+        }
         // return console.log();
     };
     const style = props.isShow
