@@ -1,5 +1,6 @@
+import { Search, SearchSuggest, SongUrl } from "../declare";
 import { toast } from "react-toastify";
-import { PlayList, PlayListSong,SongUrl } from "@/declare";
+import { PlayList, PlayListSong } from "@/declare";
 import axios from "./";
 
 export const getListSong = async (id: number) => {
@@ -26,4 +27,10 @@ export const getSongUrl = async (id: number) => {
 
     return res.data.url;
     // >(`https://fs-music-api.vercel.app/music/url/${id}`);
+};
+
+export const searchSuggest = async (keywords: string) => {
+    return await axios.get<null, SearchSuggest>(
+        `/search/suggest?keywords=${keywords}`
+    );
 };

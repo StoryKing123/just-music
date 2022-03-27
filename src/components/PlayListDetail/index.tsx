@@ -35,7 +35,11 @@ const PlayListDetail: FC<PlayListDetailProps> = (props) => {
                             onDoubleClick={(e) => handlePlaySong(item)}
                             className="flex m-2 gap-4 h-12 items-center  "
                         >
-                            <img src={item.al.picUrl} alt="" className=" w-8" />
+                            <img
+                                src={`${item.al.picUrl}?param=64y64`}
+                                alt=""
+                                className=" w-8"
+                            />
                             <div className=" font-bold text-left w-1/3 truncate">
                                 {item.name}
                             </div>

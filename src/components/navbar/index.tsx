@@ -10,7 +10,8 @@ type NavBarProps = {};
 const NavBar: FC<NavBarProps> = () => {
     const [isShowLogin, setShowLogin] = useState(false);
     const [isShowSearch, setShowSearch] = useState(false);
-    const { open, close } = useModal();
+    const { open, close, Modal } = useModal({ content: <Search></Search> });
+    // console.log(Modal)
     const [theme, setTheme] = useTheme();
 
     const handleLoginClick = () => {
@@ -35,7 +36,9 @@ const NavBar: FC<NavBarProps> = () => {
             <div onClick={handleSearch}>搜索</div>
             <Button onClick={handleLoginClick}>登录</Button>
             <Button onClick={handleThemeClick}>切换主题</Button>
-            <Search isShow={isShowSearch}></Search>
+            {/* <Search isShow={isShowSearch}></Search> */}
+            {/* <Modal></Modal> */}
+            <Modal></Modal>
             <Login
                 isShow={isShowLogin}
                 onClose={() => setShowLogin(false)}

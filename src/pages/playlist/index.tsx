@@ -19,7 +19,7 @@ const Playlist: FC = () => {
     const [songList, setSongList] = useState<Song[]>();
     const [playSong] = useAudio();
     const handleGetData = async () => {
-        console.log(id)
+        console.log(id);
         if (!id) {
             return;
         }
@@ -58,7 +58,7 @@ const Playlist: FC = () => {
             <div className="flex">
                 <div>
                     <img
-                        src={playlist?.coverImgUrl}
+                        src={`${playlist?.coverImgUrl}?param=512y512`}
                         alt=""
                         className={`w-60`}
                     />

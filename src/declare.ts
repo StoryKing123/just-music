@@ -23,7 +23,7 @@ export interface Playlist {
     adType: number;
     userId: number;
     createTime: number;
-    status: number;
+        status: number;
     opRecommend: boolean;
     highQuality: boolean;
     newImported: boolean;
@@ -446,6 +446,86 @@ export interface Profile {
     avatarDetail: null;
     playlistCount: number;
     playlistBeSubscribedCount: number;
+}
+
+export interface Search {
+    result: Result;
+    code: number;
+}
+
+export interface Result {
+    searchQcReminder: null;
+    songs: Song[];
+    songCount: number;
+}
+
+export interface SearchSuggest {
+    result: Result;
+    code: number;
+}
+
+export interface Result {
+    albums: AlbumElement[];
+    artists: Artist[];
+    songs: Song[];
+    playlists: Playlist[];
+    order: string[];
+}
+
+export interface AlbumElement {
+    id: number;
+    name: string;
+    artist: Artist;
+    publishTime: number;
+    size: number;
+    copyrightId: number;
+    status: number;
+    picId: number;
+    mark: number;
+}
+
+export interface Artist {
+    id: number;
+    name: string;
+    picUrl: null | string;
+    alias: string[];
+    albumSize: number;
+    picId: number;
+    img1v1Url: string;
+    img1v1: number;
+    trans: null;
+    alia?: string[];
+    accountId?: number;
+}
+
+export interface Song {
+    id: number;
+    name: string;
+    artists: Artist[];
+    album: SongAlbum;
+    duration: number;
+    copyrightId: number;
+    status: number;
+    alias: string[];
+    rtype: number;
+    ftype: number;
+    mvid: number;
+    fee: number;
+    rUrl: null;
+    mark: number;
+}
+
+export interface SongAlbum {
+    id: number;
+    name: string;
+    artist: Artist;
+    publishTime: number;
+    size: number;
+    copyrightId: number;
+    status: number;
+    picId: number;
+    mark: number;
+    alia?: string[];
 }
 
 export interface Experts {}
