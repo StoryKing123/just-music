@@ -3,6 +3,7 @@ import { ChangeEvent, FC, useState } from "react";
 import { throttle } from "lodash";
 import { Result, Song } from "@/declare";
 import { extractObjectArrayAttr } from "@/utils";
+import { Link } from "react-router-dom";
 
 type SearchProps = {
     // isShow: boolean;
@@ -47,21 +48,42 @@ const Search: FC<SearchProps> = (props) => {
             <div>
                 歌曲
                 <div>
-                    {suggest?.songs.map((item) => (
+                    {suggest?.songs?.map((item) => (
                         <div key={item.id} className="flex">
                             {/* <div></div> */}
                             {/* <img src={item.album.} alt="" /> */}
+                            <img
+                                src={`${item.artists[0].img1v1Url}?param=64y64`}
+                                className="w-8   rounded-sm"
+                                alt=""
+                            />
                             <div>{item.name}</div>
                             <div>
-                                {extractObjectArrayAttr(item.artists, "name").join(
-                                    " "
-                                )}
+                                {extractObjectArrayAttr(
+                                    item.artists,
+                                    "name"
+                                ).join(" ")}
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
-            <div>歌单</div>
+            <div>
+                歌单
+                <div>
+                    {suggest?.playlists?.map((item) => (
+                        <div key={item.id} className="flex items-center ">
+                            <img
+                                src={`${item.coverImgUrl}?param=64y64`}
+                                className="w-8   rounded-sm"
+                                alt=""
+                            />
+                            <Link to={`/playlist?id=${item.id}`}> <div>{item.name}</div></Link>
+                           
+                        </div>
+                    ))}
+                </div>
+            </div>
             <div>歌手</div>
         </div>
         //     <input type="text" />

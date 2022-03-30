@@ -41,6 +41,7 @@ export const useModal = (props: useModalProp) => {
                     onRequestClose={close}
                     style={customStyles}
                     contentLabel="Example Modal"
+                    appElement={document.getElementById("modal")!}
                 >
                     {props.content}
                     <button onClick={close}>close</button>

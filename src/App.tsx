@@ -25,6 +25,7 @@ function App() {
     return (
         <div id="App" className="App  bg-base text-base ">
             <ToastContainer />
+            <div id="modal"></div>
             <Router>
                 <NavBar></NavBar>
                 {/* <Login></Login> */}
