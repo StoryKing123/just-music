@@ -1,4 +1,4 @@
-import { Login } from "@/declare";
+// import { Login } from "@/declare";
 import Axios from "axios";
 
 const axios = Axios.create({
@@ -19,7 +19,7 @@ axios.interceptors.request.use(
         localStorage.getItem("user") &&
             (config.params = {
                 ...config.params,
-                cookie: (JSON.parse(localStorage.getItem("user")!) as Login)
+                cookie: (JSON.parse(localStorage.getItem("user")!) as API.Login)
                     .cookie,
             });
         return config;

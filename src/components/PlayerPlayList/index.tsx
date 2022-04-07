@@ -1,4 +1,3 @@
-import { Song } from "@/declare";
 import { useAudio } from "@/hooks";
 import { getSongUrl } from "@/services/song";
 import musicState from "@/store/music";
@@ -23,7 +22,7 @@ const PlayerPlayList: FC<PlayerPlayListProps> = (props) => {
         const res = await getSongUrl(id);
         return res;
     };
-    const handlePlaySong = async (song: Song) => {
+    const handlePlaySong = async (song: API.Song) => {
         const url = await handleGetSongUrl(song.id);
         playSong(song, url);
     };

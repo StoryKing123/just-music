@@ -8,6 +8,9 @@ export const setTheme = (theme: THEME) => {
     element?.classList.remove(
         `${THEME_KEY}-${theme === THEME.DARK ? THEME.LIGHT : THEME.DARK}`
     );
+    // document.body.classList.add(``)
+    document.body.classList.add(`${THEME_KEY}-${theme}`);
+
     element?.classList.add(`${THEME_KEY}-${theme}`);
     localStorage.setItem(THEME_KEY, theme);
 };

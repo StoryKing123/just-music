@@ -1,12 +1,12 @@
-import { Login } from "@/declare";
+// import { Login } from "@/declare";
 import { THEME } from "@/utils";
 import { atom } from "recoil";
 export type UserStateType = {
-    user?: Login;
+    user?: API.Login;
 };
 const userState = atom<UserStateType>({
     key: "userState",
-    default: {  },
+    default: {},
 });
 
 export default userState;

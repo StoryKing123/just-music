@@ -12,6 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
+    console.log("app render");
     // const [count, setCount] = useState(0);
     const initTheme = useInitTheme();
     const initMusic = useInitMusic();
@@ -31,11 +32,12 @@ function App() {
                 {/* <Login></Login> */}
                 <Routes>
                     <Route path="/" element={<Index></Index>}></Route>
+                    <Route path="/index" element={<Index></Index>}></Route>
                     {/* <Route
                             path='search'
                             element={<Search></Search>}></Route> */}
                     <Route
-                        path="playlist"
+                        path="playlist/:id"
                         element={<PlayList></PlayList>}
                     ></Route>
                 </Routes>

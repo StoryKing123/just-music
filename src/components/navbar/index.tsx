@@ -10,7 +10,13 @@ type NavBarProps = {};
 const NavBar: FC<NavBarProps> = () => {
     const [isShowLogin, setShowLogin] = useState(false);
     const [isShowSearch, setShowSearch] = useState(false);
-    const { open, close, Modal } = useModal({ content: <Search></Search> });
+    const closeSearch = () => {
+        close();
+    };
+
+    const { open, close, Modal } = useModal({
+        content: <Search close={closeSearch}></Search>,
+    });
     // console.log(Modal)
     const [theme, setTheme] = useTheme();
 
@@ -30,7 +36,7 @@ const NavBar: FC<NavBarProps> = () => {
                 <Link to="/index">首页</Link>
             </div>
             <div>
-                <Link to="/playlist?id=138709164">探索</Link>
+                <Link to="/playlist/138709164">探索</Link>
             </div>
             <div>媒体库</div>
             <div onClick={handleSearch}>搜索</div>

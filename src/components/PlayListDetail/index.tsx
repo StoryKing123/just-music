@@ -1,4 +1,3 @@
-import { Playlist, PlayList, PlayListSong, Song } from "@/declare";
 import { useAudio } from "@/hooks";
 import { getListInfo, getListSong, getSongUrl } from "@/services/song";
 import { extractObjectArrayAttr, wrapPromise } from "@/utils";
@@ -7,7 +6,7 @@ import { parseTimestampIntoMinute } from "@/utils/date";
 import { FC, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 type PlayListDetailProps = {
-    songList: Song[];
+    songList: API.Song[];
 };
 const PlayListDetail: FC<PlayListDetailProps> = (props) => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -17,7 +16,7 @@ const PlayListDetail: FC<PlayListDetailProps> = (props) => {
     // useEffect(() => {
     // }, []);
 
-    const handlePlaySong = async (song: Song) => {
+    const handlePlaySong = async (song: API.Song) => {
         const url = await handleGetSongUrl(song.id);
         playSong(song, url);
     };

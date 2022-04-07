@@ -13,6 +13,7 @@
     --color-divide-color: theme("colors.gray.300");
     /* --color-divide-color: theme("colors.red.300"); */
     --color-player: theme("colors.gray.500");
+    --color-search-item: theme("colors.gray.500");
     --color-progress-whole: theme("colors.gray.500");
     --color-progress-current: theme("colors.gray.300");
     --color-btn-bg: theme("colors.black");
@@ -26,6 +27,7 @@
     --color-off-base: theme("colors.gray.800");
     --color-divide: theme("colors.gray.700");
     --color-player: theme("colors.gray.800");
+    --color-search-item: theme("colors.gray.500");
     --color-progress-whole: theme("colors.gray.500");
     --color-progress-current: theme("colors.gray.300");
     --color-btn-bg: theme("colors.white");

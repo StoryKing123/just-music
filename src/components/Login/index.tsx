@@ -1,4 +1,3 @@
-import { Login as ILogin } from "@/declare";
 import { useAuth } from "@/hooks/auth";
 import { loginByTel } from "@/services/auth";
 import { createNamespace } from "@/utils";
@@ -23,7 +22,7 @@ const Login: FC<LoginProps> = (props) => {
         const res = (await login("tel", {
             tel: telInputRef.current.value,
             password: passwordInputRef.current.value,
-        })) as ILogin;
+        })) as API.Login;
         console.log(res);
         if (res.code === 200) {
             props.onClose();

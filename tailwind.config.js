@@ -10,6 +10,7 @@ module.exports = {
                 base: "var(--color-base)",
                 "base-sub": "var(--color-base-sub)",
                 "base-player": "var(--color-player)",
+                "search-item": "var(--color-search-item)",
                 "progress-whole": "var(--color-progress-whole)",
                 "progress-current": "var(--color-progress-current)",
                 btn: "var(--color-btn-bg)",

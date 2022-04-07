@@ -1,0 +1,44 @@
+.playlist-card {
+    @apply rounded-md overflow-hidden;
+    &__background {
+        @apply cursor-pointer relative;
+        > img {
+            z-index: -2;
+        }
+    }
+    &__background:hover &__play {
+        opacity: 1;
+    }
+    &__play {
+        @apply w-1/4 h-1/4 bottom-2 right-2 flex justify-center items-center transition-all;
+        position: absolute;
+        border-radius: 50%;
+        overflow: hidden;
+        opacity: 0;
+        // transform: ;
+        &::before {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: #000;
+            filter: blur(15px);
+            z-index: 1;
+            content: "";
+        }
+        img {
+            @apply w-1/3;
+            z-index: 3;
+        }
+    }
+    &__title {
+        word-break: break-all;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        cursor: pointer;
+        color: var(--font-color);
+        @apply text-sm;
+    }
+}

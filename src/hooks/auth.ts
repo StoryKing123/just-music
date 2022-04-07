@@ -1,5 +1,4 @@
 import { toast } from "react-toastify";
-import { Login } from "@/declare";
 import { loginByEmail, loginByTel } from "@/services/auth";
 import userState from "@/store/user";
 import { useRecoilState } from "recoil";
@@ -14,8 +13,8 @@ export const useAuth = () => {
     function login<K extends keyof loginType>(
         type: K,
         val: loginType[K]
-    ): Login {
-        const handleLoginRes = (res: Login) => {
+    ): API.Login {
+        const handleLoginRes = (res: API.Login) => {
             if (res.code === 200) {
                 toast.success("登录成功");
                 setUser({ ...user, user: res });

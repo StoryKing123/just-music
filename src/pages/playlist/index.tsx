@@ -2,22 +2,28 @@ import { FC, Suspense, useEffect, useState } from "react";
 import { createNamespace } from "@/utils";
 import Button from "@/components/Button";
 import PlayListDetail from "@/components/PlayListDetail";
-import { PlayList as IPlayList, Song } from "@/declare";
 import { getListInfo, getListSong, getSongUrl } from "@/services/song";
 import musicState from "@/store/music";
 import { useRecoilState } from "recoil";
 import { useAudio } from "@/hooks";
+import { useParams, useSearchParams } from "react-router-dom";
 
-let add = new URL(location.href);
-const id = add.searchParams.get("id");
+// let add = new URL(location.href);
+// const id = add.searchParams.get("id");
 const Playlist: FC = () => {
     const [music, setMusic] = useRecoilState(musicState);
     const [name, bem] = createNamespace("play-list");
     const [playlist, setPlaylist] = useState<
-        IPlayList["playlist"] | undefined
+        API.PlayList["playlist"] | undefined
     >();
-    const [songList, setSongList] = useState<Song[]>();
+    const [songList, setSongList] = useState<API.Song[]>();
     const [playSong] = useAudio();
+    // const [search]
+    // let [searchParams, setSearchParams] = useSearchParams();
+    const params = useParams();
+    const id = params.id;
+
+    // useEffect(() => console.log("change"), [id]);
     const handleGetData = async () => {
         console.log(id);
         if (!id) {
@@ -29,7 +35,7 @@ const Playlist: FC = () => {
         setSongList(SongRes.songs);
     };
 
-    const handlePlaySong = async (song: Song) => {
+    const handlePlaySong = async (song: API.Song) => {
         const url = await handleGetSongUrl(song.id);
         playSong(song, url);
     };
@@ -52,18 +58,19 @@ const Playlist: FC = () => {
     // };
     useEffect(() => {
         handleGetData();
-    }, []);
+    }, [id]);
     return (
         <div className={name + " p-20 select-none"}>
             <div className="flex">
-                <div>
+                <div className={`w-1/4  h-auto`}>
                     <img
                         src={`${playlist?.coverImgUrl}?param=512y512`}
                         alt=""
-                        className={`w-60`}
+
+                        // style={{ flexBasis: "20vw" }}
                     />
                 </div>
-                <div className=" m-4">
+                <div className=" m-4 w-3/4">
                     <div className="text-5xl font-bold text-left ">
                         {playlist?.name}
                     </div>
