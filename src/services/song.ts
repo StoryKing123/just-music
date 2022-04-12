@@ -14,17 +14,22 @@ export const getSongUrl = async (id: number) => {
         null,
         { code: number; message: string; data: { size: number; url: "string" } }
     >(`http://localhost:4000/music/url/${id}`);
-    if (res.code === 10001) {
-        const urlRes = await axios.get<null, API.SongUrl>(`/song/url?id=${id}`);
-        console.log(urlRes);
-        if (urlRes.code === 200) {
-            toast("歌曲不存在，播放原版歌曲");
-            return urlRes.data[0].url;
-        }
+    if (!res || res.code === 10001) {
+        const songUrl = await getOriginSongUrl(id);
+        toast("歌曲不存在，播放原版歌曲");
+        return songUrl;
     }
-
     return res.data.url;
-    // >(`https://fs-music-api.vercel.app/music/url/${id}`);
+};
+
+export const getOriginSongUrl = async (id: number) => {
+    const res = await axios.get<null, API.SongUrl>(`/song/url?id=${id}`);
+    // console.log(urlRes);
+    if (res.code === 200) {
+        return res.data[0].url;
+    } else {
+        throw new Error("error");
+    }
 };
 
 export const searchSuggest = async (keywords: string) => {

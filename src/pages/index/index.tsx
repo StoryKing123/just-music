@@ -16,7 +16,7 @@ const Index: FC = () => {
         initData();
     }, []);
     return (
-        <div className="font-bold   ">
+        <div className="font-bold   pb-20 px-8  ">
             {" "}
             <div className="flex  justify-center flex-wrap gap-10 ">
                 {recommendList &&

@@ -61,9 +61,9 @@ const Search: FC<SearchProps> = (props) => {
 
             <div>
                 歌曲
-                <div>
+                <div className="flex  flex-col gap-4 ">
                     {suggest?.songs?.map((item) => (
-                        <div key={item.id} className="flex">
+                        <div key={item.id} className="flex items-center  ">
                             {/* <div></div> */}
                             {/* <img src={item.album.} alt="" /> */}
                             <img
@@ -84,11 +84,11 @@ const Search: FC<SearchProps> = (props) => {
             </div>
             <div>
                 歌单
-                <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-5 ">
                     {suggest?.playlists?.map((item) => (
                         <div
                             key={item.id}
-                            className="flex items-center gap-5 rounded-md bg-search-item p-5 "
+                            className="flex items-center gap-5 rounded-md bg-search-item hover:bg-search-item-active  p-5 "
                             onClick={() => handleClick(item.id)}
                         >
                             <img
