@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import nextSVG from "@/assets/icons/next-dark.svg";
 import pauseSVG from "@/assets/icons/pause-dark.svg";
 import playSVG from "@/assets/icons/play-dark.svg";
@@ -17,10 +17,17 @@ import { getSongUrl } from "@/services/song";
 import { PLAY_MODE } from "@/const";
 
 const Player: FC = (props) => {
+    console.log("player render");
+
     const [isShowPlayList, setShowPlayList] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [music] = useRecoilState(musicState);
     const [playSong, playOrPauseAudio] = useAudio();
+
+    const memoPlayerPlayList = useMemo(
+        () => <PlayerPlayList isShow={isShowPlayList}></PlayerPlayList>,
+        [isShowPlayList]
+    );
 
     const handlePlayListClick = () => {
         setShowPlayList(!isShowPlayList);
@@ -104,7 +111,8 @@ const Player: FC = (props) => {
     return (
         <div className="select-none fixed h-16 bottom-0 w-screen bg-base-player ">
             <Progress currentTime={currentTime}></Progress>
-            <PlayerPlayList isShow={isShowPlayList}></PlayerPlayList>
+            {/* <PlayerPlayList isShow={isShowPlayList}></PlayerPlayList> */}
+            {memoPlayerPlayList}
             <div className="px-16 flex items-center h-full">
                 {music.currentSong && (
                     <div className="flex items-center gap-4 w-1/3 truncate">

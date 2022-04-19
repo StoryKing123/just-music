@@ -43,7 +43,7 @@ const Search: FC<SearchProps> = (props) => {
     };
     return (
         // <div style={{ visibility: props.isShow ? "visible" : "hidden" }}>
-        <div className="">
+        <div className=" overflow-scroll  px-6 h-full">
             <div className="flex">
                 <img
                     src={theme === THEME.DARK ? searchDark : searchLight}
@@ -60,10 +60,13 @@ const Search: FC<SearchProps> = (props) => {
             </div>
 
             <div>
-                歌曲
+                <div className={bem("title")}>歌曲</div>
                 <div className="flex  flex-col gap-4 ">
                     {suggest?.songs?.map((item) => (
-                        <div key={item.id} className="flex items-center  ">
+                        <div
+                            key={item.id}
+                            className="flex items-center rounded-md bg-search-item hover:bg-search-item-active p-3  "
+                        >
                             {/* <div></div> */}
                             {/* <img src={item.album.} alt="" /> */}
                             <img
@@ -71,8 +74,8 @@ const Search: FC<SearchProps> = (props) => {
                                 className="w-8   rounded-sm"
                                 alt=""
                             />
-                            <div>{item.name}</div>
-                            <div>
+                            <div className=" ml-8">{item.name}</div>
+                            <div className=" mr-0 ml-auto">
                                 {extractObjectArrayAttr(
                                     item.artists,
                                     "name"
@@ -83,7 +86,8 @@ const Search: FC<SearchProps> = (props) => {
                 </div>
             </div>
             <div>
-                歌单
+                <div className={bem("title")}>歌单</div>
+
                 <div className="flex flex-col gap-5 ">
                     {suggest?.playlists?.map((item) => (
                         <div
@@ -101,7 +105,7 @@ const Search: FC<SearchProps> = (props) => {
                     ))}
                 </div>
             </div>
-            <div>歌手</div>
+            <div className={bem("title")}>歌手</div>
         </div>
         //     <input type="text" />
         // </div>

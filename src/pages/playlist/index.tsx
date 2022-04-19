@@ -44,9 +44,10 @@ const Playlist: FC = () => {
         return res;
     };
     const handlePlayPlayList = async () => {
+        console.log('set playlist');
+        console.log(songList);
+        songList && await handlePlaySong(songList[0]);
         setMusic({ ...music, playList: songList });
-        songList && handlePlaySong(songList[0]);
-
         localStorage.setItem("playlist", JSON.stringify(songList));
         // localStorage.set("aaa", "bbb");
     };

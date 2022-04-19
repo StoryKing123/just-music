@@ -9,7 +9,11 @@ import { useRecoilState } from "recoil";
 export const useInitMusic = () => {
     const [music, setMusic] = useRecoilState(musicState);
     const initFn = () => {
+        console.log('init msuic');
+        
         const playlist = localStorage.getItem("playlist");
+        // console.log(playlist);
+        
         // console.log(playlist);
 
         playlist &&
