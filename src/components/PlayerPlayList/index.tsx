@@ -52,7 +52,7 @@ const PlayerPlayList: FC<PlayerPlayListProps> = (props) => {
                     <div
                         key={item.id}
                         className="flex h-7 px-2 hover:bg-base-sub  text-sm items-center odd:bg-base-sub"
-                        onClick={() => handlePlaySong(item)}
+                        onDoubleClick={() => handlePlaySong(item)}
                     >
                         <div className="w-1/2 truncate">{item.name}</div>
                         <div className="ml-auto flex-1 text-left truncate text-base-sub text-xs">

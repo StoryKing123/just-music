@@ -7,10 +7,12 @@ import musicState from "@/store/music";
 import { useRecoilState } from "recoil";
 import { useAudio } from "@/hooks";
 import { useParams, useSearchParams } from "react-router-dom";
+import { praseTimestampIntoDate } from "@/utils/date";
 
 // let add = new URL(location.href);
 // const id = add.searchParams.get("id");
 const Playlist: FC = () => {
+    // const [music, setMusic] = useRecoilState(musicState);
     const [music, setMusic] = useRecoilState(musicState);
     const [name, bem] = createNamespace("play-list");
     const [playlist, setPlaylist] = useState<
@@ -44,10 +46,13 @@ const Playlist: FC = () => {
         return res;
     };
     const handlePlayPlayList = async () => {
-        console.log('set playlist');
-        console.log(songList);
-        songList && await handlePlaySong(songList[0]);
-        setMusic({ ...music, playList: songList });
+        if (!songList) return;
+        await handlePlaySong(songList[0]);
+        setMusic({
+            ...music,
+            playList: songList,
+            currentSong: songList[0],
+        });
         localStorage.setItem("playlist", JSON.stringify(songList));
         // localStorage.set("aaa", "bbb");
     };
@@ -67,8 +72,6 @@ const Playlist: FC = () => {
                     <img
                         src={`${playlist?.coverImgUrl}?param=512y512`}
                         alt=""
-
-                        // style={{ flexBasis: "20vw" }}
                     />
                 </div>
                 <div className=" m-4 w-3/4">
@@ -77,7 +80,11 @@ const Playlist: FC = () => {
                     </div>
                     <div>
                         <div className="text-left ">
-                            播放列表 • YouTube Music • 2022
+                            播放列表 • {playlist?.creator.nickname} •{" "}
+                            {praseTimestampIntoDate(
+                                playlist?.updateTime,
+                                false
+                            )}
                         </div>
                         <div className="text-left ">
                             {playlist?.trackIds.length} 首歌曲 • 2小时50分钟
