@@ -28,10 +28,9 @@ const NavBar: FC<NavBarProps> = () => {
     };
     const handleSearch = () => {
         open();
-        // setShowSearch(!isShowSearch);
     };
     return (
-        <div className="flex justify-center gap-4 text-xl font-bold p-4">
+        <div className="flex justify-center relative gap-4 text-xl font-bold p-4">
             <div>
                 <Link to="/index">首页</Link>
             </div>
@@ -40,10 +39,10 @@ const NavBar: FC<NavBarProps> = () => {
             </div>
             <div>媒体库</div>
             <div onClick={handleSearch}>搜索</div>
-            <Button onClick={handleLoginClick}>登录</Button>
             <Button onClick={handleThemeClick}>切换主题</Button>
-            {/* <Search isShow={isShowSearch}></Search> */}
-            {/* <Modal></Modal> */}
+            <div className=" absolute   right-1  tranlslate-y-1/2 -translate-x-1/2 ">
+                <Button onClick={handleLoginClick}>登录</Button>
+            </div>
             <Modal></Modal>
             <Login
                 isShow={isShowLogin}

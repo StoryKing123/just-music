@@ -41,3 +41,17 @@ export const useAuth = () => {
     // login<loginType>('tel');
     return [login, logout];
 };
+
+export const useInitAuth = () => {
+    const [user, setUser] = useRecoilState(userState);
+    const initAuth = () => {
+        const userString = localStorage.getItem("user");
+        if (userString === null) {
+            return false;
+        }
+        const userObj = JSON.parse(userString);
+        setUser({ ...user, user: userObj });
+        return true;
+    };
+    return initAuth;
+};
