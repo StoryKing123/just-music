@@ -1,7 +1,9 @@
 import { useModal, useTheme } from "@/hooks";
+import userState from "@/store/user";
 import { THEME } from "@/utils";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import Button from "../Button";
 import Login from "../Login";
 import Search from "../Search";
@@ -10,6 +12,9 @@ type NavBarProps = {};
 const NavBar: FC<NavBarProps> = () => {
     const [isShowLogin, setShowLogin] = useState(false);
     const [isShowSearch, setShowSearch] = useState(false);
+    const [user] = useRecoilState(userState);
+    // console.log(user);
+
     const closeSearch = () => {
         close();
     };
@@ -41,7 +46,11 @@ const NavBar: FC<NavBarProps> = () => {
             <div onClick={handleSearch}>搜索</div>
             <Button onClick={handleThemeClick}>切换主题</Button>
             <div className=" absolute   right-1  tranlslate-y-1/2 -translate-x-1/2 ">
-                <Button onClick={handleLoginClick}>登录</Button>
+                {user.user ? (
+                    <div>{user.user.profile.nickname}</div>
+                ) : (
+                    <Button onClick={handleLoginClick}>登录</Button>
+                )}
             </div>
             <Modal></Modal>
             <Login

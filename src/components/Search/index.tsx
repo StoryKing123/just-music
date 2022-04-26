@@ -106,6 +106,22 @@ const Search: FC<SearchProps> = (props) => {
                 </div>
             </div>
             <div className={bem("title")}>歌手</div>
+            <div className="fle flex-col gap-5">
+                {suggest?.artists?.map((item) => (
+                    <div
+                        key={item.id}
+                        className="flex items-center gap-5 rounded-md bg-search-item hover:bg-search-item-active  p-5 "
+                        onClick={() => handleClick(item.id)}
+                    >
+                        <img
+                            src={`${item.img1v1Url}?param=64y64`}
+                            className="w-12    rounded-sm"
+                            alt=""
+                        />
+                        <div>{item.name}</div>
+                    </div>
+                ))}
+            </div>
         </div>
         //     <input type="text" />
         // </div>
