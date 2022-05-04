@@ -1,11 +1,11 @@
-import { searchSuggest } from "@/services/song";
+import { getSongDetail, searchSuggest } from "@/services/song";
 import { ChangeEvent, FC, MouseEventHandler, useState } from "react";
 import { throttle } from "lodash";
 import { createNamespace, extractObjectArrayAttr, THEME } from "@/utils";
 import { Link, useNavigate } from "react-router-dom";
 import searchDark from "@/assets/icons/search-dark.svg";
 import searchLight from "@/assets/icons/search-light.svg";
-import { useTheme } from "@/hooks";
+import { useAudio, useTheme } from "@/hooks";
 import "./index.less";
 
 type SearchProps = {
@@ -14,6 +14,7 @@ type SearchProps = {
 };
 const Search: FC<SearchProps> = (props) => {
     const [name, bem] = createNamespace("search");
+    const [play] = useAudio();
     let navigate = useNavigate();
     const [theme] = useTheme();
     const [suggest, setSuggest] = useState<API.Result | null>();
@@ -25,13 +26,13 @@ const Search: FC<SearchProps> = (props) => {
                 // res.result
                 setSuggest(res.result);
             }
-            // const filterSongs = (item: Song) => {
-            // if(item.rtype)
-            // };
-            // res.result.songs.forEach((item) => filterSongs(item));
         },
-        1000
+        500
     );
+    const playSong = async (id: number) => {
+        const detail = await getSongDetail(id);
+        play(detail.songs[0]);
+    };
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
         console.log(e.currentTarget.value);
@@ -66,9 +67,8 @@ const Search: FC<SearchProps> = (props) => {
                         <div
                             key={item.id}
                             className="flex items-center rounded-md bg-search-item hover:bg-search-item-active p-3  "
+                            onDoubleClick={() => playSong(item.id)}
                         >
-                            {/* <div></div> */}
-                            {/* <img src={item.album.} alt="" /> */}
                             <img
                                 src={`${item.artists[0].img1v1Url}?param=64y64`}
                                 className="w-8   rounded-sm"

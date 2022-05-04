@@ -1,7 +1,7 @@
 import { useModal, useTheme } from "@/hooks";
 import userState from "@/store/user";
 import { THEME } from "@/utils";
-import { FC, useState } from "react";
+import { FC, memo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import Button from "../Button";
@@ -14,6 +14,7 @@ const NavBar: FC<NavBarProps> = () => {
     const [isShowSearch, setShowSearch] = useState(false);
     const [user] = useRecoilState(userState);
     // console.log(user);
+    console.log("nav bar render");
 
     const closeSearch = () => {
         close();

@@ -9,8 +9,6 @@ import { useAudio } from "@/hooks";
 import { useParams, useSearchParams } from "react-router-dom";
 import { praseTimestampIntoDate } from "@/utils/date";
 
-// let add = new URL(location.href);
-// const id = add.searchParams.get("id");
 const Playlist: FC = () => {
     // const [music, setMusic] = useRecoilState(musicState);
     const [music, setMusic] = useRecoilState(musicState);
@@ -39,7 +37,7 @@ const Playlist: FC = () => {
 
     const handlePlaySong = async (song: API.Song) => {
         const url = await handleGetSongUrl(song.id);
-        playSong(song, url);
+        playSong(song);
     };
     const handleGetSongUrl = async (id: number) => {
         const res = await getSongUrl(id);

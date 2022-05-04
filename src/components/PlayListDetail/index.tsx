@@ -17,8 +17,8 @@ const PlayListDetail: FC<PlayListDetailProps> = (props) => {
     // }, []);
 
     const handlePlaySong = async (song: API.Song) => {
-        const url = await handleGetSongUrl(song.id);
-        playSong(song, url);
+        // const url = await handleGetSongUrl(song.id);
+        playSong(song);
     };
     const handleGetSongUrl = async (id: number) => {
         const res = await getSongUrl(id);

@@ -6,6 +6,12 @@ export const getListSong = async (id: number) => {
         `playlist/track/all?id=${id}&offset=1`
     );
 };
+
+export const getSongDetail = async (id: number | number[]) => {
+    return await axios.get<null, API.PlayListSong>(
+        `song/detail?ids=${Array.isArray(id) ? id.join(",") : id}`
+    );
+};
 export const getListInfo = async (id: number) => {
     return await axios.get<null, API.PlayList>(`playlist/detail?id=${id}`);
 };

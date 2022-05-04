@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
@@ -10,10 +10,10 @@ import { useInitAuth, useInitTheme, useTheme } from "./hooks";
 import { useInitMusic } from "./hooks/music";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Artist from "./pages/artist";
 
 function App() {
     console.log("app render");
-    // const [count, setCount] = useState(0);
     const initTheme = useInitTheme();
     const initMusic = useInitMusic();
     const initAuth = useInitAuth();
@@ -25,13 +25,15 @@ function App() {
         toast("Music!");
     }, []);
 
+    const memoNavBar = useMemo(() => <NavBar></NavBar>, []);
+
     return (
         <div id="App" className="App  bg-base text-base ">
             <ToastContainer />
             <div id="modal"></div>
             <Router>
-                <NavBar></NavBar>
-                {/* <Login></Login> */}
+                {/* <NavBar></NavBar> */}
+                {memoNavBar}
                 <Routes>
                     <Route path="/" element={<Index></Index>}></Route>
                     <Route path="/index" element={<Index></Index>}></Route>
@@ -42,40 +44,13 @@ function App() {
                         path="playlist/:id"
                         element={<PlayList></PlayList>}
                     ></Route>
+                    <Route
+                        path="artist/:id"
+                        element={<Artist></Artist>}
+                    ></Route>
                 </Routes>
             </Router>
             <Player></Player>
-            {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header> */}
         </div>
     );
 }

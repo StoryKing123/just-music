@@ -17,12 +17,13 @@ import { getSongUrl } from "@/services/song";
 import { PLAY_MODE } from "@/const";
 
 const Player: FC = (props) => {
-    console.log("player render");
+    // console.log("player render");
 
     const [isShowPlayList, setShowPlayList] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [music] = useRecoilState(musicState);
     const [playSong, playOrPauseAudio] = useAudio();
+    // console.log(music);
 
     const memoPlayerPlayList = useMemo(
         () => <PlayerPlayList isShow={isShowPlayList}></PlayerPlayList>,
@@ -44,8 +45,8 @@ const Player: FC = (props) => {
     };
 
     const handlePlaySong = async (song: API.Song) => {
-        const url = await handleGetSongUrl(song.id);
-        playSong(song, url);
+        // const url = await handleGetSongUrl(song.id);
+        playSong(song);
     };
     const handleGetSongUrl = async (id: number) => {
         const res = await getSongUrl(id);
@@ -79,7 +80,6 @@ const Player: FC = (props) => {
         if (!music.currentSong) {
             return;
         }
-
         const isEqual = (item: API.Song) => item.id === music.currentSong?.id;
         const currentIndex = music.playList?.findIndex(isEqual);
         if (currentIndex !== undefined) {
@@ -88,12 +88,10 @@ const Player: FC = (props) => {
                 music.playList &&
                 handlePlaySong(music.playList[playIndex]);
         }
-
         isProcessing = false;
     };
 
     const handleEnded = async () => {
-        console.log("end");
         if (music.mode === PLAY_MODE.SEQUENCE) {
             await handlePlayPreviousOrNextSong("next");
         }
