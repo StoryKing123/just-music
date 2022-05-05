@@ -23,7 +23,6 @@ const Search: FC<SearchProps> = (props) => {
             console.log(e);
             const res = await searchSuggest(e.target.value);
             if (res.code === 200) {
-                // res.result
                 setSuggest(res.result);
             }
         },

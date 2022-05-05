@@ -18,14 +18,10 @@ const Playlist: FC = () => {
     >();
     const [songList, setSongList] = useState<API.Song[]>();
     const [playSong] = useAudio();
-    // const [search]
-    // let [searchParams, setSearchParams] = useSearchParams();
     const params = useParams();
     const id = params.id;
 
-    // useEffect(() => console.log("change"), [id]);
     const handleGetData = async () => {
-        console.log(id);
         if (!id) {
             return;
         }
@@ -36,7 +32,7 @@ const Playlist: FC = () => {
     };
 
     const handlePlaySong = async (song: API.Song) => {
-        const url = await handleGetSongUrl(song.id);
+        // const url = await handleGetSongUrl(song.id);
         playSong(song);
     };
     const handleGetSongUrl = async (id: number) => {
@@ -49,7 +45,7 @@ const Playlist: FC = () => {
         setMusic({
             ...music,
             playList: songList,
-            currentSong: songList[0],
+            // currentSong: songList[0],
         });
         localStorage.setItem("playlist", JSON.stringify(songList));
         // localStorage.set("aaa", "bbb");
@@ -60,6 +56,10 @@ const Playlist: FC = () => {
 
     //     // setSongList(res.songs);
     // };
+    const randomPlay = () => {
+        songList &&
+            playSong(songList[Math.floor(Math.random() * songList.length)]);
+    };
     useEffect(() => {
         handleGetData();
     }, [id]);
@@ -93,7 +93,7 @@ const Playlist: FC = () => {
                     </div>
                     <div className="flex gap-2">
                         <Button onClick={handlePlayPlayList}>播放歌曲</Button>
-                        <Button>随机播放</Button>
+                        <Button onClick={randomPlay}>随机播放</Button>
                     </div>
                     <div></div>
                 </div>

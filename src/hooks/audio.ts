@@ -13,16 +13,21 @@ export const useAudio = (): [
     const [app, setApp] = useRecoilState(appState);
     const [music, setMusic] = useRecoilState(musicState);
     const setDuration = () => {};
-    // const playSong = () => {};
     const playSong = async (song: API.Song) => {
         const src = await getSongUrl(song.id);
+        let index = -1;
         playAudio(src);
-        setMusic({ ...music, currentSong: song, isPlaying: true });
+        //get current index
+        if (music.playList) {
+            index = music.playList.findIndex((item) => item.id === song.id);
+        }
+        setMusic({
+            ...music,
+            currentSong: song,
+            currentIndex: index >= 0 ? index : music.currentIndex,
+            isPlaying: true,
+        });
     };
-    // const playSong = (song: API.Song, src: string) => {
-    //     playAudio(src);
-    //     setMusic({ ...music, currentSong: song, isPlaying: true });
-    // };
     const setPlayOrPause = (isPlay: boolean) => {
         isPlay ? playAudio() : pauseAudio();
         setMusic({ ...music, isPlaying: isPlay });

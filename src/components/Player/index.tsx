@@ -53,8 +53,14 @@ const Player: FC = (props) => {
         return res;
     };
 
-    const getPlayIndex = (currentIndex: number, type: "next" | "previous") => {
+    const getPlayIndex = (
+        currentIndex: number | undefined,
+        type: "next" | "previous"
+    ) => {
         if (!music.playList) {
+            return;
+        }
+        if (!currentIndex) {
             return;
         }
         if (type === "previous") {
@@ -77,17 +83,35 @@ const Player: FC = (props) => {
         if (isProcessing) {
             return;
         }
+
         if (!music.currentSong) {
             return;
         }
-        const isEqual = (item: API.Song) => item.id === music.currentSong?.id;
-        const currentIndex = music.playList?.findIndex(isEqual);
-        if (currentIndex !== undefined) {
-            const playIndex = getPlayIndex(currentIndex, type);
-            playIndex !== undefined &&
-                music.playList &&
-                handlePlaySong(music.playList[playIndex]);
+        if (!music.playList) {
+            return;
         }
+
+        isProcessing = true;
+        let index = getPlayIndex(music.currentIndex, type);
+        console.log("index:" + index);
+
+        if (index) {
+            handlePlaySong(music.playList[index]);
+        } else {
+            handlePlaySong(music.playList[0]);
+        }
+        // } else {
+        // music.playList && playSong(music.playList[0]);
+        // }
+        // getPlayIndex(music.currentIndex??, type);
+        // const isEqual = (item: API.Song) => item.id === music.currentSong?.id;
+        // const currentIndex = music.playList?.findIndex(isEqual);
+        // if (currentIndex !== undefined) {
+        //     const playIndex = getPlayIndex(currentIndex, type);
+        //     playIndex !== undefined &&
+        //         music.playList &&
+        //         handlePlaySong(music.playList[playIndex]);
+        // }
         isProcessing = false;
     };
 

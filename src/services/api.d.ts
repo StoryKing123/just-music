@@ -10,6 +10,7 @@ declare namespace API {
     }
 
     export interface Playlist {
+        length: number;
         id: number;
         name: string;
         coverImgId: number;

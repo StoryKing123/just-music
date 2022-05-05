@@ -3,6 +3,7 @@ import { PLAY_MODE } from "@/const";
 import { atom } from "recoil";
 export type MusicStateType = {
     currentSong?: API.Song;
+    currentIndex?: number;
     playList?: API.Song[];
     mode?: PLAY_MODE;
     isPlaying: boolean;

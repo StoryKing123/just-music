@@ -9,21 +9,13 @@ type PlayListDetailProps = {
     songList: API.Song[];
 };
 const PlayListDetail: FC<PlayListDetailProps> = (props) => {
-    const [searchParams, setSearchParams] = useSearchParams();
     const { songList } = props;
     const [playSong] = useAudio();
 
-    // useEffect(() => {
-    // }, []);
-
     const handlePlaySong = async (song: API.Song) => {
-        // const url = await handleGetSongUrl(song.id);
         playSong(song);
     };
-    const handleGetSongUrl = async (id: number) => {
-        const res = await getSongUrl(id);
-        return res;
-    };
+
     return (
         <>
             <div className="divide-y divide-base">

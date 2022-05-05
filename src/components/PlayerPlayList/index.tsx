@@ -14,14 +14,8 @@ const PlayerPlayList: FC<PlayerPlayListProps> = (props) => {
     const [name, bem] = createNamespace("player-play-list");
     const [music] = useRecoilState(musicState);
     const [playSong] = useAudio();
-    // console.log("player play list render");
 
-    const handleGetSongUrl = async (id: number) => {
-        const res = await getSongUrl(id);
-        return res;
-    };
     const handlePlaySong = async (song: API.Song) => {
-        // const url = await handleGetSongUrl(song.id);
         playSong(song);
     };
     return (
