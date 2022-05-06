@@ -28,7 +28,7 @@ function App() {
     const memoNavBar = useMemo(() => <NavBar></NavBar>, []);
 
     return (
-        <div id="App" className="App  bg-base text-base ">
+        <div id="App" className="App  -z-50  relative bg-base text-base ">
             <ToastContainer />
             <div id="modal"></div>
             <Router>

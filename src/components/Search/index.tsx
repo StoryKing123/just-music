@@ -110,7 +110,7 @@ const Search: FC<SearchProps> = (props) => {
                     <div
                         key={item.id}
                         className="flex items-center gap-5 rounded-md bg-search-item hover:bg-search-item-active  p-5 "
-                        onClick={() => handleClick(item.id)}
+                        onClick={() => navigate(`/artist/${item.id}`)}
                     >
                         <img
                             src={`${item.img1v1Url}?param=64y64`}

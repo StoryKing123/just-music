@@ -483,6 +483,7 @@ declare namespace API {
     export interface Artist {
         id: number;
         name: string;
+        briefDesc?: string;
         picUrl: null | string;
         alias: string[];
         albumSize: number;
@@ -543,6 +544,104 @@ declare namespace API {
         trackCount: number;
         userId: number;
         alg: string;
+    }
+    export interface ArtistTopSong {
+        code: number;
+        more: boolean;
+        songs: Song[];
+    }
+
+    export interface ArtistDetail {
+        code: number;
+        message: string;
+        data: ArtistDetailData;
+    }
+
+    export interface ArtistDetailData {
+        videoCount: number;
+        vipRights: VipRights;
+        identify: Identify;
+        artist: Artist;
+        blacklist: boolean;
+        preferShow: number;
+        showPriMsg: boolean;
+        secondaryExpertIdentiy: SecondaryExpertIdentiy[];
+        eventCount: number;
+        user: User;
+    }
+
+    export interface User {
+        backgroundUrl: string;
+        birthday: number;
+        detailDescription: string;
+        authenticated: boolean;
+        gender: number;
+        city: number;
+        signature: string;
+        description: string;
+        remarkName: null;
+        shortUserName: string;
+        accountStatus: number;
+        locationStatus: number;
+        avatarImgId: number;
+        defaultAvatar: boolean;
+        province: number;
+        nickname: string;
+        expertTags: null;
+        djStatus: number;
+        avatarUrl: string;
+        accountType: number;
+        authStatus: number;
+        vipType: number;
+        userName: string;
+        followed: boolean;
+        userId: number;
+        lastLoginIP: string;
+        lastLoginTime: number;
+        authenticationTypes: number;
+        mutual: boolean;
+        createTime: number;
+        anchor: boolean;
+        authority: number;
+        backgroundImgId: number;
+        userType: number;
+        experts: null;
+        avatarDetail: AvatarDetail;
+    }
+
+    export interface AvatarDetail {
+        userType: number;
+        identityLevel: number;
+        identityIconUrl: string;
+    }
+
+    export interface VipRights {
+        rightsInfoDetailDtoList: RightsInfoDetailDtoList[];
+        oldProtocol: boolean;
+        redVipAnnualCount: number;
+    }
+
+    export interface RightsInfoDetailDtoList {
+        vipCode: number;
+        expireTime: number;
+        signIap: boolean;
+        sign: boolean;
+    }
+    export interface Rank {
+        rank: number;
+        type: number;
+    }
+
+    export interface Identify {
+        imageUrl: string;
+        imageDesc: string;
+        actionUrl: string;
+    }
+
+    export interface SecondaryExpertIdentiy {
+        expertIdentiyId: number;
+        expertIdentiyName: string;
+        expertIdentiyCount: number;
     }
 
     // export interface Experts {}

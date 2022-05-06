@@ -44,6 +44,15 @@ export const searchSuggest = async (keywords: string) => {
     );
 };
 
+export const getArtistTopSong = async (id: number) => {
+    return await axios.get<null, API.ArtistTopSong>(
+        `/artist/top/song?id=${id}`
+    );
+};
+export const getArtistDetail = async (id: number) => {
+    return await axios.get<null, API.ArtistDetail>(`/artist/detail?id=${id}`);
+};
+
 export const getRecommedSogList = async () => {
     return await axios.get<null, API.RecommendSongList>(`/recommend/resource`);
 };
