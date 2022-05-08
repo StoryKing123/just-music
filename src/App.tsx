@@ -32,14 +32,10 @@ function App() {
             <ToastContainer />
             <div id="modal"></div>
             <Router>
-                {/* <NavBar></NavBar> */}
                 {memoNavBar}
                 <Routes>
                     <Route path="/" element={<Index></Index>}></Route>
                     <Route path="/index" element={<Index></Index>}></Route>
-                    {/* <Route
-                            path='search'
-                            element={<Search></Search>}></Route> */}
                     <Route
                         path="playlist/:id"
                         element={<PlayList></PlayList>}

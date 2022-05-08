@@ -483,6 +483,7 @@ declare namespace API {
     export interface Artist {
         id: number;
         name: string;
+        cover?: string;
         briefDesc?: string;
         picUrl: null | string;
         alias: string[];

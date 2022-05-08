@@ -1,8 +1,12 @@
 .App {
     text-align: center;
     min-height: 100vh;
+    z-index: 1;
 }
 
+.ReactModal__Overlay {
+    z-index: 999;
+}
 .App-logo {
     height: 40vmin;
     pointer-events: none;

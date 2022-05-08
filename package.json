@@ -9,6 +9,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
+    "@tailwindcss/line-clamp": "^0.4.0",
     "@tauri-apps/api": "^1.0.0-rc.1",
     "axios": "^0.26.0",
     "less": "^4.1.2",

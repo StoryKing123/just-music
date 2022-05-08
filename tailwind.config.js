@@ -10,7 +10,7 @@ module.exports = {
                 base: "var(--color-base)",
                 "base-sub": "var(--color-base-sub)",
                 "base-player": "var(--color-player)",
-                "search":"var(--color-search)",
+                search: "var(--color-search)",
                 "search-item": "var(--color-search-item)",
                 "search-item-active": "var(--color-search-item-active)",
                 "progress-whole": "var(--color-progress-whole)",
@@ -40,5 +40,5 @@ module.exports = {
         },
     },
 
-    plugins: [],
+    plugins: [require("@tailwindcss/line-clamp")],
 };

@@ -18,6 +18,7 @@ const Search: FC<SearchProps> = (props) => {
     let navigate = useNavigate();
     const [theme] = useTheme();
     const [suggest, setSuggest] = useState<API.Result | null>();
+    
     const handleThrottleInput = throttle(
         async (e: ChangeEvent<HTMLInputElement>) => {
             console.log(e);
