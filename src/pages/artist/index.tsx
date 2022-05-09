@@ -1,3 +1,4 @@
+import PlayListDetail from "@/components/PlayListDetail";
 import { useAudio } from "@/hooks";
 import { getArtistDetail, getArtistTopSong } from "@/services/song";
 import { extractObjectArrayAttr } from "@/utils";
@@ -48,8 +49,6 @@ const ArtistDetail = () => {
             >
                 <img
                     className="w-full top-0 left-0 -z-10"
-                    //                     -webkit-mask: linear-gradient(#000, transparent);
-                    // mask: linear-gradient(#000, transparent);
                     style={{
                         WebkitMask: "linear-gradient(#000, transparent)",
                         mask: "linear-gradient(,#000, transparent)",
@@ -85,31 +84,7 @@ const ArtistDetail = () => {
                         歌曲
                     </div>
                     <div>
-                        {topSong.map((item) => (
-                            <div
-                                key={item.id}
-                                onDoubleClick={(e) => handlePlaySong(item)}
-                                className="flex m-2 gap-4 h-12 items-center  "
-                            >
-                                <img
-                                    src={`${item.al.picUrl}?param=64y64`}
-                                    alt=""
-                                    className=" w-8"
-                                />
-                                <div className=" font-bold text-left w-1/3 truncate">
-                                    {item.name}
-                                </div>
-                                <div className="text-base-sub w-1/2 text-left truncate">
-                                    {extractObjectArrayAttr(
-                                        item.ar,
-                                        "name"
-                                    ).join(" ")}
-                                </div>
-                                <div className="ml-auto text-base-sub">
-                                    {parseTimestampIntoMinute(item.dt)}
-                                </div>
-                            </div>
-                        ))}
+                        <PlayListDetail songList={topSong} />
                     </div>
                 </div>
 

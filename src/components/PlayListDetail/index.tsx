@@ -4,13 +4,14 @@ import { extractObjectArrayAttr, wrapPromise } from "@/utils";
 import { getAudio, playAudio } from "@/utils/audio";
 import { parseTimestampIntoMinute } from "@/utils/date";
 import { FC, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 type PlayListDetailProps = {
     songList: API.Song[];
 };
 const PlayListDetail: FC<PlayListDetailProps> = (props) => {
     const { songList } = props;
     const [playSong] = useAudio();
+    const navigate = useNavigate();
 
     const handlePlaySong = async (song: API.Song) => {
         playSong(song);
@@ -35,9 +36,23 @@ const PlayListDetail: FC<PlayListDetailProps> = (props) => {
                                 {item.name}
                             </div>
                             <div className="text-base-sub w-1/2 text-left truncate">
-                                {extractObjectArrayAttr(item.ar, "name").join(
+                                {item.ar.map((item) => (
+                                    <>
+                                        <span
+                                            key={item.id}
+                                            className=" cursor-pointer"
+                                            onClick={(e) =>
+                                                navigate(`/artist/${item.id}`)
+                                            }
+                                        >
+                                            {item.name}
+                                        </span>
+                                        &nbsp;
+                                    </>
+                                ))}
+                                {/* {extractObjectArrayAttr(item.ar, "name").join(
                                     " "
-                                )}
+                                )} */}
                             </div>
                             <div className="ml-auto text-base-sub">
                                 {parseTimestampIntoMinute(item.dt)}
