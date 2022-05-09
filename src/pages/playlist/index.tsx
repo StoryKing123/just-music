@@ -8,6 +8,8 @@ import { useRecoilState } from "recoil";
 import { useAudio } from "@/hooks";
 import { useParams, useSearchParams } from "react-router-dom";
 import { praseTimestampIntoDate } from "@/utils/date";
+import { useLiveQuery } from "dexie-react-hooks";
+import { db } from "@/db";
 
 const Playlist: FC = () => {
     // const [music, setMusic] = useRecoilState(musicState);

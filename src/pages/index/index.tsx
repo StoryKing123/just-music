@@ -1,20 +1,32 @@
 import PlayListCard from "@/components/PlayListCard";
+import { db } from "@/db";
 import { getRecommedSogList } from "@/services/song";
-import { FC, useEffect, useState } from "react";
+import { useLiveQuery } from "dexie-react-hooks";
+import { FC, useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 const Index: FC = () => {
-    const [recommendList, setRecommedSogList] = useState<API.Recommend[]>();
+    const [recommendList, setRecommedSongList] = useState<API.Recommend[]>();
     const navigate = useNavigate();
     useEffect(() => {
         const initData = async () => {
             const res = await getRecommedSogList();
             console.log(res);
-            res.code === 200 && setRecommedSogList(res.recommend);
+            if (res.code === 200) {
+                setRecommedSongList(res.recommend);
+                await db.recommendList.clear();
+                db.recommendList.bulkAdd(res.recommend);
+            }
         };
 
         initData();
     }, []);
+
+    let cacheRes = useLiveQuery(() => db.recommendList.toArray());
+    useLayoutEffect(() => {
+        setRecommedSongList(cacheRes);
+    }, []);
+
     return (
         <div className="font-bold   pb-20 px-8  ">
             {" "}
