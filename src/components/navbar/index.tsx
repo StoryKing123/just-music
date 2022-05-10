@@ -41,7 +41,7 @@ const NavBar: FC<NavBarProps> = () => {
                 <Link to="/index">首页</Link>
             </div>
             <div>
-                <Link to="/playlist/138709164">探索</Link>
+                <Link to="/index">探索</Link>
             </div>
             <div>媒体库</div>
             <div onClick={handleSearch}>搜索</div>

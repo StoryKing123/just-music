@@ -1,3 +1,4 @@
+
 declare namespace API {
     export interface PlayList {
         code: number;
@@ -614,6 +615,41 @@ declare namespace API {
         userType: number;
         identityLevel: number;
         identityIconUrl: string;
+    }
+    export interface ArtistAlbum {
+        artist: Artist;
+        hotAlbums: HotAlbum[];
+        more: boolean;
+        code: number;
+    }
+    export interface HotAlbum {
+        songs: any[];
+        paid: boolean;
+        onSale: boolean;
+        mark: number;
+        companyId: number;
+        blurPicUrl: string;
+        artists: Artist[];
+        alias: string[];
+        copyrightId: number;
+        picId: number;
+        artist: Artist;
+        publishTime: number;
+        company: string;
+        briefDesc: string;
+        picUrl: string;
+        commentThreadId: string;
+        pic: number;
+        tags: string;
+        description: string;
+        status: number;
+        subType: string;
+        name: string;
+        id: number;
+        type: string;
+        size: number;
+        picId_str?: string;
+        isSub: boolean;
     }
 
     export interface VipRights {

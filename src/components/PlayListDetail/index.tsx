@@ -37,7 +37,7 @@ const PlayListDetail: FC<PlayListDetailProps> = (props) => {
                             </div>
                             <div className="text-base-sub w-1/2 text-left truncate">
                                 {item.ar.map((item) => (
-                                    <>
+                                    <span key={item.id}>
                                         <span
                                             key={item.id}
                                             className=" cursor-pointer"
@@ -48,7 +48,7 @@ const PlayListDetail: FC<PlayListDetailProps> = (props) => {
                                             {item.name}
                                         </span>
                                         &nbsp;
-                                    </>
+                                    </span>
                                 ))}
                                 {/* {extractObjectArrayAttr(item.ar, "name").join(
                                     " "

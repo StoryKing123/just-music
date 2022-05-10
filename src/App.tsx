@@ -12,6 +12,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Artist from "./pages/artist";
 
+window.onerror = () => {
+    console.log("err");
+};
+
 function App() {
     console.log("app render");
     const initTheme = useInitTheme();

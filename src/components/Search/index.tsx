@@ -18,7 +18,7 @@ const Search: FC<SearchProps> = (props) => {
     let navigate = useNavigate();
     const [theme] = useTheme();
     const [suggest, setSuggest] = useState<API.Result | null>();
-    
+
     const handleThrottleInput = throttle(
         async (e: ChangeEvent<HTMLInputElement>) => {
             console.log(e);
@@ -38,8 +38,12 @@ const Search: FC<SearchProps> = (props) => {
         console.log(e.currentTarget.value);
         handleThrottleInput(e);
     };
-    const handleClick = (id: number) => {
+    const navigateToPlaylist = (id: number) => {
         navigate(`/playlist/${id}`);
+        props.close && props.close();
+    };
+    const navigateToArtist = (id: number) => {
+        () => navigate(`/artist/${id}`);
         props.close && props.close();
     };
     return (
@@ -93,7 +97,7 @@ const Search: FC<SearchProps> = (props) => {
                         <div
                             key={item.id}
                             className="flex items-center gap-5 rounded-md bg-search-item hover:bg-search-item-active  p-5 "
-                            onClick={() => handleClick(item.id)}
+                            onClick={() => navigateToPlaylist(item.id)}
                         >
                             <img
                                 src={`${item.coverImgUrl}?param=64y64`}
@@ -111,7 +115,7 @@ const Search: FC<SearchProps> = (props) => {
                     <div
                         key={item.id}
                         className="flex items-center gap-5 rounded-md bg-search-item hover:bg-search-item-active  p-5 "
-                        onClick={() => navigate(`/artist/${item.id}`)}
+                        onClick={(_) => navigateToArtist(item.id)}
                     >
                         <img
                             src={`${item.img1v1Url}?param=64y64`}
