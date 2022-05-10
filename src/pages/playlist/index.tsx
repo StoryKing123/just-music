@@ -8,7 +8,6 @@ import { useRecoilState } from "recoil";
 import { useAudio } from "@/hooks";
 import { useParams, useSearchParams } from "react-router-dom";
 import { praseTimestampIntoDate } from "@/utils/date";
-import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "@/db";
 
 const Playlist: FC = () => {
@@ -37,8 +36,8 @@ const Playlist: FC = () => {
         // const url = await handleGetSongUrl(song.id);
         playSong(song);
     };
-    const handleGetSongUrl = async (id: number) => {
-        const res = await getSongUrl(id);
+    const handleGetSongUrl = async (id: number,name:string,artist:string) => {
+        const res = await getSongUrl(id,name,artist);
         return res;
     };
     const handlePlayPlayList = async () => {

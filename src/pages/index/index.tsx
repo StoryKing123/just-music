@@ -1,13 +1,15 @@
 import PlayListCard from "@/components/PlayListCard";
 import { db } from "@/db";
 import { getRecommedSogList } from "@/services/song";
-import { useLiveQuery } from "dexie-react-hooks";
+// import { invoke } from "lodash";
+// import { useLiveQuery } from "dexie-react-hooks";
 import { FC, useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 const Index: FC = () => {
   const [recommendList, setRecommedSongList] = useState<API.Recommend[]>();
   const navigate = useNavigate();
+
   useEffect(() => {
     const initData = async () => {
       const res = await getRecommedSogList();

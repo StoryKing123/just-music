@@ -48,8 +48,8 @@ const Player: FC = (props) => {
         // const url = await handleGetSongUrl(song.id);
         playSong(song);
     };
-    const handleGetSongUrl = async (id: number) => {
-        const res = await getSongUrl(id);
+    const handleGetSongUrl = async (id: number,name:string,artist:string) => {
+        const res = await getSongUrl(id,name,artist);
         return res;
     };
 
