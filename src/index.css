@@ -19,6 +19,8 @@
     --color-progress-current: theme("colors.gray.300");
     --color-btn-bg: theme("colors.black");
     --color-btn: theme("colors.white");
+    --color-voice-bar-whole: #909090;
+    --color-voice-bar-current: #fff;
 }
 .theme-dark {
     --color-base: theme("colors.gray.900");
@@ -36,6 +38,8 @@
     --color-progress-current: theme("colors.gray.300");
     --color-btn-bg: theme("colors.white");
     --color-btn: theme("colors.black");
+    --color-voice-bar-whole: #909090;
+    --color-voice-bar-current: #fff;
 }
 /* } */
 body {

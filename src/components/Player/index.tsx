@@ -15,10 +15,9 @@ import { getAudio } from "@/utils/audio";
 import { useAudio } from "@/hooks";
 import { getSongUrl } from "@/services/song";
 import { PLAY_MODE } from "@/const";
+import Voice from "./Voice";
 
 const Player: FC = (props) => {
-    // console.log("player render");
-
     const [isShowPlayList, setShowPlayList] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [music] = useRecoilState(musicState);
@@ -48,10 +47,10 @@ const Player: FC = (props) => {
         // const url = await handleGetSongUrl(song.id);
         playSong(song);
     };
-    const handleGetSongUrl = async (id: number,name:string,artist:string) => {
-        const res = await getSongUrl(id,name,artist);
-        return res;
-    };
+    // const handleGetSongUrl = async (id: number,name:string,artist:string) => {
+    //     const res = await getSongUrl(id,name,artist);
+    //     return res;
+    // };
 
     const getPlayIndex = (
         currentIndex: number | undefined,
@@ -60,9 +59,10 @@ const Player: FC = (props) => {
         if (!music.playList) {
             return;
         }
-        if (!currentIndex) {
+        if (currentIndex === undefined) {
             return;
         }
+
         if (type === "previous") {
             if (currentIndex <= 0) {
                 return music.playList.length - 1;
@@ -94,8 +94,7 @@ const Player: FC = (props) => {
         isProcessing = true;
         let index = getPlayIndex(music.currentIndex, type);
         console.log("index:" + index);
-
-        if (index) {
+        if (index !== undefined) {
             handlePlaySong(music.playList[index]);
         } else {
             handlePlaySong(music.playList[0]);
@@ -129,11 +128,10 @@ const Player: FC = (props) => {
             audio.removeEventListener("ended", handleEnded);
         };
     });
-    // useEffect(() => {}, []);
+    
     return (
         <div className="select-none fixed h-16 bottom-0 w-screen bg-base-player ">
             <Progress currentTime={currentTime}></Progress>
-            {/* <PlayerPlayList isShow={isShowPlayList}></PlayerPlayList> */}
             {memoPlayerPlayList}
             <div className="px-16 flex items-center h-full">
                 {music.currentSong && (
@@ -191,7 +189,7 @@ const Player: FC = (props) => {
                         src={playlistSVG}
                         alt=""
                     />
-                    <img className="w-4" src={voiceMeidaSVG} alt="" />
+                    <Voice></Voice>
                 </div>
             </div>
         </div>

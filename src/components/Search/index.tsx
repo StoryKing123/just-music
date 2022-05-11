@@ -43,7 +43,7 @@ const Search: FC<SearchProps> = (props) => {
         props.close && props.close();
     };
     const navigateToArtist = (id: number) => {
-        () => navigate(`/artist/${id}`);
+        navigate(`/artist/${id}`);
         props.close && props.close();
     };
     return (

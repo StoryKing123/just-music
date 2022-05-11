@@ -16,6 +16,8 @@ module.exports = {
                 "progress-whole": "var(--color-progress-whole)",
                 "progress-current": "var(--color-progress-current)",
                 btn: "var(--color-btn-bg)",
+                "voice-bar-whole": "var(--color-voice-bar-whole)",
+                "voice-bar-current": "var(--color-voice-bar-current)",
             },
             animation: {
                 wiggle: "wiggle 3s linear infinite",

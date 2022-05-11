@@ -14,11 +14,10 @@ export const useAudio = (): [
     const [music, setMusic] = useRecoilState(musicState);
     const setDuration = () => {};
     const playSong = async (song: API.Song) => {
-        
-        const src = await getSongUrl(song.id,song.name,song.ar[0].name);
+        const src = await getSongUrl(song.id, song.name, song.ar[0].name);
         let index = -1;
         playAudio(src);
-        //get current index
+
         if (music.playList) {
             index = music.playList.findIndex((item) => item.id === song.id);
         }
