@@ -4,39 +4,47 @@ import { getAudio } from "@/utils/audio";
 import { FC, MouseEventHandler, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 
-type VoiceBarProps = {};
-const VoiceBar: FC<VoiceBarProps> = () => {
+type VoiceBarProps = {
+    onHandleMouseDown: () => void;
+    onHandleMouseUp: () => void;
+};
+const VoiceBar: FC<VoiceBarProps> = (props) => {
     const [audio, setAudio] = useRecoilState(audioState);
 
     console.log("set audio volumne:" + audio.volume);
     const audioElement = getAudio();
-    audioElement.volume = audio.volume;
 
     useEffect(() => {
-    }, [audioElement.volume]);
+        audioElement.volume = audio.volume;
+    }, [audio.volume]);
+
+    const setVolume = (volume: number) => {
+        volume < 1 && volume > 0 && setAudio({ ...audio, volume: volume });
+    };
+
     const mouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
         let volume = (rect.bottom - e.clientY) / rect.height;
-        if (volume > 1) volume = 1;
-        else if (volume < 0) volume = 0;
-        setAudio({ ...audio, volume: volume });
-        // console.log(volume);
+        setVolume(volume);
+        props.onHandleMouseDown();
+
         const mouseMove = (event: MouseEvent) => {
             let volume = (rect.bottom - event.clientY) / rect.height;
-            if (volume > 1) volume = 1;
-            else if (volume < 0) volume = 0;
-            setAudio({ ...audio, volume: volume });
+            setVolume(volume);
         };
+
         const mouseUp = () => {
+            console.log("up");
             window.removeEventListener("mousemove", mouseMove);
             window.removeEventListener("mouseup", mouseUp);
+            props.onHandleMouseUp();
         };
         window.addEventListener("mousemove", mouseMove);
         window.addEventListener("mouseup", mouseUp);
     };
 
     return (
-        <div className="w-10 h-40 absolute -top-40 py-4  items-center  bg-base-player drop-shadow-sm rounded-md flex flex-col">
+        <div className="w-10 h-40 absolute -top-40 py-4 left-1/2 -translate-x-1/2  items-center  bg-base-player drop-shadow-sm rounded-md flex flex-col">
             <div
                 onMouseDown={mouseDown}
                 className="py-2  rounded-md relative flex-1 w-1    box-border bg-voice-bar-whole "

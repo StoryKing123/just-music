@@ -17,8 +17,8 @@ const ModalElement: FC<ModalProps> = (props) => {
             ariaHideApp={false}
             shouldCloseOnEsc={true}
             onRequestClose={handleCloseModal}
-            // className="bg-base text-base"
-            overlayClassName="bg-base"
+            // className="scroll-bar-hide"
+            overlayClassName="bg-base scroll-bar-hide"
             style={{ content: { backgroundColor: "#000" } }}
         >
             {props.children}

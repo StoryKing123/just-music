@@ -1,4 +1,5 @@
 import axios from ".";
+import originAxios from "axios";
 
 export const loginByTel = async (tel: string, password: string) => {
     const res = await axios.post<null, API.Login>(

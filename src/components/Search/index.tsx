@@ -47,16 +47,13 @@ const Search: FC<SearchProps> = (props) => {
         props.close && props.close();
     };
     return (
-        // <div style={{ visibility: props.isShow ? "visible" : "hidden" }}>
-        <div className=" overflow-scroll  px-6 h-full">
+        <div className=" overflow-scroll scroll-bar-hide  px-6 h-full">
             <div className="flex">
                 <img
                     src={theme === THEME.DARK ? searchDark : searchLight}
                     alt=""
                 />
-
                 <input
-                    // onChange={(e) => throttle(handleInput(e), 1000)}
                     placeholder="Search Music"
                     className={`${bem("input")}`}
                     onChange={handleInput}

@@ -22,8 +22,6 @@ const Player: FC = (props) => {
     const [currentTime, setCurrentTime] = useState(0);
     const [music] = useRecoilState(musicState);
     const [playSong, playOrPauseAudio] = useAudio();
-    // console.log(music);
-
     const memoPlayerPlayList = useMemo(
         () => <PlayerPlayList isShow={isShowPlayList}></PlayerPlayList>,
         [isShowPlayList]
@@ -39,18 +37,14 @@ const Player: FC = (props) => {
     };
 
     const handlePlayOrPause = () => {
-        // console.log('sdf')
         playOrPauseAudio(music.isPlaying ? false : true);
     };
 
     const handlePlaySong = async (song: API.Song) => {
-        // const url = await handleGetSongUrl(song.id);
         playSong(song);
     };
-    // const handleGetSongUrl = async (id: number,name:string,artist:string) => {
-    //     const res = await getSongUrl(id,name,artist);
-    //     return res;
-    // };
+
+    const VoiceMemo = useMemo(() => Voice, []);
 
     const getPlayIndex = (
         currentIndex: number | undefined,
@@ -99,18 +93,6 @@ const Player: FC = (props) => {
         } else {
             handlePlaySong(music.playList[0]);
         }
-        // } else {
-        // music.playList && playSong(music.playList[0]);
-        // }
-        // getPlayIndex(music.currentIndex??, type);
-        // const isEqual = (item: API.Song) => item.id === music.currentSong?.id;
-        // const currentIndex = music.playList?.findIndex(isEqual);
-        // if (currentIndex !== undefined) {
-        //     const playIndex = getPlayIndex(currentIndex, type);
-        //     playIndex !== undefined &&
-        //         music.playList &&
-        //         handlePlaySong(music.playList[playIndex]);
-        // }
         isProcessing = false;
     };
 
@@ -128,7 +110,7 @@ const Player: FC = (props) => {
             audio.removeEventListener("ended", handleEnded);
         };
     });
-    
+
     return (
         <div className="select-none fixed h-16 bottom-0 w-screen bg-base-player ">
             <Progress currentTime={currentTime}></Progress>
@@ -189,7 +171,8 @@ const Player: FC = (props) => {
                         src={playlistSVG}
                         alt=""
                     />
-                    <Voice></Voice>
+                    {/* <Voice></Voice> */}
+                    <VoiceMemo/>
                 </div>
             </div>
         </div>

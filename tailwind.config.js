@@ -6,6 +6,12 @@ module.exports = {
             width: {
                 // '1/6vw':''
             },
+            minWidth: {
+                "1/4": "25%",
+            },
+            maxWidht: {
+                "1/4": "25%",
+            },
             backgroundColor: {
                 base: "var(--color-base)",
                 "base-sub": "var(--color-base-sub)",

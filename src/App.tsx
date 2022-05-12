@@ -12,10 +12,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Artist from "./pages/artist";
 
-window.onerror = () => {
-    console.log("err");
-};
-
 function App() {
     console.log("app render");
     const initTheme = useInitTheme();
@@ -26,17 +22,20 @@ function App() {
         initTheme();
         initMusic();
         initAuth();
+        // console.log((window as any).returnCitySN);
+        // console.log(window.returnCitySN.cip);
+        // initIP();
         toast("Music!");
     }, []);
 
-    const memoNavBar = useMemo(() => <NavBar></NavBar>, []);
+    const MemoNavBar = useMemo(() => NavBar, []);
 
     return (
         <div id="App" className="App  -z-50  relative bg-base text-base ">
             <ToastContainer />
             <div id="modal"></div>
             <Router>
-                {memoNavBar}
+                <MemoNavBar />
                 <Routes>
                     <Route path="/" element={<Index></Index>}></Route>
                     <Route path="/index" element={<Index></Index>}></Route>

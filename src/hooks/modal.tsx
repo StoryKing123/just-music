@@ -66,7 +66,7 @@ export const useModal = (props: useModalProp) => {
                     onRequestClose={close}
                     // style={customStyles}
                     // overlayClassName="flex "
-                    className="bg-search text-base overflow-scroll  rounded-md  w-1/2 h-1/2 translate-x-1/2 translate-y-1/2  py-6"
+                    className="bg-search scroll-bar-hide text-base overflow-scroll  rounded-md  w-1/2 h-1/2 translate-x-1/2 translate-y-1/2  py-6"
                     contentLabel="Example Modal"
                     appElement={document.getElementById("modal")!}
                 >

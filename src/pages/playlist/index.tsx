@@ -36,8 +36,12 @@ const Playlist: FC = () => {
         // const url = await handleGetSongUrl(song.id);
         playSong(song);
     };
-    const handleGetSongUrl = async (id: number,name:string,artist:string) => {
-        const res = await getSongUrl(id,name,artist);
+    const handleGetSongUrl = async (
+        id: number,
+        name: string,
+        artist: string
+    ) => {
+        const res = await getSongUrl(id, name, artist);
         return res;
     };
     const handlePlayPlayList = async () => {
@@ -51,12 +55,7 @@ const Playlist: FC = () => {
         localStorage.setItem("playlist", JSON.stringify(songList));
         // localStorage.set("aaa", "bbb");
     };
-    // const handleGetData = async () => {
-    //     const id = searchParams.get("id");
-    //     if (!id) return;
 
-    //     // setSongList(res.songs);
-    // };
     const randomPlay = () => {
         songList &&
             playSong(songList[Math.floor(Math.random() * songList.length)]);
@@ -67,8 +66,9 @@ const Playlist: FC = () => {
     return (
         <div className={name + " p-20 select-none"}>
             <div className="flex">
-                <div className={`w-1/4  h-auto`}>
+                <div className={`w-1/4   h-auto min-w-1/4`}>
                     <img
+                        className=" "
                         src={`${playlist?.coverImgUrl}?param=512y512`}
                         alt=""
                     />
@@ -89,10 +89,10 @@ const Playlist: FC = () => {
                             {playlist?.trackIds.length} 首歌曲 • 2小时50分钟
                         </div>
                     </div>
-                    <div className="py-4 text-left">
+                    <div className="py-4 text-left pb-0 overflow-hidden line-clamp-2">
                         {playlist?.description}
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 mt-5">
                         <Button onClick={handlePlayPlayList}>播放歌曲</Button>
                         <Button onClick={randomPlay}>随机播放</Button>
                     </div>

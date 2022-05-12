@@ -8,12 +8,25 @@ type loginType = {
 };
 // function useRef<T>(initialValue: T|null): RefObject<T>;
 // interface loginFn<loginType>(type:any):any;
-export const useAuth = () => {
+// type login = login<K extends keyof loginType>(
+//     type: K,
+//     val: loginType[K]
+// ): API.Login
+type Login = <K extends keyof loginType>(
+    type: K,
+    val: loginType[K]
+) => API.Login;
+
+// function login<K extends keyof loginType>(
+//     type: K,
+//     val: loginType[K]
+// ): API.Login
+export const useAuth: () => [Login, () => void] = () => {
     const [user, setUser] = useRecoilState(userState);
-    function login<K extends keyof loginType>(
+    const login: Login = <K extends keyof loginType>(
         type: K,
         val: loginType[K]
-    ): API.Login {
+    ) => {
         const handleLoginRes = (res: API.Login) => {
             if (res.code === 200) {
                 toast.success("登录成功");
@@ -34,11 +47,13 @@ export const useAuth = () => {
             },
         };
         return loginFnObj[type](val);
-    }
+    };
 
-    // login('tel',)
-    const logout = () => {};
-    // login<loginType>('tel');
+    const logout = () => {
+        localStorage.removeItem("user");
+        setUser({ ...user, user: undefined });
+    };
+
     return [login, logout];
 };
 

@@ -1,4 +1,3 @@
-
 declare namespace API {
     export interface PlayList {
         code: number;
@@ -679,6 +678,18 @@ declare namespace API {
         expertIdentiyId: number;
         expertIdentiyName: string;
         expertIdentiyCount: number;
+    }
+    export interface IP {
+        ip: string;
+        pro: string;
+        proCode: string;
+        city: string;
+        cityCode: string;
+        region: string;
+        regionCode: string;
+        addr: string;
+        regionNames: string;
+        err: string;
     }
 
     // export interface Experts {}

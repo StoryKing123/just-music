@@ -4,7 +4,7 @@ import { invoke } from "@tauri-apps/api/tauri";
 
 export const getListSong = async (id: number) => {
     return await axios.get<null, API.PlayListSong>(
-        `playlist/track/all?id=${id}&offset=1`
+        `playlist/track/all?id=${id}&offset=1&limit=1000`
     );
 };
 
@@ -65,7 +65,6 @@ export const getArtistTopSong = async (id: number) => {
 export const getArtistAlbumn = async (id: number) => {
     return await axios.requestGet<API.ArtistAlbum>(`/artist/album?id=${id}`);
 };
-
 
 export const getArtistDetail = async (id: number) => {
     return await axios.get<null, API.ArtistDetail>(`/artist/detail?id=${id}`);
