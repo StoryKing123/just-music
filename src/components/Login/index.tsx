@@ -11,23 +11,28 @@ type LoginProps = {
 };
 const Login: FC<LoginProps> = (props) => {
     const [name, bem] = createNamespace("login");
-    const telInputRef = useRef<HTMLInputElement>(null);
+    const telOrEmailRef = useRef<HTMLInputElement>(null);
     const passwordInputRef = useRef<HTMLInputElement>(null);
     const [login] = useAuth();
     const handleLogin = async () => {
-        if (!(passwordInputRef.current && telInputRef.current)) {
+        if (!(passwordInputRef.current && telOrEmailRef.current)) {
             return;
         }
-        // loginByTel(telInputRef.current.value, passwordInputRef.current.value);
-        const res = (await login("tel", {
-            tel: telInputRef.current.value,
-            password: passwordInputRef.current.value,
-        })) as API.Login;
-        console.log(res);
+        const emailReg =
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const telReg =
+            /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[189]))\d{8}$/;
+        const res = await login(
+            telReg.test(telOrEmailRef.current.value) ? "tel" : "email",
+            {
+                tel: telOrEmailRef.current.value,
+                email: telOrEmailRef.current.value,
+                password: passwordInputRef.current.value,
+            }
+        );
         if (res.code === 200) {
             props.onClose();
         }
-        // return console.log();
     };
     const style = props.isShow
         ? {
@@ -47,24 +52,26 @@ const Login: FC<LoginProps> = (props) => {
             style={style}
             className={`w-full h-full fixed  bg-base ${name} overflow-hidden`}
         >
-            <div onClick={() => props.onClose()} className="absolute left-0">
-                back
-            </div>
-            {/* <div></div> */}
-            <div>login</div>
-            <div>
+            <Button
+                onClick={() => props.onClose()}
+                className="m-2 absolute left-0"
+            >
+                返回
+            </Button>
+            <div className="mt-10">登录</div>
+            <div className="mt-10">
                 <div>
-                    <div>tel</div>
+                    <div>手机号码/邮箱</div>
                     <div>
                         <input
                             type="text"
-                            ref={telInputRef}
+                            ref={telOrEmailRef}
                             className=" bg-base border-b-2"
                         />{" "}
                     </div>
                 </div>
                 <div>
-                    <div>password</div>
+                    <div>密码</div>
                     <div>
                         <input
                             type="password"
