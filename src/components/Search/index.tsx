@@ -14,7 +14,7 @@ type SearchProps = {
 };
 const Search: FC<SearchProps> = (props) => {
     const [name, bem] = createNamespace("search");
-    const [play] = useAudio();
+    const { playSong: play } = useAudio();
     let navigate = useNavigate();
     const [theme] = useTheme();
     const [suggest, setSuggest] = useState<API.Result | null>();

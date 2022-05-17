@@ -18,7 +18,7 @@ const Playlist: FC = () => {
         API.PlayList["playlist"] | undefined
     >();
     const [songList, setSongList] = useState<API.Song[]>();
-    const [playSong] = useAudio();
+    const { playSong } = useAudio();
     const params = useParams();
     const id = params.id;
 
@@ -32,28 +32,14 @@ const Playlist: FC = () => {
         setSongList(SongRes.songs);
     };
 
-    const handlePlaySong = async (song: API.Song) => {
-        // const url = await handleGetSongUrl(song.id);
-        playSong(song);
-    };
-    const handleGetSongUrl = async (
-        id: number,
-        name: string,
-        artist: string
-    ) => {
-        const res = await getSongUrl(id, name, artist);
-        return res;
-    };
     const handlePlayPlayList = async () => {
         if (!songList) return;
-        await handlePlaySong(songList[0]);
-        setMusic({
+        playSong(songList[0]);
+        setMusic((music) => ({
             ...music,
             playList: songList,
-            // currentSong: songList[0],
-        });
+        }));
         localStorage.setItem("playlist", JSON.stringify(songList));
-        // localStorage.set("aaa", "bbb");
     };
 
     const randomPlay = () => {

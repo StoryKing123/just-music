@@ -18,7 +18,7 @@ const ArtistDetail = () => {
     const [topSong, setTopSong] = useState<API.ArtistTopSong["songs"]>([]);
     const [albumn, setAlbumn] = useState<API.ArtistAlbum["hotAlbums"]>([]);
     const [deploymentDesc, setDeploymentDesc] = useState<boolean>(false);
-    const [playSong] = useAudio();
+    const {playSong} = useAudio();
     const handlePlaySong = async (song: API.Song) => {
         playSong(song);
     };

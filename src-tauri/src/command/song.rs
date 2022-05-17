@@ -21,7 +21,7 @@ pub async fn get_song_url(name: String, artist: String) -> Result<String, String
     let context = Context::default();
     let song = Song::builder()
         .name(name.to_string())
-        // .artists(vec![Artist::builder().name("周杰伦".to_string()).build()])
+        .artists(vec![Artist::builder().name(artist.to_string()).build()])
         .build();
 
     let search_result = executor

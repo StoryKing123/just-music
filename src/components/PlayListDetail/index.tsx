@@ -10,7 +10,7 @@ type PlayListDetailProps = {
 };
 const PlayListDetail: FC<PlayListDetailProps> = (props) => {
     const { songList } = props;
-    const [playSong] = useAudio();
+    const {playSong} = useAudio();
     const navigate = useNavigate();
 
     const handlePlaySong = async (song: API.Song) => {

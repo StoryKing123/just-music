@@ -11,17 +11,23 @@ import { useInitMusic } from "./hooks/music";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Artist from "./pages/artist";
+import { useInitShortCut } from "./hooks/client";
 
 function App() {
     console.log("app render");
     const initTheme = useInitTheme();
     const initMusic = useInitMusic();
     const initAuth = useInitAuth();
+    useInitShortCut();
 
     useEffect(() => {
         initTheme();
         initMusic();
         initAuth();
+        // initShortCut();
+        // globalShortcut.register("Cmd+Right", () => {
+        //     alert("Hello?");
+        // });
         // console.log((window as any).returnCitySN);
         // console.log(window.returnCitySN.cip);
         // initIP();

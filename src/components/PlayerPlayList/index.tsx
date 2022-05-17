@@ -13,7 +13,7 @@ type PlayerPlayListProps = {
 const PlayerPlayList: FC<PlayerPlayListProps> = (props) => {
     const [name, bem] = createNamespace("player-play-list");
     const [music] = useRecoilState(musicState);
-    const [playSong] = useAudio();
+    const {playSong} = useAudio();
 
     const handlePlaySong = async (song: API.Song) => {
         playSong(song);
