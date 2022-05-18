@@ -12,6 +12,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Artist from "./pages/artist";
 import { useInitShortCut } from "./hooks/client";
+import { isInTauri } from "./utils/tauri";
+import { platform } from "@tauri-apps/api/os";
+import Media from "./pages/media";
 
 function App() {
     console.log("app render");
@@ -19,18 +22,18 @@ function App() {
     const initMusic = useInitMusic();
     const initAuth = useInitAuth();
     useInitShortCut();
+    if (isInTauri()) {
+        console.log("tauri");
+        platform().then((res) => {
+            console.log("platform");
+            console.log(res);
+        });
+    }
 
     useEffect(() => {
         initTheme();
         initMusic();
         initAuth();
-        // initShortCut();
-        // globalShortcut.register("Cmd+Right", () => {
-        //     alert("Hello?");
-        // });
-        // console.log((window as any).returnCitySN);
-        // console.log(window.returnCitySN.cip);
-        // initIP();
         toast("Music!");
     }, []);
 
@@ -39,6 +42,7 @@ function App() {
     return (
         <div id="App" className="App  -z-50  relative bg-base text-base ">
             <ToastContainer />
+          
             <div id="modal"></div>
             <Router>
                 <MemoNavBar />
@@ -53,6 +57,7 @@ function App() {
                         path="artist/:id"
                         element={<Artist></Artist>}
                     ></Route>
+                    <Route path="media" element={<Media></Media>}></Route>
                 </Routes>
             </Router>
             <Player></Player>

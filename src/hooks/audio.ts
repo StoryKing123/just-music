@@ -8,7 +8,7 @@ import { useRecoilState } from "recoil";
 
 export const useAudio = (): {
     playSong: (song: API.Song) => void;
-    playOrPauseAudio: (isPlay: boolean) => void;
+    playOrPauseSong: (isPlay?: boolean) => void;
     playPreviousOrNextSong: (type: "next" | "previous") => void;
     // any;
 } => {
@@ -28,21 +28,32 @@ export const useAudio = (): {
         console.log(musicRef);
 
         if (musicRef.current!.playList) {
-            index = musicRef.current!.playList.findIndex((item) => item.id === song.id);
+            index = musicRef.current!.playList.findIndex(
+                (item) => item.id === song.id
+            );
         }
         setMusic((music) => {
             console.log(music);
             return {
                 ...music,
                 currentSong: song,
-                currentIndex: index >= 0 ? index : musicRef.current!.currentIndex,
+                currentIndex:
+                    index >= 0 ? index : musicRef.current!.currentIndex,
                 isPlaying: true,
             };
         });
     };
-    const playOrPauseAudio = (isPlay: boolean) => {
-        isPlay ? playAudio() : pauseAudio();
-        setMusic({ ...music, isPlaying: isPlay });
+    const playOrPauseSong = (isPlay?: boolean) => {
+        if (isPlay) {
+            isPlay ? playAudio() : pauseAudio();
+            setMusic((music) => ({ ...music, isPlaying: isPlay }));
+        } else {
+            musicRef.current!.isPlaying ? pauseAudio() : playAudio();
+            setMusic((music) => ({
+                ...music,
+                isPlaying: !musicRef.current!.isPlaying,
+            }));
+        }
     };
 
     const playPreviousOrNextSong = (type: "next" | "previous") => {
@@ -87,7 +98,7 @@ export const useAudio = (): {
                 return currentIndex - 1;
             }
         } else {
-            if (currentIndex >= musicRef.current!.playList.length) {
+            if (currentIndex >= musicRef.current!.playList.length - 1) {
                 return 0;
             } else {
                 return currentIndex + 1;
@@ -97,5 +108,5 @@ export const useAudio = (): {
 
     let isProcessing = false;
 
-    return { playSong, playOrPauseAudio, playPreviousOrNextSong };
+    return { playSong, playOrPauseSong, playPreviousOrNextSong };
 };

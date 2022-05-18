@@ -21,7 +21,7 @@ const Player: FC = (props) => {
     const [isShowPlayList, setShowPlayList] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [music] = useRecoilState(musicState);
-    const { playSong, playOrPauseAudio, playPreviousOrNextSong } = useAudio();
+    const { playSong, playOrPauseSong, playPreviousOrNextSong } = useAudio();
     const memoPlayerPlayList = useMemo(
         () => <PlayerPlayList isShow={isShowPlayList}></PlayerPlayList>,
         [isShowPlayList]
@@ -37,7 +37,7 @@ const Player: FC = (props) => {
     };
 
     const handlePlayOrPause = () => {
-        playOrPauseAudio(music.isPlaying ? false : true);
+        playOrPauseSong();
     };
 
     const handlePlaySong = async (song: API.Song) => {
@@ -46,55 +46,8 @@ const Player: FC = (props) => {
 
     const VoiceMemo = useMemo(() => Voice, []);
 
-    // const getPlayIndex = (
-    //     currentIndex: number | undefined,
-    //     type: "next" | "previous"
-    // ) => {
-    //     if (!music.playList) {
-    //         return;
-    //     }
-    //     if (currentIndex === undefined) {
-    //         return;
-    //     }
-
-    //     if (type === "previous") {
-    //         if (currentIndex <= 0) {
-    //             return music.playList.length - 1;
-    //         } else {
-    //             return currentIndex - 1;
-    //         }
-    //     } else {
-    //         if (currentIndex >= music.playList.length) {
-    //             return 0;
-    //         } else {
-    //             return currentIndex + 1;
-    //         }
-    //     }
-    // };
-
-    // let isProcessing = false;
     const handlePlayPreviousOrNextSong = (type: "next" | "previous") => {
         playPreviousOrNextSong(type);
-        return;
-        // if (isProcessing) {
-        //     return;
-        // }
-        // if (!music.currentSong) {
-        //     return;
-        // }
-        // if (!music.playList) {
-        //     return;
-        // }
-
-        // isProcessing = true;
-        // let index = getPlayIndex(music.currentIndex, type);
-        // console.log("index:" + index);
-        // if (index !== undefined) {
-        //     handlePlaySong(music.playList[index]);
-        // } else {
-        //     handlePlaySong(music.playList[0]);
-        // }
-        // isProcessing = false;
     };
 
     const handleEnded = async () => {
