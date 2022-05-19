@@ -73,3 +73,7 @@ export const getArtistDetail = async (id: number) => {
 export const getRecommedSogList = async () => {
     return await axios.get<null, API.RecommendSongList>(`/recommend/resource`);
 };
+
+export const getUserPlaylist = async (id: number) => {
+    axios.requestGet(`/user/playlist?uid=${id}`);
+};

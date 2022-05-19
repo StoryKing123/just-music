@@ -31,7 +31,6 @@ const Index: FC = () => {
             setRecommedSongList(cacheRes);
         };
         initDataFromDB();
-
         // setRecommedSongList(cacheRes);
     }, []);
 

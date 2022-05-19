@@ -1,3 +1,4 @@
+import Button from "@/components/Button";
 import PlayListCard from "@/components/PlayListCard";
 import PlayListDetail from "@/components/PlayListDetail";
 import { useAudio } from "@/hooks";
@@ -6,21 +7,27 @@ import {
     getArtistDetail,
     getArtistTopSong,
 } from "@/services/song";
-import { extractObjectArrayAttr } from "@/utils";
-import { parseTimestampIntoMinute } from "@/utils/date";
+import musicState from "@/store/music";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useSetRecoilState } from "recoil";
 
 const ArtistDetail = () => {
     const params = useParams();
     const id = params.id;
+    const setMusic = useSetRecoilState(musicState);
     const [artist, setArtist] = useState<API.ArtistDetail["data"]>();
     const [topSong, setTopSong] = useState<API.ArtistTopSong["songs"]>([]);
     const [albumn, setAlbumn] = useState<API.ArtistAlbum["hotAlbums"]>([]);
     const [deploymentDesc, setDeploymentDesc] = useState<boolean>(false);
-    const {playSong} = useAudio();
+    const { playSong } = useAudio();
     const handlePlaySong = async (song: API.Song) => {
         playSong(song);
+    };
+    const playSongList = () => {
+        if (!topSong) return;
+        playSong(topSong[0]);
+        setMusic((music) => ({ ...music, playList: topSong }));
     };
 
     useEffect(() => {
@@ -45,18 +52,7 @@ const ArtistDetail = () => {
     }, [id]);
     return (
         <div className="bg-base">
-            {/* artist detail */}
-            <div
-                className="absolute bg-base -z-10  pb-96 w-full top-0 left-0 bg-no-repeat bg-cover"
-                style={
-                    {
-                        // backgroundImage: `url(${artist?.user.backgroundUrl})`,
-                        // backgroundSize: "100% auto",
-                        // WebkitMask: "linear-gradient(#000, transparent)",
-                        // mask: "linear-gradient(#000, transparent)",
-                    }
-                }
-            >
+            <div className="absolute bg-base -z-10  pb-96 w-full top-0 left-0 bg-no-repeat bg-cover">
                 <img
                     className=" absolute w-full top-0 left-0 -z-10"
                     style={{
@@ -74,7 +70,7 @@ const ArtistDetail = () => {
                         {artist?.artist.name}
                     </div>
                     <div
-                        className={`text-left  w-5/12 ${
+                        className={`text-left mt-5  w-5/12 ${
                             deploymentDesc ? "" : "line-clamp-2"
                         }`}
                     >
@@ -88,6 +84,10 @@ const ArtistDetail = () => {
                             {deploymentDesc ? "收起" : "展开"}
                         </span>
                     </div>
+                    <div className="text-left mt-5">
+                        <Button onClick={playSongList}>播放歌曲</Button>
+                    </div>
+
                     <div>
                         <div className=" mt-20 font-bold text-2xl  my-4 text-left">
                             歌曲

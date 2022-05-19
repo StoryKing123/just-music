@@ -19,21 +19,26 @@ export const useAudio = (): {
     useEffect(() => {
         musicRef.current = music;
     }, [music]);
-    // const setDuration = () => {};
     const playSong = async (song: API.Song) => {
         const src = await getSongUrl(song.id, song.name, song.ar[0].name);
         let index = -1;
         playAudio(src);
-        console.log("ref:");
-        console.log(musicRef);
-
         if (musicRef.current!.playList) {
             index = musicRef.current!.playList.findIndex(
                 (item) => item.id === song.id
             );
         }
         setMusic((music) => {
-            console.log(music);
+            localStorage.setItem(
+                "music",
+                JSON.stringify({
+                    ...music,
+                    currentSong: song,
+                    currentIndex:
+                        index >= 0 ? index : musicRef.current!.currentIndex,
+                    isPlaying: false,
+                })
+            );
             return {
                 ...music,
                 currentSong: song,
@@ -44,7 +49,7 @@ export const useAudio = (): {
         });
     };
     const playOrPauseSong = (isPlay?: boolean) => {
-        if (isPlay) {
+        if (isPlay !== undefined) {
             isPlay ? playAudio() : pauseAudio();
             setMusic((music) => ({ ...music, isPlaying: isPlay }));
         } else {
@@ -66,14 +71,10 @@ export const useAudio = (): {
         if (!musicRef.current!.playList) {
             return;
         }
-        console.log("current");
-        console.log(music);
         isProcessing = true;
         let index = getPlayIndex(musicRef.current!.currentIndex, type);
-        console.log("next index:" + index);
         if (index !== undefined) {
             playSong(musicRef.current!.playList[index]);
-            // console.log(music.playList[index]);
         } else {
             playSong(musicRef.current!.playList[0]);
         }

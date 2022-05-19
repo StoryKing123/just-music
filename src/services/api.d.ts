@@ -691,6 +691,12 @@ declare namespace API {
         regionNames: string;
         err: string;
     }
+    export interface UserPlaylist {
+        version: string;
+        more: boolean;
+        playlist: Playlist[];
+        code: number;
+    }
 
     // export interface Experts {}
 

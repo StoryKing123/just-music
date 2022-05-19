@@ -19,18 +19,16 @@ const audio = getAudio();
 
 export const setAudioSrc = (src: string) => {
     // getAudio().src = src;
-    audio.src;
+    audio.src = src;
 };
 
 export const playAudio = async (src?: string) => {
-    console.log(src);
     if (src) {
         audio.src = src;
         audio.play();
     } else {
         audio.play();
     }
-    console.log("play");
 };
 export const pauseAudio = () => {
     audio.pause();

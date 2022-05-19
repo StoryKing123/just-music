@@ -11,8 +11,5 @@ export const prefixZero = (num: number, n: number): string => {
 export const praseTimestampIntoDate = (time = +new Date(), isFull = true) => {
     const date = new Date(time + 8 * 3600 * 1000);
     const fullString = date.toJSON().substring(0, 19).replace("T", " ");
-    // if(isFull) {
-    // return
-    // }
     return isFull ? fullString : fullString.split(" ")[0];
 };

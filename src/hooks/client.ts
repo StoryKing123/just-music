@@ -1,12 +1,10 @@
+// import { isInTauri } from "@/utils/tauri";
+// import { globalShortcut } from "@tauri-apps/api";
+// import { platform } from "@tauri-apps/api/os";
 import { isInTauri } from "@/utils/tauri";
-import { globalShortcut } from "@tauri-apps/api";
-import { platform } from "@tauri-apps/api/os";
 import { useEffect } from "react";
 import { useAudio } from "./audio";
 
-// const NEXT_SONG = "";
-// const PREV_SONG = "";
-// const PLAYORPAUSE = "";
 type System = "win32" | "darwin";
 type ShortCut = {
     nextSong: string;
@@ -26,10 +24,12 @@ const shortCut: Record<System, ShortCut> = {
     },
 };
 
-export const useInitShortCut = () => {
+export const useInitShortCut = async () => {
     const { playPreviousOrNextSong, playOrPauseSong } = useAudio();
     const initData = async () => {
         if (isInTauri()) {
+            const { platform } = await import("@tauri-apps/api/os");
+            const { globalShortcut } = await import("@tauri-apps/api");
             const system = (await platform()) as "darwin" | "win32";
             if (system === "darwin" || system === "win32") {
                 await globalShortcut.unregisterAll();
@@ -43,7 +43,6 @@ export const useInitShortCut = () => {
                     playOrPauseSong();
                 });
             } else {
-                // console.error("not supported system");
                 throw new Error("not supported system");
             }
         }

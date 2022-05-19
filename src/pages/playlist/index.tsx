@@ -1,4 +1,4 @@
-import { FC, Suspense, useEffect, useState } from "react";
+import { FC, Suspense, useEffect, useMemo, useState } from "react";
 import { createNamespace } from "@/utils";
 import Button from "@/components/Button";
 import PlayListDetail from "@/components/PlayListDetail";
@@ -11,7 +11,6 @@ import { praseTimestampIntoDate } from "@/utils/date";
 import { db } from "@/db";
 
 const Playlist: FC = () => {
-    // const [music, setMusic] = useRecoilState(musicState);
     const [music, setMusic] = useRecoilState(musicState);
     const [name, bem] = createNamespace("play-list");
     const [playlist, setPlaylist] = useState<
@@ -39,13 +38,26 @@ const Playlist: FC = () => {
             ...music,
             playList: songList,
         }));
-        localStorage.setItem("playlist", JSON.stringify(songList));
+
+        // localStorage.setItem("playlist", JSON.stringify(songList));
     };
 
     const randomPlay = () => {
         songList &&
             playSong(songList[Math.floor(Math.random() * songList.length)]);
     };
+    const totalDuration = useMemo(() => {
+        if (!songList) return;
+
+        const getHoursAndMinutes = (time: number) => {
+            const hours = Math.floor(time / (1000 * 60 * 60));
+            const minutes = Math.floor(time / 1000 / 60) % 60;
+            return `${hours}小时${minutes}分钟`;
+        };
+        return getHoursAndMinutes(
+            songList.map((item) => item.dt).reduce((prev, cur) => prev + cur)
+        );
+    }, [songList]);
     useEffect(() => {
         handleGetData();
     }, [id]);
@@ -72,7 +84,7 @@ const Playlist: FC = () => {
                             )}
                         </div>
                         <div className="text-left ">
-                            {playlist?.trackIds.length} 首歌曲 • 2小时50分钟
+                            {playlist?.trackIds.length} 首歌曲 • {totalDuration}
                         </div>
                     </div>
                     <div className="py-4 text-left pb-0 overflow-hidden line-clamp-2">

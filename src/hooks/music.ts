@@ -1,66 +1,33 @@
 import { PLAY_MODE } from "@/const";
 import { getSongUrl } from "@/services/song";
 import appState from "@/store/app";
-import musicState from "@/store/music";
-import { getAudio } from "@/utils/audio";
+import musicState, { MusicStateType } from "@/store/music";
+import { getAudio, setAudioSrc } from "@/utils/audio";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 
 export const useInitMusic = () => {
     const [music, setMusic] = useRecoilState(musicState);
     const initFn = () => {
-        console.log('init msuic');
-        
-        const playlist = localStorage.getItem("playlist");
-        // console.log(playlist);
-        
-        // console.log(playlist);
-
-        playlist &&
-            playlist !== "undefined" &&
-            setMusic({ ...music, playList: JSON.parse(playlist) });
+        // const playlist = localStorage.getItem("playlist");
+        // playlist &&
+        //     playlist !== "undefined" &&
+        //     setMusic({ ...music, playList: JSON.parse(playlist) });
+        const updateSrc = (currentSong: API.Song) => {
+            const { id, name, ar } = currentSong;
+            getSongUrl(id, name, ar[0].name).then((res) => {
+                setAudioSrc(res);
+            });
+        };
+        const musicStorage = localStorage.getItem("music");
+        if (musicStorage && musicStorage !== "undefined") {
+            const musicState = JSON.parse(musicStorage) as MusicStateType;
+            musicState.currentSong && updateSrc(musicState.currentSong);
+            setMusic(musicState);
+        }
     };
     return initFn;
 };
-
-// const handleGetSongUrl = async (id: number) => {
-//     const res = await getSongUrl(id);
-//     return res;
-// };
-
-// const getPlayIndex = (currentIndex: number, type: "next" | "previous") => {
-//     if (!music.playList) {
-//         return;
-//     }
-//     if (type === "previous") {
-//         if (currentIndex <= 0) {
-//             return music.playList.length - 1;
-//         } else {
-//             return currentIndex - 1;
-//         }
-//     } else {
-//         if (currentIndex >= music.playList.length) {
-//             return 0;
-//         } else {
-//             return currentIndex + 1;
-//         }
-//     }
-// };
-
-// let isProcessing = false;
-// export const handlePlayPreviousOrNextSong = (type: "next" | "previous") => {
-//     if (isProcessing) {
-//         return;
-//     }
-//     if (!music.currentSong) {
-//         return;
-//     }
-//     const isEqual = (item: Song) => item.id === music.currentSong?.id;
-//     const currentIndex = music.playList?.findIndex(isEqual);
-//     const playIndex = currentIndex && getPlayIndex(currentIndex, type);
-//     playIndex && music.playList && handlePlaySong(music.playList[playIndex]);
-//     isProcessing = false;
-// };
 
 export const useEffectMusicRegister = () => {
     const [music, setMusic] = useRecoilState(musicState);
@@ -70,7 +37,6 @@ export const useEffectMusicRegister = () => {
         if (music.mode === PLAY_MODE.SEQUENCE) {
         }
     };
-
     useEffect(() => {
         audio.addEventListener("ended", handleEnded);
     }, []);
