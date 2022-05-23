@@ -375,6 +375,8 @@ declare namespace API {
         profile: Profile;
         bindings: Binding[];
         cookie: string;
+        message?:string;
+        msg?:string;
     }
 
     export interface Account {

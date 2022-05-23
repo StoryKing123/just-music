@@ -75,5 +75,5 @@ export const getRecommedSogList = async () => {
 };
 
 export const getUserPlaylist = async (id: number) => {
-    axios.requestGet(`/user/playlist?uid=${id}`);
+    return axios.requestGet(`/user/playlist?uid=${id}`);
 };

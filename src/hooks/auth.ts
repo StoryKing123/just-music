@@ -28,8 +28,7 @@ export const useAuth: () => [Login, () => void] = () => {
         val: loginType[K]
     ) => {
         const handleLoginRes = (res: API.Login) => {
-            if (res.code === 200) {
-                toast.success("登录成功");
+            if (res && res.code === 200) {
                 setUser({ ...user, user: res });
                 localStorage.setItem("user", JSON.stringify(res));
             }

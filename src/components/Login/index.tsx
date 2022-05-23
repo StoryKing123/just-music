@@ -2,6 +2,8 @@ import { useAuth } from "@/hooks/auth";
 import { loginByTel } from "@/services/auth";
 import { createNamespace } from "@/utils";
 import { FC, useRef } from "react";
+import { useLocation } from "react-router";
+import { toast } from "react-toastify";
 import Button from "../Button";
 import "./index.less";
 
@@ -14,6 +16,7 @@ const Login: FC<LoginProps> = (props) => {
     const telOrEmailRef = useRef<HTMLInputElement>(null);
     const passwordInputRef = useRef<HTMLInputElement>(null);
     const [login] = useAuth();
+
     const handleLogin = async () => {
         if (!(passwordInputRef.current && telOrEmailRef.current)) {
             return;
@@ -30,9 +33,20 @@ const Login: FC<LoginProps> = (props) => {
                 password: passwordInputRef.current.value,
             }
         );
-        if (res.code === 200) {
+
+        if (res && res.code === 200) {
+            toast.success("登录成功");
             props.onClose();
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        } else {
+            toast.error(res.msg);
         }
+
+        // if(res.code ===502){
+
+        // }
     };
     const style = props.isShow
         ? {

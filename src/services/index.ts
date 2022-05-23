@@ -35,7 +35,10 @@ axios.interceptors.response.use(
             return Promise.resolve(res.data);
         }
     },
-    (err) => {}
+    (err) => {
+        console.log(err.response.data);
+        return Promise.resolve(err.response.data);
+    }
 );
 axios.requestGet = <T>(...args: Parameters<typeof axios.get>) => {
     return axios.get<null, T>(...args);
