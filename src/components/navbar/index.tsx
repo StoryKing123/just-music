@@ -25,7 +25,7 @@ const NavBar: FC<NavBarProps> = () => {
     const { open, close, Modal } = useModal({
         content: <Search close={closeSearch}></Search>,
     });
-    // console.log(Modal)
+
     const [theme, setTheme] = useTheme();
 
     const handleLoginClick = () => {
@@ -53,7 +53,11 @@ const NavBar: FC<NavBarProps> = () => {
             <Button onClick={toggleTheme}>切换主题</Button>
             <div className=" absolute   right-1  tranlslate-y-1/2 -translate-x-1/2 ">
                 {user.user ? (
-                    <div className="flex gap-10">
+                    <div className="flex gap-4  items-center">
+                        <img
+                            className="h-10 rounded-full"
+                            src={user.user.profile.avatarUrl}
+                        />
                         <div>{user.user.profile.nickname}</div>
                         <Button onClick={logout}>logout</Button>
                     </div>

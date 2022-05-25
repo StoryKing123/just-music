@@ -1,18 +1,18 @@
 import { useEffect, useRef } from "react";
 // import { Song } from "@/declare";
-import { getSongUrl } from "@/services/song";
+import { getOriginSongUrl, getSongUrl } from "@/services/song";
 import appState from "@/store/app";
 import musicState, { MusicStateType } from "@/store/music";
 import { pauseAudio, playAudio, toggleAudio } from "@/utils/audio";
 import { useRecoilState } from "recoil";
+import { validateMP3Url } from "@/utils/http";
+import { toast } from "react-toastify";
 
 export const useAudio = (): {
     playSong: (song: API.Song) => void;
     playOrPauseSong: (isPlay?: boolean) => void;
     playPreviousOrNextSong: (type: "next" | "previous") => void;
-    // any;
 } => {
-    const [app, setApp] = useRecoilState(appState);
     const [music, setMusic] = useRecoilState(musicState);
     const musicRef = useRef<MusicStateType>();
 
@@ -20,7 +20,13 @@ export const useAudio = (): {
         musicRef.current = music;
     }, [music]);
     const playSong = async (song: API.Song) => {
-        const src = await getSongUrl(song.id, song.name, song.ar[0].name);
+        let src = await getSongUrl(song.id, song.name, song.ar[0].name);
+        const isValid = await validateMP3Url(src);
+        if (!isValid) {
+            toast.info("播放原版歌曲");
+            src = await getOriginSongUrl(song.id);
+        }
+
         let index = -1;
         playAudio(src);
         if (musicRef.current!.playList) {
@@ -28,24 +34,17 @@ export const useAudio = (): {
                 (item) => item.id === song.id
             );
         }
+
         setMusic((music) => {
-            localStorage.setItem(
-                "music",
-                JSON.stringify({
-                    ...music,
-                    currentSong: song,
-                    currentIndex:
-                        index >= 0 ? index : musicRef.current!.currentIndex,
-                    isPlaying: false,
-                })
-            );
-            return {
+            const newMusicState = {
                 ...music,
                 currentSong: song,
                 currentIndex:
                     index >= 0 ? index : musicRef.current!.currentIndex,
-                isPlaying: true,
+                isPlaying: false,
             };
+            localStorage.setItem("music", JSON.stringify(newMusicState));
+            return newMusicState;
         });
     };
     const playOrPauseSong = (isPlay?: boolean) => {

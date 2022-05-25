@@ -17,6 +17,13 @@ export const getAudio = (): HTMLAudioElement => {
 };
 const audio = getAudio();
 
+// audio.addEventListener("error", (err) => {
+//     // console.log(Object.keys(err));
+//     console.log("err");
+//     console.log(err);
+//     // console.log("err");
+// });
+
 export const setAudioSrc = (src: string) => {
     // getAudio().src = src;
     audio.src = src;

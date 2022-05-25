@@ -9,10 +9,6 @@ import { useRecoilState } from "recoil";
 export const useInitMusic = () => {
     const [music, setMusic] = useRecoilState(musicState);
     const initFn = () => {
-        // const playlist = localStorage.getItem("playlist");
-        // playlist &&
-        //     playlist !== "undefined" &&
-        //     setMusic({ ...music, playList: JSON.parse(playlist) });
         const updateSrc = (currentSong: API.Song) => {
             const { id, name, ar } = currentSong;
             getSongUrl(id, name, ar[0].name).then((res) => {
