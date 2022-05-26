@@ -21,7 +21,7 @@ const PlayerPlayList: FC<PlayerPlayListProps> = (props) => {
     return (
         <div
             style={{
-                height: props.isShow ? "40rem" : "0px",
+                height: props.isShow ? "80vh" : "0px",
             }}
             className={`w-80 text-left absolute right-10 h-100  overflow-hidden  flex flex-col  shadow-inner bottom-16 bg-progress-whole rounded-md ${name}`}
         >

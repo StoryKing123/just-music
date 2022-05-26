@@ -1,12 +1,15 @@
 import { useAuth, useModal, useTheme } from "@/hooks";
 import userState from "@/store/user";
 import { THEME } from "@/utils";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import { FC, memo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import Button from "../Button";
 import Login from "../Login";
 import Search from "../Search";
+import User from "./User";
 
 type NavBarProps = {};
 const NavBar: FC<NavBarProps> = () => {
@@ -52,18 +55,7 @@ const NavBar: FC<NavBarProps> = () => {
             <div onClick={search}>搜索</div>
             <Button onClick={toggleTheme}>切换主题</Button>
             <div className=" absolute   right-1  tranlslate-y-1/2 -translate-x-1/2 ">
-                {user.user ? (
-                    <div className="flex gap-4  items-center">
-                        <img
-                            className="h-10 rounded-full"
-                            src={user.user.profile.avatarUrl}
-                        />
-                        <div>{user.user.profile.nickname}</div>
-                        <Button onClick={logout}>logout</Button>
-                    </div>
-                ) : (
-                    <Button onClick={handleLoginClick}>登录</Button>
-                )}
+                <User login={handleLoginClick}></User>
             </div>
             <Modal></Modal>
             <Login
