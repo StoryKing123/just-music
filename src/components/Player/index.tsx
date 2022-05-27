@@ -15,6 +15,7 @@ import { getAudio } from "@/utils/audio";
 import { useAudio } from "@/hooks";
 import { getSongUrl } from "@/services/song";
 import { PLAY_MODE } from "@/const";
+import { throttle } from "lodash";
 import Voice from "./Voice";
 
 const Player: FC = (props) => {
@@ -39,11 +40,6 @@ const Player: FC = (props) => {
     const handlePlayOrPause = () => {
         playOrPauseSong();
     };
-
-    const handlePlaySong = async (song: API.Song) => {
-        playSong(song);
-    };
-
     const VoiceMemo = useMemo(() => Voice, []);
 
     const handlePlayPreviousOrNextSong = (type: "next" | "previous") => {
@@ -56,11 +52,12 @@ const Player: FC = (props) => {
         }
     };
 
+    const handleTimeUpEventThrottle = throttle(handleTimeUpEvent, 1000);
     useEffect(() => {
-        audio.addEventListener("timeupdate", handleTimeUpEvent);
+        audio.addEventListener("timeupdate", handleTimeUpEventThrottle);
         audio.addEventListener("ended", handleEnded);
         return () => {
-            audio.removeEventListener("timeupdate", handleTimeUpEvent);
+            audio.removeEventListener("timeupdate", handleTimeUpEventThrottle);
             audio.removeEventListener("ended", handleEnded);
         };
     });
@@ -90,9 +87,13 @@ const Player: FC = (props) => {
                             </div>
                             <div>
                                 {parseTimestampIntoMinute(currentTime)} /{" "}
-                                {parseTimestampIntoMinute(
-                                    audio.duration * 1000
-                                ) ?? `00:00`}
+                                {audio.duration
+                                    ? parseTimestampIntoMinute(
+                                          audio.duration * 1000
+                                      )
+                                    : parseTimestampIntoMinute(
+                                          music.currentSong.dt
+                                      )}
                             </div>
                         </div>
                     </div>

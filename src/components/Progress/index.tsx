@@ -7,16 +7,13 @@ type ProgressType = {
     currentTime?: number;
 };
 const Progress: FC<ProgressType> = (props) => {
-    const [music] = useRecoilState(musicState);
+    const audio = getAudio();
     let width = 0;
-    if (props.currentTime && music.currentSong) {
-        width = (props.currentTime / music.currentSong.dt) * 100;
+    if (props.currentTime && audio.duration) {
+        width = (props.currentTime / (audio.duration * 1000)) * 100;
     }
+
     const handleClick = (e: MouseEvent<HTMLDivElement>) => {
-        // console.log("123");
-        // console.log(e);
-        // console.log(e.currentTarget.offsetWidth);
-        console.log(e.clientX / e.currentTarget.offsetWidth);
         setAudioCurrentTime(e.clientX / e.currentTarget.offsetWidth);
     };
     return (

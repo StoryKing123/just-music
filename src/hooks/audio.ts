@@ -41,9 +41,12 @@ export const useAudio = (): {
                 currentSong: song,
                 currentIndex:
                     index >= 0 ? index : musicRef.current!.currentIndex,
-                isPlaying: false,
+                isPlaying: true,
             };
-            localStorage.setItem("music", JSON.stringify(newMusicState));
+            localStorage.setItem(
+                "music",
+                JSON.stringify({ ...newMusicState, isPlaying: false })
+            );
             return newMusicState;
         });
     };
