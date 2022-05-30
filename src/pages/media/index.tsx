@@ -1,46 +1,19 @@
+import Tabs, { Tab } from "@/components/Tabs";
+import TabPanel from "@/components/Tabs/TabPanel";
+// import Tab from "@/components/Tabs/Tab";
 import { getUserPlaylist } from "@/services/song";
-import userState from "@/store/user";
 import { checkLogin } from "@/utils";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useRecoilValue } from "recoil";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { makeStyles } from "@material-ui/styles";
+import Playlist from "./components/Playlist";
 
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        backgroundColor: "#fff",
-        color: "white",
-    },
-    red: {
-        backgroundColor: "red",
-    },
-    "&.Mui-selected": {
-        color: "black"
-    },
-}));
-function a11yProps(index: number) {
-    return {
-        id: `simple-tab-${index}`,
-        "aria-controls": `simple-tabpanel-${index}`,
-        // className: "text-base",
-        // buttonStyle: {
-        //     color: "#4b4b4b",
-        // },
-    };
-}
 const Media = () => {
     const userPlayList = useState();
-    const styles = useStyles();
-
-    const [value, setValue] = useState(0);
-
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
+    const [tabIndex, setTableIndex] = useState(0);
+    const handleChange = (event: MouseEvent, newValue: number) => {
+        console.log("event");
+        console.log(newValue);
+        setTableIndex(newValue);
     };
     useEffect(() => {
         let user = checkLogin();
@@ -51,27 +24,15 @@ const Media = () => {
         }
     }, []);
     return (
-        <div>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="basic tabs example"
-                    // TabIndicatorProps={{
-                    //     sx: {
-                    //         // backgroundColor: "red",
-                    //         // color: "#fff",
-                    //         height: 3,
-                    //     },
-                    // }}
-                    className={styles.root}
-                >
-                    <Tab label="歌单" {...a11yProps(0)} />
-                    <Tab label="云盘" {...a11yProps(1)} />
-                    <Tab label="Item Three" {...a11yProps(2)} />
-                </Tabs>
-            </Box>
-            media
+        <div className="p-10">
+            <Tabs value={tabIndex} onChange={handleChange}>
+                <Tab label="歌单"></Tab>
+                <Tab label="云盘"></Tab>
+            </Tabs>
+            <TabPanel index={0} value={tabIndex}>
+                <Playlist></Playlist>
+            </TabPanel>
+            <TabPanel index={1} value={tabIndex}></TabPanel>
         </div>
     );
 };

@@ -6,21 +6,11 @@ type loginType = {
     tel: { tel: string; password: string };
     email: { email: string; password: string };
 };
-// function useRef<T>(initialValue: T|null): RefObject<T>;
-// interface loginFn<loginType>(type:any):any;
-// type login = login<K extends keyof loginType>(
-//     type: K,
-//     val: loginType[K]
-// ): API.Login
 type Login = <K extends keyof loginType>(
     type: K,
     val: loginType[K]
 ) => API.Login;
 
-// function login<K extends keyof loginType>(
-//     type: K,
-//     val: loginType[K]
-// ): API.Login
 export const useAuth: () => [Login, () => void] = () => {
     const [user, setUser] = useRecoilState(userState);
     const login: Login = <K extends keyof loginType>(

@@ -39,6 +39,8 @@ module.exports = {
             base: "var(--color-text-base)",
             "base-sub": "var(--color-sub-text-base)",
             btn: "var(--color-btn)",
+            active: "var(--color-text-active)",
+            "in-active": "var(--color-text-in-active)",
         },
         divideColor: {
             base: "var(--color-divide)",
