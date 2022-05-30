@@ -32,5 +32,5 @@ logo暂定
 
 ---
 
-[The MIT License (MIT)](https://github.com/Binaryify/NeteaseCloudMusicApi/blob/master/LICENSE)
+[The MIT License (MIT)](https://github.com/StoryKing123/just-music/blob/dev-tauri/LICENSE)
 
