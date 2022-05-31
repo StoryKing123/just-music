@@ -375,8 +375,8 @@ declare namespace API {
         profile: Profile;
         bindings: Binding[];
         cookie: string;
-        message?:string;
-        msg?:string;
+        message?: string;
+        msg?: string;
     }
 
     export interface Account {
@@ -698,6 +698,30 @@ declare namespace API {
         more: boolean;
         playlist: Playlist[];
         code: number;
+    }
+    export interface UserCloud {
+        data: CloudData[];
+        count: number;
+        size: string;
+        maxSize: string;
+        upgradeSign: number;
+        hasMore: boolean;
+        code: number;
+    }
+    export interface CloudData {
+        simpleSong: Song;
+        fileSize: number;
+        album: string;
+        artist: string;
+        bitrate: number;
+        songId: number;
+        addTime: number;
+        songName: string;
+        cover: number;
+        coverId: string;
+        lyricId: string;
+        version: number;
+        fileName: string;
     }
 
     // export interface Experts {}

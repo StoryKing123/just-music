@@ -14,7 +14,8 @@ const TabPanel = (props: TabPanelProps) => {
             aria-labelledby={`simple-tab-${index}`}
             {...other}
         >
-            {value === index && children}
+            {children}
+            {/* {value === index && children} */}
         </div>
     );
 };

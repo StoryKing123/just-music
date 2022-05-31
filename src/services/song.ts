@@ -23,7 +23,7 @@ export const getSongUrl = async (id: number, name: string, artist: string) => {
             artist,
         });
         console.log(res);
-        
+
         return res as string;
     } catch (error) {
         // console.log(error)
@@ -31,21 +31,10 @@ export const getSongUrl = async (id: number, name: string, artist: string) => {
         toast("歌曲不存在，播放原版歌曲");
         return songUrl;
     }
-    // const res = await axios.get<
-    //     null,
-    //     { code: number; message: string; data: { size: number; url: "string" } }
-    // >(`http://localhost:4000/music/url/${id}`);
-    //   if (!res || res.code === 10001) {
-    //     const songUrl = await getOriginSongUrl(id);
-    //     toast("歌曲不存在，播放原版歌曲");
-    //     return songUrl;
-    //   }
-    //   return res.data.url;
 };
 
 export const getOriginSongUrl = async (id: number) => {
     const res = await axios.get<null, API.SongUrl>(`/song/url?id=${id}`);
-    // console.log(urlRes);
     if (res.code === 200) {
         return res.data[0].url;
     } else {
@@ -78,5 +67,9 @@ export const getRecommedSogList = async () => {
 };
 
 export const getUserPlaylist = async (id: number) => {
-    return axios.requestGet(`/user/playlist?uid=${id}`);
+    return axios.requestGet<API.UserPlaylist>(`/user/playlist?uid=${id}`);
+};
+
+export const getUserCloud = async () => {
+    return axios.requestGet<API.UserCloud>(`/user/cloud`);
 };

@@ -5,14 +5,12 @@ import { getUserPlaylist } from "@/services/song";
 import { checkLogin } from "@/utils";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import Cloud from "./components/Cloud";
 import Playlist from "./components/Playlist";
 
 const Media = () => {
-    const userPlayList = useState();
     const [tabIndex, setTableIndex] = useState(0);
     const handleChange = (event: MouseEvent, newValue: number) => {
-        console.log("event");
-        console.log(newValue);
         setTableIndex(newValue);
     };
     useEffect(() => {
@@ -32,7 +30,9 @@ const Media = () => {
             <TabPanel index={0} value={tabIndex}>
                 <Playlist></Playlist>
             </TabPanel>
-            <TabPanel index={1} value={tabIndex}></TabPanel>
+            <TabPanel index={1} value={tabIndex}>
+                <Cloud></Cloud>
+            </TabPanel>
         </div>
     );
 };

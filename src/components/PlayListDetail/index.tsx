@@ -10,7 +10,7 @@ type PlayListDetailProps = {
 };
 const PlayListDetail: FC<PlayListDetailProps> = (props) => {
     const { songList } = props;
-    const {playSong} = useAudio();
+    const { playSong } = useAudio();
     const navigate = useNavigate();
 
     const handlePlaySong = async (song: API.Song) => {
@@ -27,29 +27,36 @@ const PlayListDetail: FC<PlayListDetailProps> = (props) => {
                             onDoubleClick={(e) => handlePlaySong(item)}
                             className="flex m-2 gap-4 h-12 items-center  "
                         >
-                            <img
-                                src={`${item.al.picUrl}?param=64y64`}
-                                alt=""
-                                className=" w-8"
-                            />
+                            {item.al && item.al.picUrl && (
+                                <img
+                                    src={`${item.al.picUrl}?param=64y64`}
+                                    alt=""
+                                    className=" w-8"
+                                />
+                            )}
+
                             <div className=" font-bold text-left w-1/3 truncate">
                                 {item.name}
                             </div>
                             <div className="text-base-sub w-1/2 text-left truncate">
-                                {item.ar.map((item) => (
-                                    <span key={item.id}>
-                                        <span
-                                            key={item.id}
-                                            className=" cursor-pointer"
-                                            onClick={(e) =>
-                                                navigate(`/artist/${item.id}`)
-                                            }
-                                        >
-                                            {item.name}
-                                        </span>
-                                        &nbsp;
-                                    </span>
-                                ))}
+                                {item.ar
+                                    ? item.ar.map((item) => (
+                                          <span key={item.id}>
+                                              <span
+                                                  key={item.id}
+                                                  className=" cursor-pointer"
+                                                  onClick={() =>
+                                                      navigate(
+                                                          `/artist/${item.id}`
+                                                      )
+                                                  }
+                                              >
+                                                  {item.name}
+                                              </span>
+                                              &nbsp;
+                                          </span>
+                                      ))
+                                    : "未知歌手"}
                                 {/* {extractObjectArrayAttr(item.ar, "name").join(
                                     " "
                                 )} */}

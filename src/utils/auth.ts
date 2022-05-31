@@ -5,9 +5,7 @@ export const checkLogin = () => {
     if (!userStr) {
         return false;
     }
-
     const user = JSON.parse(userStr);
-
     if (user === null || !user.account) {
         return false;
     }

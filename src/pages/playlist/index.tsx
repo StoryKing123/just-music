@@ -2,13 +2,14 @@ import { FC, Suspense, useEffect, useMemo, useState } from "react";
 import { createNamespace } from "@/utils";
 import Button from "@/components/Button";
 import PlayListDetail from "@/components/PlayListDetail";
-import { getListInfo, getListSong, getSongUrl } from "@/services/song";
+// import { getListInfo, getListSong, getSongUrl } from "@/services/song";
 import musicState from "@/store/music";
 import { useRecoilState } from "recoil";
 import { useAudio } from "@/hooks";
 import { useParams, useSearchParams } from "react-router-dom";
 import { praseTimestampIntoDate } from "@/utils/date";
 import { db } from "@/db";
+import { getListInfo, getListSong } from "@/services/song";
 
 const Playlist: FC = () => {
     const [music, setMusic] = useRecoilState(musicState);

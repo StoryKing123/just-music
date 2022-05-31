@@ -47,14 +47,6 @@ const Index: FC = () => {
                             key={item.id}
                             onClose={() => navigate(`/playlist/${item.id}`)}
                         ></PlayListCard>
-                        // <div
-                        //     className="w-1/6 cursor-pointer"
-                        //     key={item.id}
-                        //     onClick={() => navigate(`/playlist/${item.id}`)}
-                        // >
-                        //     <img src={item.picUrl} alt="" />
-                        //     <div>{item.name}</div>
-                        // </div>
                     ))}
             </div>
         </div>
