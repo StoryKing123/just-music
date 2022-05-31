@@ -7,12 +7,20 @@ logo暂定
 - 使用Tauri + React进行开发
 - 没有其他杂七杂八的功能，只有纯粹的听歌
 - 支持网易云手机邮箱账号登录
-- 解锁VIP歌曲
+- 解锁VIP歌曲（[UnblockNeteaseMusic/server-rust](https://github.com/UnblockNeteaseMusic/server-rust)）
 - 切换主题（目前只有深色模式，浅色主题还没有配置好颜色）
+- 音乐云盘
+## 🧑‍💼开发中
+
+- 播放模式
+- 扫码登录/验证码登录
+- 搜索页（目前只有搜索弹出框）
 ## 📦 安装
 前往[Release](https://github.com/StoryKing123/just-music/releases)页面进行安装
 ## 🛴 广告
 广州的互联网企有想招前端的可以找我，目前在考虑跳槽中。
 ## 📜 许可
 [The MIT License (MIT)](https://github.com/StoryKing123/just-music/blob/dev-tauri/LICENSE)
+## 声明
+API使用[Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
 
