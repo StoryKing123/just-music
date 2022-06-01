@@ -1,14 +1,11 @@
 import React, { EventHandler, FC, MouseEventHandler, ReactNode } from "react";
 import Tab from "./Tab";
 
-
-
 type TabsProps = {
     value: number;
     onChange: (event: MouseEvent, newValue: number) => void;
 };
 
-// const TabWrapper = ()=>
 
 const Tabs: FC<TabsProps> = (props) => {
     const renderTab = (node: React.ReactNode, index: number) => {

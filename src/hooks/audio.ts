@@ -1,32 +1,37 @@
 import { useEffect, useRef } from "react";
-// import { Song } from "@/declare";
 import { getOriginSongUrl, getSongUrl } from "@/services/song";
-import appState from "@/store/app";
 import musicState, { MusicStateType } from "@/store/music";
-import { pauseAudio, playAudio, toggleAudio } from "@/utils/audio";
+import { getAudio, pauseAudio, playAudio, toggleAudio } from "@/utils/audio";
 import { useRecoilState } from "recoil";
 import { validateMP3Url } from "@/utils/http";
 import { toast } from "react-toastify";
+import { isFreeSong } from "@/utils";
 
-export const useAudio = (): {
-    playSong: (song: API.Song) => void;
+type UseAudioReturnType = {
+    playSong: (song: API.Song, config?: { origin: boolean }) => void;
     playOrPauseSong: (isPlay?: boolean) => void;
     playPreviousOrNextSong: (type: "next" | "previous") => void;
-} => {
+};
+export const useAudio: () => UseAudioReturnType = () => {
     const [music, setMusic] = useRecoilState(musicState);
     const musicRef = useRef<MusicStateType>();
-
     useEffect(() => {
         musicRef.current = music;
     }, [music]);
-    const playSong = async (song: API.Song) => {
-        let src = await getSongUrl(song.id, song.name, song.ar[0].name);
-        const isValid = await validateMP3Url(src);
-        if (!isValid) {
-            toast.info("播放原版歌曲");
-            src = await getOriginSongUrl(song.id);
-        }
+    let isProcessing = false;
 
+    const playSong: UseAudioReturnType["playSong"] = async (song, config) => {
+        let src;
+        if (config?.origin || isFreeSong(song)) {
+            src = src = await getOriginSongUrl(song.id);
+        } else {
+            src = await getSongUrl(song.id, song.name, song.ar[0].name);
+            const isValid = await validateMP3Url(src);
+            if (!isValid) {
+                console.log("播放原版歌曲");
+                src = await getOriginSongUrl(song.id);
+            }
+        }
         let index = -1;
         playAudio(src);
         if (musicRef.current!.playList) {
@@ -50,7 +55,20 @@ export const useAudio = (): {
             return newMusicState;
         });
     };
-    const playOrPauseSong = (isPlay?: boolean) => {
+    const playOrPauseSong: UseAudioReturnType["playOrPauseSong"] = (isPlay) => {
+        const audio = getAudio();
+
+        //fresh app and continue to play
+        if (
+            !isPlay &&
+            music.isPlaying === false &&
+            audio.src === "" &&
+            music.currentSong
+        ) {
+            playSong(music.currentSong);
+            return;
+        }
+
         if (isPlay !== undefined) {
             isPlay ? playAudio() : pauseAudio();
             setMusic((music) => ({ ...music, isPlaying: isPlay }));
@@ -63,53 +81,43 @@ export const useAudio = (): {
         }
     };
 
-    const playPreviousOrNextSong = (type: "next" | "previous") => {
-        if (isProcessing) {
-            return;
-        }
-        if (!musicRef.current!.currentSong) {
-            return;
-        }
-        if (!musicRef.current!.playList) {
-            return;
-        }
-        isProcessing = true;
-        let index = getPlayIndex(musicRef.current!.currentIndex, type);
-        if (index !== undefined) {
-            playSong(musicRef.current!.playList[index]);
-        } else {
-            playSong(musicRef.current!.playList[0]);
-        }
-        isProcessing = false;
-    };
+    const playPreviousOrNextSong: UseAudioReturnType["playPreviousOrNextSong"] =
+        (type) => {
+            if (
+                isProcessing ||
+                !musicRef.current!.currentSong ||
+                !musicRef.current!.playList
+            ) {
+                return;
+            }
+            isProcessing = true;
+            let index = getPlayIndex(musicRef.current!.currentIndex, type);
+            if (index !== undefined) {
+                playSong(musicRef.current!.playList[index]);
+            } else {
+                playSong(musicRef.current!.playList[0]);
+            }
+            isProcessing = false;
+        };
 
     const getPlayIndex = (
         currentIndex: number | undefined,
         type: "next" | "previous"
     ) => {
-        if (!musicRef.current!.playList) {
-            return;
-        }
-        if (currentIndex === undefined) {
+        if (!musicRef.current!.playList || currentIndex === undefined) {
             return;
         }
 
         if (type === "previous") {
-            if (currentIndex <= 0) {
-                return musicRef.current!.playList.length - 1;
-            } else {
-                return currentIndex - 1;
-            }
+            return currentIndex <= 0
+                ? musicRef.current!.playList.length - 1
+                : currentIndex - 1;
         } else {
-            if (currentIndex >= musicRef.current!.playList.length - 1) {
-                return 0;
-            } else {
-                return currentIndex + 1;
-            }
+            return currentIndex >= musicRef.current!.playList.length - 1
+                ? 0
+                : currentIndex + 1;
         }
     };
-
-    let isProcessing = false;
 
     return { playSong, playOrPauseSong, playPreviousOrNextSong };
 };
