@@ -15,6 +15,19 @@ logo暂定
 - 播放模式
 - 扫码登录/验证码登录
 - 搜索页（目前只有搜索弹出框）
+
+
+## 快捷键
+目前暂不支持手动设置快捷键
+
+- WIndows
+   - 暂停/播放 Ctrl + Alt + Space
+   - 下一首 Ctrl + Alt + ➡️
+   - 上一首 Ctrl + Alt + ⬅️
+- Macos
+   - 暂停/播放 Option + Cmd + Space
+   - 下一首 Option + Cmd + ➡️
+   - 上一首 Option + Cmd + ⬅️
 ## 📦 安装
 前往[Release](https://github.com/StoryKing123/just-music/releases)页面进行安装
 ## 🛴 广告
