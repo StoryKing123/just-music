@@ -22,7 +22,7 @@ const Playlist: FC = () => {
     }, []);
     return (
         <div>
-            <div className="flex flex-wrap gap-10 py-10">
+            <div className="flex flex-wrap justify-around gap-10 py-10">
                 {playlist &&
                     playlist.map((item) => (
                         <PlayListCard

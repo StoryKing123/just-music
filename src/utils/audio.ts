@@ -17,21 +17,15 @@ export const getAudio = (): HTMLAudioElement => {
 };
 const audio = getAudio();
 
-// audio.addEventListener("error", (err) => {
-//     // console.log(Object.keys(err));
-//     console.log("err");
-//     console.log(err);
-//     // console.log("err");
-// });
+export const replaceHttpToHttps = (src: string) => src.replace("http", "https");
 
 export const setAudioSrc = (src: string) => {
-    // getAudio().src = src;
-    audio.src = src;
+    audio.src = replaceHttpToHttps(src);
 };
 
 export const playAudio = async (src?: string) => {
     if (src) {
-        audio.src = src;
+        audio.src = replaceHttpToHttps(src);
         audio.play();
     } else {
         audio.play();
@@ -49,7 +43,7 @@ export const setAudioCurrentTime = (Proportion: number) => {
 // export const ;
 
 export const toggleAudio = () => {
-    console.log("toggle");
+    // console.log("toggle");
     // getAudio().
     audio.paused ? audio.play() : audio.pause();
 };

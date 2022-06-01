@@ -1,5 +1,5 @@
 {
-  "name": "react-tauri",
+  "name": "just-music",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -19,6 +19,7 @@
     "dexie": "^3.2.2",
     "less": "^4.1.2",
     "lodash": "^4.17.21",
+    "mac-scrollbar": "^0.10.1",
     "md5": "^2.3.0",
     "md5-hex": "^4.0.0",
     "react": "^17.0.2",

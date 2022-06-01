@@ -1,6 +1,6 @@
 {
   "package": {
-    "productName": "react-tauri",
+    "productName": "just-music",
     "version": "0.1.0"
   },
   "build": {
@@ -13,7 +13,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.tauri.dev",
+      "identifier": "com.github.storyking123",
       "icon": [
         "icons/logo.png"
       

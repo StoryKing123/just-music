@@ -12,7 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Artist from "./pages/artist";
 import { useInitShortCut } from "./hooks/client";
-import { isInTauri } from "./utils/tauri";
+import { isInTauri } from "./utils";
 import Media from "./pages/media";
 
 function App() {

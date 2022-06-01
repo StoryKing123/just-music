@@ -1,20 +1,19 @@
 import { useAudio } from "@/hooks";
-import { getListInfo, getListSong, getSongUrl } from "@/services/song";
-import { extractObjectArrayAttr, wrapPromise } from "@/utils";
-import { getAudio, playAudio } from "@/utils/audio";
 import { parseTimestampIntoMinute } from "@/utils/date";
-import { FC, useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 type PlayListDetailProps = {
     songList: API.Song[];
+    play?: (song: API.Song) => any;
 };
 const PlayListDetail: FC<PlayListDetailProps> = (props) => {
     const { songList } = props;
+    console.log(songList);
+
     const { playSong } = useAudio();
     const navigate = useNavigate();
-
     const handlePlaySong = async (song: API.Song) => {
-        playSong(song);
+        props.play ? props.play(song) : playSong(song);
     };
 
     return (
@@ -27,9 +26,17 @@ const PlayListDetail: FC<PlayListDetailProps> = (props) => {
                             onDoubleClick={(e) => handlePlaySong(item)}
                             className="flex m-2 gap-4 h-12 items-center  "
                         >
-                            {item.al && item.al.picUrl && (
+                            {item.al ? (
+                                item.al.picUrl && (
+                                    <img
+                                        src={`${item.al.picUrl}?param=64y64`}
+                                        alt=""
+                                        className=" w-8"
+                                    />
+                                )
+                            ) : (
                                 <img
-                                    src={`${item.al.picUrl}?param=64y64`}
+                                    src={`http://p4.music.126.net/UeTuwE7pvjBpypWLudqukA==/3132508627578625.jpg?param=64y64`}
                                     alt=""
                                     className=" w-8"
                                 />
@@ -43,7 +50,6 @@ const PlayListDetail: FC<PlayListDetailProps> = (props) => {
                                     ? item.ar.map((item) => (
                                           <span key={item.id}>
                                               <span
-                                                  key={item.id}
                                                   className=" cursor-pointer"
                                                   onClick={() =>
                                                       navigate(
