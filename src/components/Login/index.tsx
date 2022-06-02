@@ -44,9 +44,6 @@ const Login: FC<LoginProps> = (props) => {
             toast.error(res.msg);
         }
 
-        // if(res.code ===502){
-
-        // }
     };
     const style = props.isShow
         ? {

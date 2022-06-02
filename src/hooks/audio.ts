@@ -26,6 +26,8 @@ export const useAudio: () => UseAudioReturnType = () => {
             src = src = await getOriginSongUrl(song.id);
         } else {
             src = await getSongUrl(song.id, song.name, song.ar[0].name);
+            console.log(src);
+            
             const isValid = await validateMP3Url(src);
             if (!isValid) {
                 console.log("播放原版歌曲");

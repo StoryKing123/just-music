@@ -45,14 +45,14 @@ const NavBar: FC<NavBarProps> = () => {
             <div>
                 <Link to="/index">首页</Link>
             </div>
-            {/* <div>
-                <Link to="/index">探索</Link>
-            </div> */}
+            <div>
+                <Link to="/explore">探索</Link>
+            </div>
             <div>
                 {" "}
                 <Link to="/media">媒体库</Link>{" "}
             </div>
-            <div onClick={search}>搜索</div>
+            <div className="cursor-pointer" onClick={search}>搜索</div>
             <Button onClick={toggleTheme}>切换主题</Button>
             <div className=" absolute   right-1  tranlslate-y-1/2 -translate-x-1/2 ">
                 <User login={handleLoginClick}></User>
