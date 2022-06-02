@@ -18,8 +18,13 @@ const ModalElement: FC<ModalProps> = (props) => {
             shouldCloseOnEsc={true}
             onRequestClose={handleCloseModal}
             // className="scroll-bar-hide"
+            // className="abc"
+            className={{ afterOpen: "abc", base: "aaa", beforeClose: "bbb" }}
             overlayClassName="bg-base scroll-bar-hide"
-            style={{ content: { backgroundColor: "#000" } }}
+            style={{
+                content: { backgroundColor: "#000" },
+                overlay: { backgroundColor: "blue" },
+            }}
         >
             {props.children}
             {/* 123 */}

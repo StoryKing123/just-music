@@ -64,15 +64,11 @@ export const useModal = (props: useModalProp) => {
                     isOpen={visiable}
                     onAfterOpen={afterOpenModal}
                     onRequestClose={close}
-                    // style={customStyles}
-                    // overlayClassName="flex "
-                    className="bg-search scroll-bar-hide text-base overflow-scroll  rounded-md  w-1/2 h-1/2 translate-x-1/2 translate-y-1/2  py-6"
-                    contentLabel="Example Modal"
+                    overlayClassName="fixed flex justify-content items-center inset-0 backdrop-blur-sm  "
+                    className="bg-search scroll-bar-hide text-base overflow-scroll  rounded-md  w-1/2 h-3/4 translate-x-1/2  py-6 outline-0"
                     appElement={document.getElementById("modal")!}
                 >
                     {props.content}
-                    {/* <button onClick={close}>close</button>
-                    <div>I am a modal</div> */}
                 </ReactModal>
             </div>
         );

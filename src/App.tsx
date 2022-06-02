@@ -12,30 +12,20 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Artist from "./pages/artist";
 import { useInitShortCut } from "./hooks/client";
-import { isInTauri } from "./utils";
 import Media from "./pages/media";
+import Explore from "./pages/explore";
 
 function App() {
-    console.log("app render");
     const initTheme = useInitTheme();
     const initMusic = useInitMusic();
     const initAuth = useInitAuth();
 
     useInitShortCut();
 
-    if (isInTauri()) {
-        //     console.log("tauri");
-        //     platform().then((res) => {
-        //         console.log("platform");
-        //         console.log(res);
-        //     });
-    }
-
     useEffect(() => {
         initTheme();
         initMusic();
         initAuth();
-        // toast("Music!");
     }, []);
 
     const MemoNavBar = useMemo(() => NavBar, []);
@@ -50,6 +40,10 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Index></Index>}></Route>
                     <Route path="/index" element={<Index></Index>}></Route>
+                    <Route
+                        path="/explore"
+                        element={<Explore></Explore>}
+                    ></Route>
                     <Route
                         path="playlist/:id"
                         element={<PlayList></PlayList>}
