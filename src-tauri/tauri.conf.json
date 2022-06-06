@@ -14,7 +14,7 @@
             "active": true,
             "targets": "all",
             "identifier": "com.github.storyking123",
-            "icon": ["icons/logo.png"],
+            "icon": ["icons/icon.ico"],
             "resources": [],
             "externalBin": [],
             "copyright": "",
