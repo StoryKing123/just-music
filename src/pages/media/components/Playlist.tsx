@@ -30,7 +30,7 @@ const Playlist: FC = () => {
                             cover={item.coverImgUrl}
                             title={item.name}
                             key={item.id}
-                            onClose={() => navigate(`/playlist/${item.id}`)}
+                            onClick={() => navigate(`/playlist/${item.id}`)}
                         ></PlayListCard>
                     ))}
             </div>

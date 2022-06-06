@@ -8,8 +8,6 @@ type PlayListDetailProps = {
 };
 const PlayListDetail: FC<PlayListDetailProps> = (props) => {
     const { songList } = props;
-    console.log(songList);
-
     const { playSong } = useAudio();
     const navigate = useNavigate();
     const handlePlaySong = async (song: API.Song) => {
@@ -63,9 +61,6 @@ const PlayListDetail: FC<PlayListDetailProps> = (props) => {
                                           </span>
                                       ))
                                     : "未知歌手"}
-                                {/* {extractObjectArrayAttr(item.ar, "name").join(
-                                    " "
-                                )} */}
                             </div>
                             <div className="ml-auto text-base-sub">
                                 {parseTimestampIntoMinute(item.dt)}
