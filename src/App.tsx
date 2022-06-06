@@ -14,6 +14,7 @@ import Artist from "./pages/artist";
 import { useInitShortCut } from "./hooks/client";
 import Media from "./pages/media";
 import Explore from "./pages/explore";
+import DailyRecommend from "./pages/dailyRecommend";
 
 function App() {
     const initTheme = useInitTheme();
@@ -40,6 +41,10 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Index></Index>}></Route>
                     <Route path="/index" element={<Index></Index>}></Route>
+                    <Route
+                        path="/recommend"
+                        element={<DailyRecommend></DailyRecommend>}
+                    ></Route>
                     <Route
                         path="/explore"
                         element={<Explore></Explore>}

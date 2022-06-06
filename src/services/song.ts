@@ -59,11 +59,15 @@ export const getArtistAlbumn = async (id: number) => {
 };
 
 export const getArtistDetail = async (id: number) => {
-    return await axios.get<null, API.ArtistDetail>(`/artist/detail?id=${id}`);
+    return await axios.requestGet<API.ArtistDetail>(`/artist/detail?id=${id}`);
 };
 
-export const getRecommedSogList = async () => {
-    return await axios.get<null, API.RecommendSongList>(`/recommend/resource`);
+export const getRecommedPlaylist = async () => {
+    return await axios.requestGet<API.RecommendPlaylist>(`/recommend/resource`);
+};
+
+export const getRecommedSong = async () => {
+    return await axios.requestGet<API.RecommendSong>("/recommend/songs");
 };
 
 export const getUserPlaylist = async (id: number) => {
@@ -71,5 +75,5 @@ export const getUserPlaylist = async (id: number) => {
 };
 
 export const getUserCloud = async () => {
-    return axios.requestGet<API.UserCloud>(`/user/cloud`);
+    return axios.requestGet<API.UserCloud>(`/user/cloud?limit=1000`);
 };

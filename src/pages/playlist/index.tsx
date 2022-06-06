@@ -2,17 +2,15 @@ import { FC, Suspense, useEffect, useMemo, useState } from "react";
 import { createNamespace } from "@/utils";
 import Button from "@/components/Button";
 import PlayListDetail from "@/components/PlayListDetail";
-// import { getListInfo, getListSong, getSongUrl } from "@/services/song";
 import musicState from "@/store/music";
-import { useRecoilState } from "recoil";
+import {  useSetRecoilState } from "recoil";
 import { useAudio } from "@/hooks";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { praseTimestampIntoDate } from "@/utils/date";
-import { db } from "@/db";
 import { getListInfo, getListSong } from "@/services/song";
 
 const Playlist: FC = () => {
-    const [music, setMusic] = useRecoilState(musicState);
+    const setMusic = useSetRecoilState(musicState);
     const [name, bem] = createNamespace("play-list");
     const [playlist, setPlaylist] = useState<
         API.PlayList["playlist"] | undefined
@@ -39,8 +37,6 @@ const Playlist: FC = () => {
             ...music,
             playList: songList,
         }));
-
-        // localStorage.setItem("playlist", JSON.stringify(songList));
     };
 
     const randomPlay = () => {
@@ -65,7 +61,7 @@ const Playlist: FC = () => {
     return (
         <div className={name + " p-20 select-none"}>
             <div className="flex">
-                <div className={`w-1/4   h-auto min-w-1/4`}>
+                <div className={`w-60 shrink-0  h-auto `}>
                     <img
                         className=" "
                         src={`${playlist?.coverImgUrl}?param=512y512`}

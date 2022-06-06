@@ -528,7 +528,7 @@ declare namespace API {
         alia?: string[];
     }
 
-    export interface RecommendSongList {
+    export interface RecommendPlaylist {
         code: number;
         featureFirst: boolean;
         haveRcmdSongs: boolean;
@@ -722,6 +722,16 @@ declare namespace API {
         lyricId: string;
         version: number;
         fileName: string;
+    }
+
+    export interface RecommendSong {
+        code: number;
+        data: Data;
+    }
+
+    export interface Data {
+        dailySongs: Song[];
+        orderSongs: any[];
     }
 
     // export interface Experts {}

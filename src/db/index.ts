@@ -11,13 +11,15 @@ export class MySubClassedDexie extends Dexie {
     friends!: Table<Friend>;
     playList!: Table<API.PlayList>;
     recommendList!: Table<API.Recommend>;
+    recommendSongList!: Table<API.Song>;
 
     constructor() {
         super("myDatabase");
-        this.version(2).stores({
+        this.version(3).stores({
             friends: "++id, name, age", // Primary key and indexed props
             playList: "++id",
             recommendList: "++Id",
+            recommendSongList: "++id",
         });
     }
 }
