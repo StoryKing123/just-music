@@ -65,7 +65,7 @@ export const useModal = (props: useModalProp) => {
                     onAfterOpen={afterOpenModal}
                     onRequestClose={close}
                     overlayClassName="fixed flex justify-content items-center inset-0 backdrop-blur-sm  "
-                    className="bg-search scroll-bar-hide text-base overflow-scroll  rounded-md  w-1/2 h-3/4 translate-x-1/2  py-6 outline-0"
+                    className="bg-search z-50 scroll-bar-hide text-base overflow-scroll  rounded-md  w-1/2 h-3/4 translate-x-1/2  py-6 outline-0"
                     appElement={document.getElementById("modal")!}
                 >
                     {props.content}

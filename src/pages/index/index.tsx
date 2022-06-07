@@ -41,7 +41,7 @@ const Index: FC = () => {
 
     return (
         <div className="font-bold   pb-20 px-8  ">
-            <div className="flex  justify-center flex-wrap gap-10 ">
+            <div className="flex z-0  justify-center flex-wrap gap-10 ">
                 {recommendList && (
                     <>
                         <div className="w-1/6 relative">
