@@ -3,3 +3,4 @@ export * from "./audio";
 export * from "./modal";
 export * from "./auth";
 export * from "./music";
+export * from "./event";

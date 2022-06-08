@@ -41,7 +41,7 @@ const NavBar: FC<NavBarProps> = () => {
         open();
     };
     return (
-        <div className="flex justify-center relative gap-4 text-xl font-bold p-4 pr-0">
+        <div className="flex z-20 justify-center relative gap-4 text-xl font-bold p-4 pr-0">
             <div>
                 <Link to="/index">首页</Link>
             </div>

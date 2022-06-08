@@ -1,16 +1,27 @@
 import PlayListCard from "@/components/PlayListCard";
 import { db } from "@/db";
-import { getRecommedPlaylist, getRecommedSong } from "@/services/song";
+import {
+    getRecommedPlaylist,
+    getRecommedPlaylistNotLogin,
+    getRecommedSong,
+} from "@/services/song";
 import { FC, useEffect, useLayoutEffect, useState } from "react";
 import calendarSvg from "@/assets/icons/calendar.svg";
 import { useNavigate } from "react-router";
 import Calendar from "./component/Calendar";
 
+import { checkLogin } from "@/utils";
+
 const Index: FC = () => {
-    const [recommendList, setRecommedSongList] = useState<API.Recommend[]>();
+    const [recommendList, setRecommedSongList] = useState<
+        API.RecommendPlaylist[]
+    >([]);
     const [songList, setSongList] =
         useState<API.RecommendSong["data"]["dailySongs"]>();
     const navigate = useNavigate();
+    let user = checkLogin();
+
+
     useEffect(() => {
         const initData = async () => {
             const res = await getRecommedPlaylist();
@@ -28,8 +39,20 @@ const Index: FC = () => {
                 db.recommendSongList.bulkAdd(res.data.dailySongs);
             }
         };
-        initData();
-        initRecommedSong();
+        const initTouristData = async () => {
+            const res = await getRecommedPlaylistNotLogin();
+            if (res && res.code === 200) {
+                setRecommedSongList(res.result);
+                await db.recommendList.clear();
+                db.recommendList.bulkAdd(res.result);
+            }
+        };
+        if (user) {
+            initData();
+            initRecommedSong();
+        } else {
+            initTouristData();
+        }
     }, []);
     useLayoutEffect(() => {
         const initDataFromDB = async () => {
@@ -41,18 +64,24 @@ const Index: FC = () => {
 
     return (
         <div className="font-bold   pb-20 px-8  ">
-            <div className="flex  justify-center flex-wrap gap-10 ">
-                {recommendList && (
+
+            <div className="flex z-0  justify-center flex-wrap gap-10 ">
+                {recommendList.length > 0 && (
                     <>
-                        <div className="w-1/6 relative">
-                            <Calendar
-                                cover={
-                                    songList ? songList[0].al.picUrl : "black"
-                                }
-                                className="absolute z-10"
-                                text=""
-                            ></Calendar>
-                        </div>
+                        {user && (
+                            <div className="w-1/6 relative">
+                                <Calendar
+                                    cover={
+                                        songList
+                                            ? songList[0].al.picUrl
+                                            : "black"
+                                    }
+                                    className="absolute z-10"
+                                    text=""
+                                ></Calendar>
+                            </div>
+                        )}
+
                         {recommendList.map((item) => (
                             <PlayListCard
                                 className="w-1/6"

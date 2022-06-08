@@ -528,14 +528,22 @@ declare namespace API {
         alia?: string[];
     }
 
-    export interface RecommendPlaylist {
+
+    export interface RecommendPlaylists {
         code: number;
         featureFirst: boolean;
         haveRcmdSongs: boolean;
-        recommend: Recommend[];
+        recommend: RecommendPlaylist[];
     }
 
-    export interface Recommend {
+    export interface RecommedPlayListsNotLogin {
+        code: number;
+        hasTaste: boolean;
+        category: number;
+        result: RecommendPlaylist[];
+    }
+
+    export interface RecommendPlaylist {
         id: number;
         type: number;
         name: string;
@@ -733,6 +741,56 @@ declare namespace API {
         dailySongs: Song[];
         orderSongs: any[];
     }
+
+
+    export interface Toplists {
+        code: number;
+        list: Toplist[];
+    }
+
+    export interface Toplist {
+        subscribers: any[];
+        subscribed: null;
+        creator: null;
+        artists: null;
+        tracks: null;
+        updateFrequency: string;
+        backgroundCoverId: number;
+        backgroundCoverUrl: null;
+        titleImage: number;
+        titleImageUrl: null;
+        englishTitle: null;
+        opRecommend: boolean;
+        recommendInfo: null;
+        adType: number;
+        trackNumberUpdateTime: number;
+        cloudTrackCount: number;
+        subscribedCount: number;
+        createTime: number;
+        userId: number;
+        highQuality: boolean;
+        specialType: number;
+        anonimous: boolean;
+        coverImgId: number;
+        updateTime: number;
+        newImported: boolean;
+        trackCount: number;
+        trackUpdateTime: number;
+        coverImgUrl: string;
+        commentThreadId: string;
+        totalDuration: number;
+        privacy: number;
+        playCount: number;
+        ordered: boolean;
+        tags: any[];
+        description: string;
+        status: number;
+        name: string;
+        id: number;
+        coverImgId_str: string;
+        ToplistType: string;
+    }
+
 
     // export interface Experts {}
 

@@ -34,7 +34,6 @@ function App() {
     return (
         <div id="App" className="App  -z-50  relative bg-base text-base ">
             <ToastContainer />
-
             <div id="modal"></div>
             <Router>
                 <MemoNavBar />

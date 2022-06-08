@@ -11,8 +11,6 @@ type UserProps = {
     login: (...arg0: any) => any;
 };
 const User: FC<UserProps> = (props) => {
-    console.log("user render");
-
     const [user] = useRecoilState(userState);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);

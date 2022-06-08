@@ -1,7 +1,7 @@
 {
     "package": {
-        "productName": "just-music",
-        "version": "0.1.0"
+        "productName": "Just Music",
+        "version": "0.1.2"
     },
     "build": {
         "distDir": "../dist",
@@ -14,7 +14,7 @@
             "active": true,
             "targets": "all",
             "identifier": "com.github.storyking123",
-            "icon": ["icons/logo.png"],
+            "icon": ["icons/logo.ico"],
             "resources": [],
             "externalBin": [],
             "copyright": "",

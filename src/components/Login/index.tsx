@@ -1,3 +1,4 @@
+import { useEventListener } from "@/hooks";
 import { useAuth } from "@/hooks/auth";
 import { loginByTel } from "@/services/auth";
 import { createNamespace } from "@/utils";
@@ -16,6 +17,12 @@ const Login: FC<LoginProps> = (props) => {
     const telOrEmailRef = useRef<HTMLInputElement>(null);
     const passwordInputRef = useRef<HTMLInputElement>(null);
     const [login] = useAuth();
+    useEventListener("keyup", (e) => {
+        // console.log(e);
+        if (e.key === "Enter") {
+            handleLogin();
+        }
+    });
 
     const handleLogin = async () => {
         if (!(passwordInputRef.current && telOrEmailRef.current)) {
