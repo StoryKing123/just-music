@@ -528,6 +528,7 @@ declare namespace API {
         alia?: string[];
     }
 
+
     export interface RecommendPlaylists {
         code: number;
         featureFirst: boolean;
@@ -741,6 +742,7 @@ declare namespace API {
         orderSongs: any[];
     }
 
+
     export interface Toplists {
         code: number;
         list: Toplist[];
@@ -788,6 +790,7 @@ declare namespace API {
         coverImgId_str: string;
         ToplistType: string;
     }
+
 
     // export interface Experts {}
 
