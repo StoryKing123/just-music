@@ -10,7 +10,7 @@ export class MySubClassedDexie extends Dexie {
     // We just tell the typing system this is the case
     friends!: Table<Friend>;
     playList!: Table<API.PlayList>;
-    recommendList!: Table<API.Recommend>;
+    recommendList!: Table<API.RecommendPlaylist>;
     recommendSongList!: Table<API.Song>;
 
     constructor() {

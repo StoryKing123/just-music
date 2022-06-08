@@ -45,7 +45,6 @@ const Playlist: FC = () => {
     };
     const totalDuration = useMemo(() => {
         if (!songList) return;
-
         const getHoursAndMinutes = (time: number) => {
             const hours = Math.floor(time / (1000 * 60 * 60));
             const minutes = Math.floor(time / 1000 / 60) % 60;
