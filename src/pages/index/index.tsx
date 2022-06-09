@@ -9,6 +9,7 @@ import { FC, useEffect, useLayoutEffect, useState } from "react";
 import calendarSvg from "@/assets/icons/calendar.svg";
 import { useNavigate } from "react-router";
 import Calendar from "./component/Calendar";
+
 import { checkLogin } from "@/utils";
 
 const Index: FC = () => {
@@ -19,6 +20,7 @@ const Index: FC = () => {
         useState<API.RecommendSong["data"]["dailySongs"]>();
     const navigate = useNavigate();
     let user = checkLogin();
+
 
     useEffect(() => {
         const initData = async () => {
@@ -62,6 +64,7 @@ const Index: FC = () => {
 
     return (
         <div className="font-bold   pb-20 px-8  ">
+
             <div className="flex z-0  justify-center flex-wrap gap-10 ">
                 {recommendList.length > 0 && (
                     <>

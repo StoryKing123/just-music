@@ -50,6 +50,7 @@ const Login: FC<LoginProps> = (props) => {
         } else {
             toast.error(res.msg);
         }
+
     };
     const style = props.isShow
         ? {
