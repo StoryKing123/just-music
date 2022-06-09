@@ -2,9 +2,12 @@ import { toast } from "react-toastify";
 import axios from "./";
 import { invoke } from "@tauri-apps/api/tauri";
 
-export const getListSong = async (id: number) => {
-    return await axios.get<null, API.PlayListSong>(
-        `playlist/track/all?id=${id}&offset=1&limit=1000`
+export const getListSong = async (
+    id: number,
+    config: { offset?: number; limit?: number } = { offset: 1, limit: 1000 }
+) => {
+    return axios.get<null, API.PlayListSong>(
+        `playlist/track/all?id=${id}&offset=${config?.offset}&limit=${config?.limit}`
     );
 };
 
