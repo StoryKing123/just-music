@@ -8,6 +8,8 @@
     }
     &__background:hover &__play {
         opacity: 1;
+        border-radius: 50%;
+        overflow: hidden;
     }
     &__play {
         @apply w-1/5 h-1/5 bottom-2 right-2 flex justify-center items-center transition-all;
@@ -25,6 +27,7 @@
             filter: blur(15px);
             z-index: 1;
             content: "";
+            overflow: hidden;
         }
         img {
             @apply w-1/3;

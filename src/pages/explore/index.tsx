@@ -38,7 +38,7 @@ const Explore: FC = () => {
             <div>
                 {toplist && (
                     <>
-                        <div className="flex flex-col gap-10 justify-center ">
+                        {/* <div className="flex flex-col gap-10 justify-center ">
                             {toplist.slice(0, 4).map((item, index) => (
                                 <div className="flex gap-10">
                                     <div className="w-40 " key={item.id}>
@@ -56,7 +56,7 @@ const Explore: FC = () => {
                                     </div>
                                 </div>
                             ))}
-                        </div>
+                        </div> */}
                         <div
                             className="grid gap-4  "
                             style={{
@@ -65,7 +65,7 @@ const Explore: FC = () => {
                                     "repeat(auto-fill, minmax(6rem,8rem))",
                             }}
                         >
-                            {toplist.slice(4, toplist.length).map((item) => (
+                            {toplist.map((item) => (
                                 <div className="w-full" key={item.id}>
                                     <PlayListCard
                                         onClick={() =>

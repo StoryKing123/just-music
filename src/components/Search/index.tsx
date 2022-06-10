@@ -10,7 +10,6 @@ import "./index.less";
 
 type SearchProps = {
     close?: Function;
-    // isShow: boolean;
 };
 const Search: FC<SearchProps> = (props) => {
     const [name, bem] = createNamespace("search");
@@ -21,7 +20,11 @@ const Search: FC<SearchProps> = (props) => {
 
     const handleThrottleInput = throttle(
         async (e: ChangeEvent<HTMLInputElement>) => {
-            console.log(e);
+            console.log(e.target.value);
+            if (e.target.value === "") {
+                setSuggest(undefined);
+                return;
+            }
             const res = await searchSuggest(e.target.value);
             if (res.code === 200) {
                 setSuggest(res.result);
@@ -62,66 +65,80 @@ const Search: FC<SearchProps> = (props) => {
             </div>
 
             <div>
-                <div className={bem("title")}>歌曲</div>
-                <div className="flex  flex-col gap-4 ">
-                    {suggest?.songs?.map((item) => (
-                        <div
-                            key={item.id}
-                            className="flex items-center rounded-md bg-search-item hover:bg-search-item-active p-3  "
-                            onDoubleClick={() => playSong(item.id)}
-                        >
-                            <img
-                                src={`${item.artists[0].img1v1Url}?param=64y64`}
-                                className="w-8   rounded-sm"
-                                alt=""
-                            />
-                            <div className=" ml-8">{item.name}</div>
-                            <div className=" mr-0 ml-auto">
-                                {extractObjectArrayAttr(
-                                    item.artists,
-                                    "name"
-                                ).join(" ")}
-                            </div>
+                {suggest?.songs && (
+                    <>
+                        <div className={bem("title")}>歌曲</div>
+                        <div className="flex  flex-col gap-4 ">
+                            {suggest?.songs?.map((item) => (
+                                <div
+                                    key={item.id}
+                                    className="flex items-center rounded-md bg-search-item hover:bg-search-item-active p-3  "
+                                    onDoubleClick={() => playSong(item.id)}
+                                >
+                                    <img
+                                        src={`${item.artists[0].img1v1Url}?param=64y64`}
+                                        className="w-8   rounded-sm"
+                                        alt=""
+                                    />
+                                    <div className=" ml-8">{item.name}</div>
+                                    <div className=" mr-0 ml-auto">
+                                        {extractObjectArrayAttr(
+                                            item.artists,
+                                            "name"
+                                        ).join(" ")}
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
+                    </>
+                )}
             </div>
             <div>
-                <div className={bem("title")}>歌单</div>
+                {suggest?.playlists && (
+                    <>
+                        <div className={bem("title")}>歌单</div>
 
-                <div className="flex flex-col gap-5 ">
-                    {suggest?.playlists?.map((item) => (
-                        <div
-                            key={item.id}
-                            className="flex items-center gap-5 rounded-md bg-search-item hover:bg-search-item-active  p-5 "
-                            onClick={() => navigateToPlaylist(item.id)}
-                        >
-                            <img
-                                src={`${item.coverImgUrl}?param=64y64`}
-                                className="w-12    rounded-sm"
-                                alt=""
-                            />
-                            <div>{item.name}</div>
+                        <div className="flex flex-col gap-5 ">
+                            {suggest?.playlists?.map((item) => (
+                                <div
+                                    key={item.id}
+                                    className="flex items-center gap-5 rounded-md bg-search-item hover:bg-search-item-active  p-5 "
+                                    onClick={() => navigateToPlaylist(item.id)}
+                                >
+                                    <img
+                                        src={`${item.coverImgUrl}?param=64y64`}
+                                        className="w-12    rounded-sm"
+                                        alt=""
+                                    />
+                                    <div>{item.name}</div>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
+                    </>
+                )}
             </div>
-            <div className={bem("title")}>歌手</div>
-            <div className="fle flex-col gap-5">
-                {suggest?.artists?.map((item) => (
-                    <div
-                        key={item.id}
-                        className="flex items-center gap-5 rounded-md bg-search-item hover:bg-search-item-active  p-5 "
-                        onClick={(_) => navigateToArtist(item.id)}
-                    >
-                        <img
-                            src={`${item.img1v1Url}?param=64y64`}
-                            className="w-12    rounded-sm"
-                            alt=""
-                        />
-                        <div>{item.name}</div>
-                    </div>
-                ))}
+            <div>
+                {suggest?.artists && (
+                    <>
+                        <div className={bem("title")}>歌手</div>
+                        <div className="fle flex-col gap-5">
+                            {suggest?.artists?.map((item) => (
+                                <div
+                                    key={item.id}
+                                    className="flex items-center gap-5 rounded-md bg-search-item hover:bg-search-item-active  p-5 "
+                                    onClick={(_) => navigateToArtist(item.id)}
+                                >
+                                    <img
+                                        src={`${item.img1v1Url}?param=64y64`}
+                                        className="w-12    rounded-sm"
+                                        alt=""
+                                    />
+                                    <div>{item.name}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </>
+                )}
             </div>
         </div>
         //     <input type="text" />
