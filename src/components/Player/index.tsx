@@ -4,24 +4,24 @@ import pauseSVG from "@/assets/icons/pause-dark.svg";
 import playSVG from "@/assets/icons/play-dark.svg";
 import previousSVG from "@/assets/icons/previous-dark.svg";
 import playlistSVG from "@/assets/icons/playlist.svg";
-import voiceMeidaSVG from "@/assets/icons/voice-media.svg";
 import Progress from "@/components/Progress";
 import PlayerPlayList from "../PlayerPlayList";
 import musicState from "@/store/music";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { extractObjectArrayAttr } from "@/utils";
 import { parseTimestampIntoMinute } from "@/utils/date";
 import { getAudio } from "@/utils/audio";
 import { useAudio } from "@/hooks";
-import { getSongUrl } from "@/services/song";
 import { PLAY_MODE } from "@/const";
 import { throttle } from "lodash";
 import Voice from "./Voice";
+import appState from "@/store/app";
 
 const Player: FC = (props) => {
     const [isShowPlayList, setShowPlayList] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [music] = useRecoilState(musicState);
+    const setApp = useSetRecoilState(appState);
     const { playSong, playOrPauseSong, playPreviousOrNextSong } = useAudio();
     const memoPlayerPlayList = useMemo(
         () => <PlayerPlayList isShow={isShowPlayList}></PlayerPlayList>,
@@ -63,7 +63,7 @@ const Player: FC = (props) => {
     });
 
     return (
-        <div className="select-none fixed h-16 bottom-0 w-screen bg-base-player ">
+        <div className="select-none z-50 fixed h-16 bottom-0 w-screen bg-base-player ">
             <Progress currentTime={currentTime}></Progress>
             {memoPlayerPlayList}
             <div className="px-16 flex items-center h-full">
@@ -71,8 +71,14 @@ const Player: FC = (props) => {
                     <div className="flex items-center gap-4 w-1/3 truncate">
                         <img
                             src={music.currentSong.al.picUrl}
+                            onClick={() =>
+                                setApp((app) => ({
+                                    ...app,
+                                    showDetail: !app.showDetail,
+                                }))
+                            }
                             alt=""
-                            className="w-10 h-10 rounded-sm"
+                            className="w-10 h-10 rounded-sm cursor-pointer"
                         />
                         <div className="text-left  ">
                             <div>
@@ -101,7 +107,7 @@ const Player: FC = (props) => {
 
                 <div className="flex gap-2 m-auto absolute left-1/2 -translate-x-1/2">
                     <img
-                        className="w-6"
+                        className="w-6 "
                         src={previousSVG}
                         onClick={() => handlePlayPreviousOrNextSong("previous")}
                         alt=""

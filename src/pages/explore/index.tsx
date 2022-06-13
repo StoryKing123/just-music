@@ -13,11 +13,10 @@ const Explore: FC = () => {
     const navigate = useNavigate();
     useEffect(() => {
         const initData = async () => {
-            toast.info("开发中");
             const res = await getToplist();
             if (res.code === 200) {
                 setToplist(res.list);
-                initToplistSong(res.list.slice(0, 4).map((list) => list.id));
+                // initToplistSong(res.list.slice(0, 4).map((list) => list.id));
             }
         };
 

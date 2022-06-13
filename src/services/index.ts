@@ -8,7 +8,8 @@ const generateReqKey = (config: {
     params: any;
 }) => {
     const { method, url, params, data } = config;
-    return [method, url].join("&");
+    return [method, url.split("?")[0]].join("&");
+    // return [method, url].join("&");
     // return [method, url, JSON.stringify(params), JSON.stringify(data)].join(
     //     "&"
     // );

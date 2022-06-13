@@ -41,7 +41,7 @@ const NavBar: FC<NavBarProps> = () => {
         open();
     };
     return (
-        <div className="flex z-20 justify-center relative gap-4 text-xl font-bold p-4 pr-0">
+        <div className="flex fixed top-0 bg-base z-20 justify-center w-full  backdrop-blur-sm  gap-4 text-xl font-bold p-4 pr-0">
             <div>
                 <Link to="/index">首页</Link>
             </div>
@@ -52,7 +52,9 @@ const NavBar: FC<NavBarProps> = () => {
                 {" "}
                 <Link to="/media">媒体库</Link>{" "}
             </div>
-            <div className="cursor-pointer" onClick={search}>搜索</div>
+            <div className="cursor-pointer" onClick={search}>
+                搜索
+            </div>
             <Button onClick={toggleTheme}>切换主题</Button>
             <div className=" absolute   right-1  tranlslate-y-1/2 -translate-x-1/2 ">
                 <User login={handleLoginClick}></User>

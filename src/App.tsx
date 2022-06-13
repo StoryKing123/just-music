@@ -15,6 +15,7 @@ import { useInitShortCut } from "./hooks/client";
 import Media from "./pages/media";
 import Explore from "./pages/explore";
 import DailyRecommend from "./pages/dailyRecommend";
+import Detail from "./components/Detail";
 
 function App() {
     const initTheme = useInitTheme();
@@ -32,7 +33,7 @@ function App() {
     const MemoNavBar = useMemo(() => NavBar, []);
 
     return (
-        <div id="App" className="App  -z-50  relative bg-base text-base ">
+        <div id="App" className="App  -z-50 pt-20  relative bg-base text-base ">
             <ToastContainer />
             <div id="modal"></div>
             <Router>
@@ -59,6 +60,7 @@ function App() {
                     <Route path="media" element={<Media></Media>}></Route>
                 </Routes>
             </Router>
+            <Detail></Detail>
             <Player></Player>
         </div>
     );
