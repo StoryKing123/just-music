@@ -16,7 +16,7 @@ const Media = () => {
     useEffect(() => {
         let user = checkLogin();
         if (user) {
-            getUserPlaylist(user!.account.id);
+            // getUserPlaylist(user!.account.id);
         } else {
             toast.info("请进行登录");
         }

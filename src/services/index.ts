@@ -48,8 +48,8 @@ const axios = Axios.create({
 };
 axios.interceptors.request.use(
     (config) => {
-        removePendingRequest(config); // 检查是否存在重复请求，若存在则取消已发的请求
-        addPendingRequest(config); // 把当前请求信息添加到pendingRequest对象中
+        // removePendingRequest(config); // 检查是否存在重复请求，若存在则取消已发的请求
+        // addPendingRequest(config); // 把当前请求信息添加到pendingRequest对象中
         config.params = {
             ...config.params,
             realIP: window.returnCitySN.cip ?? undefined,
@@ -68,14 +68,14 @@ axios.interceptors.request.use(
 );
 axios.interceptors.response.use(
     (res) => {
-        removePendingRequest(res.config); // 从pendingRequest对象中移除请求
+        // removePendingRequest(res.config); // 从pendingRequest对象中移除请求
         if (res.status === 200) {
             return Promise.resolve(res.data);
         }
     },
     (err) => {
         console.log(err.response.data);
-        removePendingRequest(err.config || {}); // 从pendingRequest对象中移除请求
+        // removePendingRequest(err.config || {}); // 从pendingRequest对象中移除请求
         if (Axios.isCancel(err)) {
             console.log("已取消的重复请求：" + err.message);
         } else {

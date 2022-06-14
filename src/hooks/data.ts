@@ -10,7 +10,7 @@ type Action<T> =
     | { type: "fetched"; payload: T }
     | { type: "error"; payload: Error };
 
-export const useFetch = <T = unknown>(request: Promise<unknown>) => {
+export const useFetch = <T>(request: () => Promise<T>) => {
     const initialState: State<T> = {
         error: undefined,
         data: undefined,
@@ -31,13 +31,15 @@ export const useFetch = <T = unknown>(request: Promise<unknown>) => {
     useEffect(() => {
         const fetchData = async () => {
             dispatch({ type: "loading" });
-            request
+            request()
                 .then((res) => {
+                    console.log("res");
+                    console.log(res);
                     dispatch({ type: "fetched", payload: res as T });
                 })
                 .catch((err) => dispatch({ type: "error", payload: err }));
         };
         fetchData();
-    }, [request]);
+    }, []);
     return state;
 };

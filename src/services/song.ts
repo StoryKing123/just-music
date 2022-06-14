@@ -81,6 +81,7 @@ export const getRecommedSong = async () => {
 };
 
 export const getUserPlaylist = async (id: number) => {
+    console.trace("!!!!");
     return await axios.requestGet<API.UserPlaylist>(`/user/playlist?uid=${id}`);
 };
 

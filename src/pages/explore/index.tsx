@@ -1,5 +1,7 @@
+import CircularProgressWrapper from "@/components/CircularProgressWrapper";
 import PlayListCard from "@/components/PlayListCard";
 import PlayListDetail from "@/components/PlayListDetail";
+import { useFetch } from "@/hooks/data";
 import { getListSong } from "@/services/song";
 import { getToplist } from "@/services/toplist";
 import { log } from "console";
@@ -10,6 +12,7 @@ import { toast } from "react-toastify";
 const Explore: FC = () => {
     const [toplist, setToplist] = useState<API.Toplist[]>([]);
     const [toplistSongs, setToplistSongs] = useState<API.Song[][]>([]);
+    const { data, error } = useFetch(() => getToplist());
     const navigate = useNavigate();
     useEffect(() => {
         const initData = async () => {
@@ -32,30 +35,21 @@ const Explore: FC = () => {
         };
         initData();
     }, []);
+    if (error) {
+        return <div>error</div>;
+    }
+    if (!data) {
+        return (
+            <div>
+                <CircularProgressWrapper />
+            </div>
+        );
+    }
     return (
         <div className="flex flex-col p-10 pb-20">
             <div>
                 {toplist && (
                     <>
-                        {/* <div className="flex flex-col gap-10 justify-center ">
-                            {toplist.slice(0, 4).map((item, index) => (
-                                <div className="flex gap-10">
-                                    <div className="w-40 " key={item.id}>
-                                        <PlayListCard
-                                            title={item.name}
-                                            cover={item.coverImgUrl}
-                                        ></PlayListCard>
-                                    </div>
-                                    <div className="flex-1">
-                                        {toplistSongs && (
-                                            <PlayListDetail
-                                                songList={toplistSongs[index]}
-                                            ></PlayListDetail>
-                                        )}
-                                    </div>
-                                </div>
-                            ))}
-                        </div> */}
                         <div
                             className="grid gap-4  "
                             style={{
@@ -64,7 +58,7 @@ const Explore: FC = () => {
                                     "repeat(auto-fill, minmax(6rem,8rem))",
                             }}
                         >
-                            {toplist.map((item) => (
+                            {data?.list.map((item) => (
                                 <div className="w-full" key={item.id}>
                                     <PlayListCard
                                         onClick={() =>
