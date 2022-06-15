@@ -4,6 +4,8 @@ import PlayListDetail from "@/components/PlayListDetail";
 import { useFetch } from "@/hooks/data";
 import { getListSong } from "@/services/song";
 import { getToplist } from "@/services/toplist";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 import { log } from "console";
 import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
@@ -38,17 +40,24 @@ const Explore: FC = () => {
     if (error) {
         return <div>error</div>;
     }
-    if (!data) {
-        return (
-            <div>
-                <CircularProgressWrapper />
-            </div>
-        );
-    }
+    // if (!data) {
+    //     return (
+    //         <div>
+    //             <Stack spacing={1}>
+    //                 <Skeleton variant="text" />
+    //                 <Skeleton variant="circular" width={40} height={40} />
+    //                 <Skeleton variant="rectangular" width={210} height={118} />
+    //             </Stack>
+    //             {/* <CircularProgressWrapper /> */}
+    //         </div>
+    //     );
+    // }
+    const arr = new Array(40).fill(0);
+
     return (
         <div className="flex flex-col p-10 pb-20">
             <div>
-                {toplist && (
+                {data?.list ? (
                     <>
                         <div
                             className="grid gap-4  "
@@ -71,6 +80,29 @@ const Explore: FC = () => {
                             ))}
                         </div>
                     </>
+                ) : (
+                    <div
+                        className="grid gap-4  "
+                        style={{
+                            justifyContent: "space-between",
+                            gridTemplateColumns:
+                                "repeat(auto-fill, minmax(6rem,8rem))",
+                        }}
+                    >
+                        {arr.map(() => (
+                            <div className="w-full">
+                                <Skeleton
+                                    sx={{ bgcolor: "#15202B" }}
+                                    variant="rectangular"
+                                    height={118}
+                                />
+                                <Skeleton
+                                    sx={{ bgcolor: "#15202B" }}
+                                    variant="text"
+                                />
+                            </div>
+                        ))}
+                    </div>
                 )}
             </div>
         </div>

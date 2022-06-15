@@ -3,6 +3,7 @@ import { useEffect, useReducer } from "react";
 interface State<T> {
     data?: T;
     error?: Error;
+    loading: boolean;
 }
 
 type Action<T> =
@@ -14,15 +15,24 @@ export const useFetch = <T>(request: () => Promise<T>) => {
     const initialState: State<T> = {
         error: undefined,
         data: undefined,
+        loading: true,
     };
     const fetchReducer = (state: State<T>, action: Action<T>): State<T> => {
         switch (action.type) {
             case "loading":
                 return { ...initialState };
             case "fetched":
-                return { ...initialState, data: action.payload };
+                return {
+                    ...initialState,
+                    data: action.payload,
+                    loading: false,
+                };
             case "error":
-                return { ...initialState, error: action.payload };
+                return {
+                    ...initialState,
+                    error: action.payload,
+                    loading: false,
+                };
             default:
                 return state;
         }
