@@ -11,48 +11,30 @@ import { getListInfo, getListSong } from "@/services/song";
 import { useFetch } from "@/hooks/data";
 import Stack from "@mui/material/Stack";
 import Skeleton from "@mui/material/Skeleton";
+import SkeletonWrapper from "@/components/SkeletonWrapper";
 
 const Playlist: FC = () => {
     const setMusic = useSetRecoilState(musicState);
     const [name, bem] = createNamespace("play-list");
-    const [playlist, setPlaylist] = useState<
-        API.PlayList["playlist"] | undefined
-    >();
-    const [songList, setSongList] = useState<API.Song[]>();
+    // const [playlist, setPlaylist] = useState<
+    //     API.PlayList["playlist"] | undefined
+    // >();
+    // const [songList, setSongList] = useState<API.Song[]>();
     const { playSong } = useAudio();
     const params = useParams();
     const id = params.id;
-
     const { data, error, loading } = useFetch(() =>
         Promise.all([getListInfo(+id!), getListSong(+id!)])
     );
     console.log(data);
+    const playlist = data ? data[0].playlist : undefined;
+    const songList = data ? data[1].songs : undefined;
 
-    const handleGetData = async () => {
-        if (!id) {
+    const totalDuration = useMemo(() => {
+        if (!songList) {
             return;
         }
-        const allRes = await Promise.all([getListInfo(+id), getListSong(+id)]);
-        const [infoRes, SongRes] = allRes;
-        setPlaylist(infoRes.playlist);
-        setSongList(SongRes.songs);
-    };
-
-    const handlePlayPlayList = async () => {
-        if (!songList) return;
-        playSong(songList[0]);
-        setMusic((music) => ({
-            ...music,
-            playList: songList,
-        }));
-    };
-
-    const randomPlay = () => {
-        songList &&
-            playSong(songList[Math.floor(Math.random() * songList.length)]);
-    };
-    const totalDuration = useMemo(() => {
-        if (!songList) return;
+        console.log(songList);
         const getHoursAndMinutes = (time: number) => {
             const hours = Math.floor(time / (1000 * 60 * 60));
             const minutes = Math.floor(time / 1000 / 60) % 60;
@@ -62,19 +44,16 @@ const Playlist: FC = () => {
             songList.map((item) => item.dt).reduce((prev, cur) => prev + cur)
         );
     }, [songList]);
-    useEffect(() => {
-        handleGetData();
-    }, [id]);
+ 
     if (loading) {
         return (
             <div className={name + " p-20 select-none"}>
                 <div className="flex">
                     <div className={`w-60 shrink-0  h-auto `}>
-                        <Skeleton
-                            sx={{ bgcolor: "#15202B" }}
+                        <SkeletonWrapper
                             variant="rectangular"
-                            width={210}
-                            height={118}
+                            height={"15rem"}
+                            width={"15rem"}
                         />
                     </div>
                     <div className=" m-4 w-3/4">
@@ -87,63 +66,49 @@ const Playlist: FC = () => {
                         </div>
                         <div>
                             <div className="text-left ">
-                                播放列表 • {playlist?.creator.nickname} •{" "}
-                                {praseTimestampIntoDate(
-                                    playlist?.updateTime,
-                                    false
-                                )}
+                                <SkeletonWrapper variant="text" />
                             </div>
                             <div className="text-left ">
-                                {playlist?.trackIds.length} 首歌曲 •{" "}
-                                {totalDuration}
+                                <SkeletonWrapper variant="text" />
+                                <SkeletonWrapper variant="text" />
                             </div>
                         </div>
                         <div className="py-4 text-left pb-0 overflow-hidden line-clamp-2">
-                            {playlist?.description}
+                            <SkeletonWrapper variant="text" />
+                            <SkeletonWrapper variant="text" />
+                            <SkeletonWrapper variant="text" />
                         </div>
                         <div className="flex gap-2 mt-5">
-                            <Skeleton
-                                sx={{ bgcolor: "#15202B" }}
-                                variant="text"
-                            />
-                            {/* <Button onClick={handlePlayPlayList}>
-                                播放歌曲
-                            </Button>
-                            <Button onClick={randomPlay}>随机播放</Button> */}
+                            <SkeletonWrapper variant="text" />
                         </div>
                         <div></div>
                     </div>
                 </div>
                 {Array(20)
                     .fill(0)
-                    .map(() => (
-                        <Skeleton />
+                    .map((_, index) => (
+                        <SkeletonWrapper key={index} height={"3rem"} />
                     ))}
-                {/* <Suspense fallback={<div>loading</div>}>
-                    {songList && (
-                        <PlayListDetail songList={songList}></PlayListDetail>
-                    )}
-                </Suspense> */}
             </div>
-            // <div className={name + " p-20 select-none"}>
-            //     <Stack spacing={1}>
-            //         <Skeleton sx={{ bgcolor: "#15202B" }} variant="text" />
-            //         <Skeleton
-            //             sx={{ bgcolor: "#15202B" }}
-            //             variant="circular"
-            //             width={40}
-            //             height={40}
-            //         />
-            //         <Skeleton
-            //             sx={{ bgcolor: "#15202B" }}
-            //             variant="rectangular"
-            //             width={210}
-            //             height={118}
-            //         />
-            //     </Stack>
-            // </div>
         );
     }
+    if (data?.every((value) => value.code !== 200)) {
+        return <div>发生错误</div>;
+    }
+
+    const handlePlayPlayList = async () => {
+        if (!songList) return;
+        playSong(songList[0]);
+        setMusic((music) => ({
+            ...music,
+            playList: songList,
+        }));
+    };
+    const randomPlay = () => {
+        songList &&
+            playSong(songList[Math.floor(Math.random() * songList.length)]);
+    };
+
     return (
         <div className={name + " p-20 select-none"}>
             <div className="flex">
