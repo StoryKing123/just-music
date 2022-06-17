@@ -1,11 +1,17 @@
 import { getSongDetail, searchSuggest } from "@/services/song";
-import { ChangeEvent, FC, MouseEventHandler, useState } from "react";
+import {
+    ChangeEvent,
+    FC,
+    MouseEventHandler,
+    useState,
+    KeyboardEventHandler,
+} from "react";
 import { throttle } from "lodash";
 import { createNamespace, extractObjectArrayAttr, THEME } from "@/utils";
 import { Link, useNavigate } from "react-router-dom";
 import searchDark from "@/assets/icons/search-dark.svg";
 import searchLight from "@/assets/icons/search-light.svg";
-import { useAudio, useTheme } from "@/hooks";
+import { useAudio, useEventListener, useTheme } from "@/hooks";
 import "./index.less";
 
 type SearchProps = {
@@ -49,6 +55,16 @@ const Search: FC<SearchProps> = (props) => {
         navigate(`/artist/${id}`);
         props.close && props.close();
     };
+
+    // useEventListener('keydown',()=>{},)
+    const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+        // console.log(e.currentTarget);
+        if (e.key === "Enter") {
+            navigate(`/search/${e.currentTarget.value}`);
+            props.close && props.close();
+        }
+    };
+
     return (
         <div className=" overflow-scroll scroll-bar-hide  px-6 h-full">
             <div className="flex">
@@ -60,6 +76,7 @@ const Search: FC<SearchProps> = (props) => {
                     placeholder="Search Music"
                     className={`${bem("input")}`}
                     onChange={handleInput}
+                    onKeyDown={handleKeyDown}
                     type="text"
                 />
             </div>

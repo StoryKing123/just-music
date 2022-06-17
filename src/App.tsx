@@ -16,6 +16,7 @@ import Media from "./pages/media";
 import Explore from "./pages/explore";
 import DailyRecommend from "./pages/dailyRecommend";
 import Detail from "./components/Detail";
+import Search from "./pages/search";
 
 function App() {
     const initTheme = useInitTheme();
@@ -56,6 +57,10 @@ function App() {
                     <Route
                         path="artist/:id"
                         element={<Artist></Artist>}
+                    ></Route>
+                    <Route
+                        path="search/:keyword"
+                        element={<Search></Search>}
                     ></Route>
                     <Route path="media" element={<Media></Media>}></Route>
                 </Routes>

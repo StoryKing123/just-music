@@ -17,12 +17,16 @@ const Login: FC<LoginProps> = (props) => {
     const telOrEmailRef = useRef<HTMLInputElement>(null);
     const passwordInputRef = useRef<HTMLInputElement>(null);
     const [login] = useAuth();
-    useEventListener("keyup", (e) => {
-        // console.log(e);
-        if (e.key === "Enter") {
-            handleLogin();
-        }
-    });
+    useEventListener(
+        "keyup",
+        (e) => {
+            // console.log(e);
+            if (e.key === "Enter") {
+                handleLogin();
+            }
+        },
+        passwordInputRef
+    );
 
     const handleLogin = async () => {
         if (!(passwordInputRef.current && telOrEmailRef.current)) {
@@ -50,7 +54,6 @@ const Login: FC<LoginProps> = (props) => {
         } else {
             toast.error(res.msg);
         }
-
     };
     const style = props.isShow
         ? {
