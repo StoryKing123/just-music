@@ -16,10 +16,6 @@ import SkeletonWrapper from "@/components/SkeletonWrapper";
 const Playlist: FC = () => {
     const setMusic = useSetRecoilState(musicState);
     const [name, bem] = createNamespace("play-list");
-    // const [playlist, setPlaylist] = useState<
-    //     API.PlayList["playlist"] | undefined
-    // >();
-    // const [songList, setSongList] = useState<API.Song[]>();
     const { playSong } = useAudio();
     const params = useParams();
     const id = params.id;

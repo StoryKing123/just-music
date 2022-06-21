@@ -88,3 +88,25 @@ export const getUserPlaylist = async (id: number) => {
 export const getUserCloud = async () => {
     return axios.requestGet<API.UserCloud>(`/user/cloud?limit=1000`);
 };
+
+export enum SEARCH_TYPE {
+    SONG = 1,
+    ALBUM = 10,
+    ARTIST = 100,
+    PLAYLIST = 1000,
+}
+
+export const getAllTypeSearch = async (keyword: string) => {
+    const arr: any[] = [];
+    for (let value in SEARCH_TYPE) {
+        // console.log(value);
+    }
+    Object.values(SEARCH_TYPE).forEach((item) => console.log(item));
+    // Object.values((value: SEARCH_TYPE) => arr.push(getSearch(keyword, value)));
+    console.log(arr);
+
+    return Promise.allSettled(arr);
+};
+export const getSearch = async (keyword: string, type: SEARCH_TYPE) => {
+    return axios.requestGet(`/cloudsearch?keywords=${keyword}&type=${type}`);
+};

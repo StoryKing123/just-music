@@ -14,12 +14,9 @@ import User from "./User";
 type NavBarProps = {};
 const NavBar: FC<NavBarProps> = () => {
     const [isShowLogin, setShowLogin] = useState(false);
-    const [isShowSearch, setShowSearch] = useState(false);
-    const [user] = useRecoilState(userState);
-
-    const [_, logout] = useAuth();
-    // console.log(user);
-    console.log("nav bar render");
+    // const [isShowSearch, setShowSearch] = useState(false);
+    // const [user] = useRecoilState(userState);
+    // const [_, logout] = useAuth();
 
     const closeSearch = () => {
         close();
