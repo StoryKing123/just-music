@@ -40,18 +40,6 @@ const Explore: FC = () => {
     if (error) {
         return <div>error</div>;
     }
-    // if (!data) {
-    //     return (
-    //         <div>
-    //             <Stack spacing={1}>
-    //                 <Skeleton variant="text" />
-    //                 <Skeleton variant="circular" width={40} height={40} />
-    //                 <Skeleton variant="rectangular" width={210} height={118} />
-    //             </Stack>
-    //             {/* <CircularProgressWrapper /> */}
-    //         </div>
-    //     );
-    // }
     const arr = new Array(40).fill(0);
 
     return (

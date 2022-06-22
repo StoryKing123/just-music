@@ -98,13 +98,10 @@ export enum SEARCH_TYPE {
 
 export const getAllTypeSearch = async (keyword: string) => {
     const arr: any[] = [];
-    for (let value in SEARCH_TYPE) {
-        // console.log(value);
-    }
-    Object.values(SEARCH_TYPE).forEach((item) => console.log(item));
-    // Object.values((value: SEARCH_TYPE) => arr.push(getSearch(keyword, value)));
+    Object.values(SEARCH_TYPE)
+        .filter((value) => Number.isInteger(value))
+        .forEach((value) => arr.push(getSearch(keyword, value as SEARCH_TYPE)));
     console.log(arr);
-
     return Promise.allSettled(arr);
 };
 export const getSearch = async (keyword: string, type: SEARCH_TYPE) => {
