@@ -11,7 +11,7 @@
 - 使用Tauri + React进行开发,基于Webview2，低占用
 - 没有其他杂七杂八的功能，只有纯粹的听歌
 - 支持网易云手机邮箱账号登录
-- 解锁VIP歌曲（[UnblockNeteaseMusic/server-rust](https://github.com/UnblockNeteaseMusic/server-rust)）
+- 使用（[UnblockNeteaseMusic/server-rust](https://github.com/UnblockNeteaseMusic/server-rust)）
 - 切换主题（目前只有深色模式，浅色主题还没有配置好颜色）
 - 音乐云盘
 ## 🚀 开发中
@@ -19,11 +19,13 @@
 - [x] 每日歌曲
 - [ ] 搜索页
 - [x] 榜单库
+- [ ] QQ音乐(高优先级)
 ## 📚 待开发
 
 - 歌词页
 - 播放模式
 - 扫码登录/验证码登录
+- 自定义接口
 ## ✋ 快捷键
 目前暂不支持手动设置快捷键
 
@@ -42,5 +44,7 @@
 ## 📜 许可
 [The MIT License (MIT)](https://github.com/StoryKing123/just-music/blob/dev-tauri/LICENSE)
 ## 📖 声明
+本软件仅供学习使用，绝无收费情况，如有侵权，请联系作者删除
+
 API使用[Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
 
