@@ -25,6 +25,7 @@ pub async fn get_song_url(name: String, artist: String) -> Result<String, String
         .name(name.to_string())
         .artists(vec![Artist::builder().name(artist.to_string()).build()])
         .build();
+    println!("name:{},artist:{}", name, artist);
 
     let search_result = executor
         .search(

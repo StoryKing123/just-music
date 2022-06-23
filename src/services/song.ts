@@ -101,7 +101,7 @@ export const getAllTypeSearch = async (keyword: string) => {
     Object.values(SEARCH_TYPE)
         .filter((value) => Number.isInteger(value))
         .forEach((value) => arr.push(getSearch(keyword, value as SEARCH_TYPE)));
-    console.log(arr);
+    // console.log(arr);
     return Promise.allSettled(arr);
 };
 export const getSearch = async (keyword: string, type: SEARCH_TYPE) => {

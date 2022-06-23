@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { isFreeSong } from "@/utils";
 
 type UseAudioReturnType = {
-    playSong: (song: API.Song, config?: { origin: boolean }) => void;
+    playSong: (song: Song, config?: { origin: boolean }) => void;
     playOrPauseSong: (isPlay?: boolean) => void;
     playPreviousOrNextSong: (type: "next" | "previous") => void;
 };

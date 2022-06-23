@@ -2,15 +2,17 @@ import { useAudio } from "@/hooks";
 import { parseTimestampIntoMinute } from "@/utils/date";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
+
 type PlayListDetailProps = {
-    songList: API.Song[];
-    play?: (song: API.Song) => any;
+    songList: Song[];
+    play?: (song: Song) => any;
 };
 const PlayListDetail: FC<PlayListDetailProps> = (props) => {
+    console.log(props);
     const { songList } = props;
     const { playSong } = useAudio();
     const navigate = useNavigate();
-    const handlePlaySong = async (song: API.Song) => {
+    const handlePlaySong = async (song: Song) => {
         props.play ? props.play(song) : playSong(song);
     };
 

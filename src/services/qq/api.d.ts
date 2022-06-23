@@ -25,11 +25,11 @@ declare namespace API {
         export interface Semantic {
             curnum: number;
             curpage: number;
-            list: List[];
+            list: Song[];
             totalnum: number;
         }
 
-        export interface List {
+        export interface Song {
             albumid: number;
             albummid: string;
             albumname: string;
@@ -39,7 +39,7 @@ declare namespace API {
             cdIdx: number;
             chinesesinger: number;
             docid: string;
-            grp?: List[];
+            grp?: Song[];
             interval: number;
             isonly: number;
             lyric: string;
