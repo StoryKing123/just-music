@@ -15,7 +15,7 @@ const PlayerPlayList: FC<PlayerPlayListProps> = (props) => {
     const [music] = useRecoilState(musicState);
     const {playSong} = useAudio();
 
-    const handlePlaySong = async (song: API.Song) => {
+    const handlePlaySong = async (song: Song) => {
         playSong(song);
     };
     return (

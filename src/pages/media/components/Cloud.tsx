@@ -15,7 +15,7 @@ const Cloud = () => {
         };
         initData();
     }, []);
-    const play = (song: API.Song) => {
+    const play = (song: Song) => {
         playSong(song, { origin: true });
     };
     return (

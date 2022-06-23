@@ -9,7 +9,7 @@ import { useRecoilState } from "recoil";
 export const useInitMusic = () => {
     const [music, setMusic] = useRecoilState(musicState);
     const initFn = () => {
-        const updateSrc = (currentSong: API.Song) => {
+        const updateSrc = (currentSong: Song) => {
             const { id, name, ar } = currentSong;
             getSongUrl(id, name, ar[0].name).then((res) => {
                 setAudioSrc(res);
