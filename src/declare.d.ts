@@ -8,3 +8,4 @@ type Song = {
     ar: { id: number; name: string }[];
     fee: number;
 };
+type LoadingStatus = "loading" | "loaded" | "nomore";

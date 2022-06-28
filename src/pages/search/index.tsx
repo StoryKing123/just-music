@@ -52,20 +52,21 @@ const search = () => {
         <div className="p-10">
             <Tabs value={tabIndex} onChange={handleChange}>
                 <Tab label="歌曲"></Tab>
-                <Tab label="专辑"></Tab>
+                {/* <Tab label="专辑"></Tab>
                 <Tab label="歌手"></Tab>
                 <Tab label="歌单"></Tab>
+                  <Tab label="QQ音乐歌单"></Tab>
+                */}
                 <Tab label="QQ音乐歌曲"></Tab>
-                <Tab label="QQ音乐歌单"></Tab>
             </Tabs>
             <TabPanel index={0} value={tabIndex}>
                 {/* <Playlist></Playlist> */}
                 <Song songList={data[0].value.result.songs}></Song>
             </TabPanel>
+            {/* <TabPanel index={1} value={tabIndex}> */}
+            {/* <Cloud></Cloud> */}
+            {/* </TabPanel> */}
             <TabPanel index={1} value={tabIndex}>
-                {/* <Cloud></Cloud> */}
-            </TabPanel>
-            <TabPanel index={4} value={tabIndex}>
                 <QQSong
                     keyword={keyword}
                     songList={qqData[0].value.data.song.list}

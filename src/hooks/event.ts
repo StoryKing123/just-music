@@ -1,5 +1,11 @@
 import { throttle } from "lodash";
-import { RefObject, useEffect, useLayoutEffect, useRef } from "react";
+import {
+    RefObject,
+    useEffect,
+    useLayoutEffect,
+    useReducer,
+    useRef,
+} from "react";
 
 export function useEventListener<K extends keyof WindowEventMap>(
     eventName: K,
@@ -55,7 +61,9 @@ const isTouchBottom = (handler: Function) => {
     // 所有内容高度
     const allHeight = document.body.scrollHeight;
     // (所有内容高度 = 文档显示区域高度 + 网页卷曲高度) 时即为触底
-    if (allHeight <= showHeight + scrollTopHeight) {
+    if (allHeight <= showHeight + scrollTopHeight + 100) {
+        // (handler() as unknown as Promise<any>).then(res=>{
+        // });
         handler();
     }
 };
@@ -71,6 +79,54 @@ export const useTouchBottom = (fn: Function) => {
     useEventListener("scroll", useFn);
 };
 
+export const useBottomLoad = <T>(fetchFn: Promise<T>) => {
+    const page = useRef(1);
+    interface State<T> {
+        data?: T;
+        error?: Error;
+        loading: boolean;
+        page: number;
+    }
+
+    type Action<T> =
+        | { type: "loading" }
+        | { type: "fetched"; payload: T }
+        | { type: "error"; payload: Error };
+
+    const initialState: State<T> = {
+        loading: true,
+        data: undefined,
+        error: undefined,
+        page: 1,
+    };
+    const fetchReducer = (state: State<T>, action: Action<T>): State<T> => {
+        switch (action.type) {
+            case "loading":
+                return { ...initialState };
+            case "fetched":
+                return {
+                    ...initialState,
+                    data: action.payload,
+                    loading: false,
+                };
+            case "error":
+                return {
+                    ...initialState,
+                    error: action.payload,
+                    loading: false,
+                };
+            default:
+                return state;
+        }
+    };
+    useTouchBottom(() => {
+        fetchFn.then((res) => {
+            console.log(res);
+            console.log("end");
+        });
+    });
+    const [state, dispatch] = useReducer(fetchReducer, initialState);
+};
 // export const useEventListener = <K extends keyof WindowEventMap>(
 //     eventName: K,
 //     handler: (event: WindowEventMap[K]) => void
