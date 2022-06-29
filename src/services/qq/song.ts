@@ -22,7 +22,7 @@ export const getQQSearch = async (
     config: {
         page?: number;
         limit?: number;
-    } = { page: 1, limit: 20 }
+    } = { page: 1, limit: 30 }
 ) => {
     return qqAxios.requestGet<API.QQ.SearchResponse>(
         `getSearchByKey?key=${keyword}&type=${type}&limit=${config.limit}&page=${config.page}`

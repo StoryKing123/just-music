@@ -61,7 +61,10 @@ const search = () => {
             </Tabs>
             <TabPanel index={0} value={tabIndex}>
                 {/* <Playlist></Playlist> */}
-                <Song songList={data[0].value.result.songs}></Song>
+                <Song
+                    keyword={keyword}
+                    songList={data[0].value.result.songs}
+                ></Song>
             </TabPanel>
             {/* <TabPanel index={1} value={tabIndex}> */}
             {/* <Cloud></Cloud> */}

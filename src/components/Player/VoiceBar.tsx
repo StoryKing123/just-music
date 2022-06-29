@@ -27,7 +27,6 @@ const VoiceBar: FC<VoiceBarProps> = (props) => {
         let volume = (rect.bottom - e.clientY) / rect.height;
         setVolume(volume);
         props.onHandleMouseDown();
-
         const mouseMove = (event: MouseEvent) => {
             let volume = (rect.bottom - event.clientY) / rect.height;
             setVolume(volume);
