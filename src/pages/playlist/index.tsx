@@ -40,8 +40,9 @@ const Playlist: FC = () => {
             songList.map((item) => item.dt).reduce((prev, cur) => prev + cur)
         );
     }, [songList]);
- 
+
     if (loading) {
+    // if (1 == 1) {
         return (
             <div className={name + " p-20 select-none"}>
                 <div className="flex">
@@ -55,10 +56,7 @@ const Playlist: FC = () => {
                     <div className=" m-4 w-3/4">
                         <div className="text-5xl font-bold text-left ">
                             {/* {playlist?.name} */}
-                            <Skeleton
-                                sx={{ bgcolor: "#15202B" }}
-                                variant="text"
-                            />
+                            <SkeletonWrapper />
                         </div>
                         <div>
                             <div className="text-left ">
@@ -75,15 +73,15 @@ const Playlist: FC = () => {
                             <SkeletonWrapper variant="text" />
                         </div>
                         <div className="flex gap-2 mt-5">
-                            <SkeletonWrapper variant="text" />
+                            {/* <SkeletonWrapper variant="text" /> */}
                         </div>
-                        <div></div>
+                        {/* <div></div> */}
                     </div>
                 </div>
                 {Array(20)
                     .fill(0)
                     .map((_, index) => (
-                        <SkeletonWrapper key={index} height={"3rem"} />
+                        <SkeletonWrapper key={index} height={"4rem"} />
                     ))}
             </div>
         );
