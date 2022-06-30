@@ -101,7 +101,6 @@ export const getAllTypeSearch = async (keyword: string) => {
     Object.values(SEARCH_TYPE)
         .filter((value) => Number.isInteger(value))
         .forEach((value) => arr.push(getSearch(keyword, value as SEARCH_TYPE)));
-    // console.log(arr);
     return Promise.allSettled(arr);
 };
 export const getSearch = async (
@@ -109,9 +108,7 @@ export const getSearch = async (
     type: SEARCH_TYPE,
     config: { limit?: number; offset?: number } = { limit: 30, offset: 0 }
 ) => {
-    console.log(config);
-    
-    return axios.requestGet(
-        `/cloudsearch?keywords=${keyword}&type=${type}&limit=${config.limit}&offset=${config.limit}`
+    return axios.requestGet<API.SearchSong>(
+        `/cloudsearch?keywords=${keyword}&type=${type}&limit=${config.limit}&offset=${config.offset}`
     );
 };

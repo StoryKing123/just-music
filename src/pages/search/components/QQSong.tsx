@@ -8,7 +8,7 @@ import { PAGE_SIZE } from "@/const";
 
 type SongProps = { songList: API.QQ.Song[]; keyword: string; isShow: boolean };
 const QQSong: FC<SongProps> = (props) => {
-    const page = useRef(1);
+    const page = useRef(2);
     const listRef = useRef<HTMLDivElement>(null);
     const [songList, setSongList] = useState(props.songList);
     const [loading, setLoading] = useState<LoadingStatus>("loaded");
@@ -19,7 +19,6 @@ const QQSong: FC<SongProps> = (props) => {
         }
         try {
             setLoading("loading");
-            page.current = page.current + 1;
             const res = await getQQSearch(props.keyword, QQ_SEARCH_TYPE.SONG, {
                 page: page.current,
                 limit: PAGE_SIZE,
@@ -29,6 +28,7 @@ const QQSong: FC<SongProps> = (props) => {
                 ...removeDuplicateQQSong(res.data.song.list),
             ]);
             setLoading("loaded");
+            page.current = page.current + 1;
             return res;
         } catch (error) {
             setLoading("loaded");

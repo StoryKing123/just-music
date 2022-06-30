@@ -1,3 +1,4 @@
+import CircularProgressWrapper from "@/components/CircularProgressWrapper";
 import Tabs, { Tab } from "@/components/Tabs";
 import TabPanel from "@/components/Tabs/TabPanel";
 import { useFetch } from "@/hooks/data";
@@ -27,9 +28,12 @@ const search = () => {
         loading: qqLoading,
         error: qqError,
     } = useFetch(() => getQQAllTypeSearch(keyword));
-    console.log(qqData);
+    if (loading || qqLoading) {
+        return <CircularProgressWrapper />;
+    }
+    // console.log(qqData);
 
-    console.log(data);
+    // console.log(data);
     if (!data) {
         return <></>;
     }
