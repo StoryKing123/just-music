@@ -6,18 +6,15 @@ import LoadMore from "@/components/LoadMore";
 import { removeDuplicateQQSong } from "@/utils";
 import { PAGE_SIZE } from "@/const";
 
-type SongProps = { songList: API.QQ.Song[]; keyword: string };
+type SongProps = { songList: API.QQ.Song[]; keyword: string; isShow: boolean };
 const QQSong: FC<SongProps> = (props) => {
     const page = useRef(1);
+    const listRef = useRef<HTMLDivElement>(null);
     const [songList, setSongList] = useState(props.songList);
     const [loading, setLoading] = useState<LoadingStatus>("loaded");
-    // useBottomLoad(
-    //     getQQSearch(props.keyword, QQ_SEARCH_TYPE.SONG, {
-    //         page: page.current,
-    //     })
-    // );
+
     const handleLoadMore = async () => {
-        if (loading === "loading") {
+        if (loading === "loading" || !props.isShow) {
             return;
         }
         try {
@@ -40,7 +37,7 @@ const QQSong: FC<SongProps> = (props) => {
     useTouchBottom(handleLoadMore);
 
     return (
-        <div className="pb-20">
+        <div className="pb-20" ref={listRef}>
             <PlayListDetail songList={songList} />
             <LoadMore status={loading} />
         </div>

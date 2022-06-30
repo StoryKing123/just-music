@@ -62,6 +62,7 @@ const search = () => {
             <TabPanel index={0} value={tabIndex}>
                 {/* <Playlist></Playlist> */}
                 <Song
+                    isShow={0 === tabIndex}
                     keyword={keyword}
                     songList={data[0].value.result.songs}
                 ></Song>
@@ -71,6 +72,7 @@ const search = () => {
             {/* </TabPanel> */}
             <TabPanel index={1} value={tabIndex}>
                 <QQSong
+                    isShow={1 === tabIndex}
                     keyword={keyword}
                     songList={qqData[0].value.data.song.list}
                 ></QQSong>

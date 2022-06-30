@@ -56,7 +56,6 @@ const Search: FC<SearchProps> = (props) => {
         props.close && props.close();
     };
 
-    // useEventListener('keydown',()=>{},)
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
         // console.log(e.currentTarget);
         if (e.key === "Enter") {

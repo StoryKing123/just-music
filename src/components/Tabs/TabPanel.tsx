@@ -10,12 +10,12 @@ const TabPanel = (props: TabPanelProps) => {
         <div
             role="tabpanel"
             hidden={value !== index}
+            // className={`${'block':'hidden'}  `}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
             {...other}
         >
             {children}
-            {/* {value === index && children} */}
         </div>
     );
 };
