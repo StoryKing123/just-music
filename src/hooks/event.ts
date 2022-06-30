@@ -53,29 +53,26 @@ export function useEventListener<
 }
 
 const isTouchBottom = (handler: Function) => {
-    // 文档显示区域高度
     const showHeight = window.innerHeight;
-    // 网页卷曲高度
     const scrollTopHeight =
         document.body.scrollTop || document.documentElement.scrollTop;
-    // 所有内容高度
     const allHeight = document.body.scrollHeight;
     // (所有内容高度 = 文档显示区域高度 + 网页卷曲高度) 时即为触底
     if (allHeight <= showHeight + scrollTopHeight + 100) {
-        // (handler() as unknown as Promise<any>).then(res=>{
-        // });
         handler();
     }
 };
 
-export const useTouchBottom = (fn: Function) => {
+export const useTouchBottom = (
+    fn: Function,
+    element?: RefObject<HTMLElement>
+) => {
     // const eventHandler = throttle(() => fn, 500);
     const useFn = throttle(() => {
         if (typeof fn === "function") {
             isTouchBottom(fn);
         }
     }, 500);
-
     useEventListener("scroll", useFn);
 };
 
@@ -119,12 +116,12 @@ export const useBottomLoad = <T>(fetchFn: Promise<T>) => {
                 return state;
         }
     };
-    useTouchBottom(() => {
-        fetchFn.then((res) => {
-            console.log(res);
-            console.log("end");
-        });
-    });
+    // useTouchBottom(() => {
+    //     fetchFn.then((res) => {
+    //         console.log(res);
+    //         console.log("end");
+    //     });
+    // });
     const [state, dispatch] = useReducer(fetchReducer, initialState);
 };
 // export const useEventListener = <K extends keyof WindowEventMap>(

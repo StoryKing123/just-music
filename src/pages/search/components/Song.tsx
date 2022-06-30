@@ -5,13 +5,13 @@ import { getSearch, SEARCH_TYPE } from "@/services/song";
 import { PAGE_SIZE } from "@/const";
 import { useTouchBottom } from "@/hooks";
 
-type SongProps = { songList: API.Song[]; keyword: string };
+type SongProps = { songList: API.Song[]; keyword: string; isShow: boolean };
 const Song: FC<SongProps> = (props) => {
     const page = useRef(1);
     const [songList, setSongList] = useState(props.songList);
     const [loading, setLoading] = useState<LoadingStatus>("loaded");
     const handleLoadMore = async () => {
-        if (loading === "loading") {
+        if (loading === "loading" || !props.isShow) {
             return;
         }
         try {
