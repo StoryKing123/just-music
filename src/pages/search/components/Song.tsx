@@ -3,7 +3,7 @@ import PlayListDetail from "@/components/PlayListDetail";
 import LoadMore from "@/components/LoadMore";
 import { getSearch, SEARCH_TYPE } from "@/services/song";
 import { PAGE_SIZE } from "@/const";
-import { useTouchBottom } from "@/hooks";
+import { useBottomLoad, useTouchBottom } from "@/hooks";
 
 type SongProps = { songList: API.Song[]; keyword: string; isShow: boolean };
 const Song: FC<SongProps> = (props) => {
@@ -11,19 +11,6 @@ const Song: FC<SongProps> = (props) => {
     const [songList, setSongList] = useState(props.songList);
     const [loading, setLoading] = useState<LoadingStatus>("loaded");
 
-    // const removeDuplicateQQSong = (arr: API.Song[]) => {
-    //     const newArr: API.Song[] = [];
-    //     arr.forEach((item) => {
-    //         if (newArr.findIndex((song) => song.id === item.id) > -1) {
-    //             console.log("--------");
-    //             console.log(item);
-    //             newArr.push(item);
-    //         }
-    //     });
-    //     return newArr;
-    // };
-
-    // removeDuplicateQQSong(songList);
     const handleLoadMore = async () => {
         if (loading === "loading" || !props.isShow) {
             return;
@@ -42,7 +29,22 @@ const Song: FC<SongProps> = (props) => {
             setLoading("loaded");
         }
     };
-    useTouchBottom(handleLoadMore);
+
+    // useTouchBottom(handleLoadMore);
+    const loadData = async (params: { current: number; pageSize: number }) => {
+        return getSearch(props.keyword, SEARCH_TYPE.SONG, {
+            offset: (params.current - 1) * params.pageSize,
+            limit: params.pageSize,
+        });
+        // const res = await getSearch(props.keyword, SEARCH_TYPE.SONG, {
+        //     offset: (params.current - 1) * params.pageSize,
+        //     limit: params.pageSize,
+        // });
+        // return res
+        // setSongList((list) => [...list, ...res.result.songs]);
+    };
+    const data = useBottomLoad(loadData);
+    console.log(data);
 
     return (
         <div className="pb-20">
