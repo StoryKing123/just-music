@@ -1,3 +1,4 @@
+import { PAGE_SIZE } from "@/const";
 import { throttle } from "lodash";
 import {
     RefObject,
@@ -5,6 +6,7 @@ import {
     useLayoutEffect,
     useReducer,
     useRef,
+    useState,
 } from "react";
 
 export function useEventListener<K extends keyof WindowEventMap>(
@@ -76,12 +78,14 @@ export const useTouchBottom = (
     useEventListener("scroll", useFn);
 };
 
-export const useBottomLoad = <T>(fetchFn: Promise<T>) => {
-    const page = useRef(1);
+export const useBottomLoad = <T>(fetchFn: (...args: any[]) => Promise<T>) => {
+    // const page = useRef(2);
+    // const [loading, setLoading] = useState<LoadingStatus>("loaded");
     interface State<T> {
         data?: T;
         error?: Error;
-        loading: boolean;
+        loading: LoadingStatus;
+        pageSize: number;
         page: number;
     }
 
@@ -91,10 +95,11 @@ export const useBottomLoad = <T>(fetchFn: Promise<T>) => {
         | { type: "error"; payload: Error };
 
     const initialState: State<T> = {
-        loading: true,
+        loading: "loaded",
         data: undefined,
         error: undefined,
-        page: 1,
+        pageSize: PAGE_SIZE,
+        page: 2,
     };
     const fetchReducer = (state: State<T>, action: Action<T>): State<T> => {
         switch (action.type) {
@@ -104,25 +109,29 @@ export const useBottomLoad = <T>(fetchFn: Promise<T>) => {
                 return {
                     ...initialState,
                     data: action.payload,
-                    loading: false,
+                    page: state.page + 1,
+                    loading: "loaded",
                 };
             case "error":
                 return {
                     ...initialState,
                     error: action.payload,
-                    loading: false,
+                    loading: "loaded",
                 };
             default:
                 return state;
         }
     };
-    // useTouchBottom(() => {
-    //     fetchFn.then((res) => {
-    //         console.log(res);
-    //         console.log("end");
-    //     });
-    // });
     const [state, dispatch] = useReducer(fetchReducer, initialState);
+
+    useTouchBottom(() => {
+        fetchFn({ current: state.page, pageSize: state.pageSize })
+            .then((res) => {
+                dispatch({ type: "fetched", payload: res as T });
+            })
+            .catch((err) => dispatch({ type: "error", payload: err }));
+    });
+    return state;
 };
 // export const useEventListener = <K extends keyof WindowEventMap>(
 //     eventName: K,
