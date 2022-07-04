@@ -14,6 +14,7 @@ module.exports = {
             },
             backgroundColor: {
                 base: "var(--color-base)",
+                nav: "var(--color-nav)",
                 "base-sub": "var(--color-base-sub)",
                 "base-player": "var(--color-player)",
                 search: "var(--color-search)",
