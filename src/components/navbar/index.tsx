@@ -38,7 +38,10 @@ const NavBar: FC<NavBarProps> = () => {
         open();
     };
     return (
-        <div className="flex fixed top-0 bg-base z-20 justify-center w-full  backdrop-blur-sm  gap-4 text-xl font-bold p-4 pr-0">
+        <div
+            // style={{ backgroundColor: "rgba(0,0,0,0)" }}
+            className="flex fixed top-0  z-20 justify-center w-full bg-nav backdrop-blur-sm  gap-4 text-xl font-bold p-4 pr-0"
+        >
             <div>
                 <Link to="/index">首页</Link>
             </div>
