@@ -3,48 +3,34 @@ import PlayListDetail from "@/components/PlayListDetail";
 import LoadMore from "@/components/LoadMore";
 import { getSearch, SEARCH_TYPE } from "@/services/song";
 import { PAGE_SIZE } from "@/const";
-import { useBottomLoad, useTouchBottom } from "@/hooks";
+import { LoadingAction, useBottomLoad, useTouchBottom } from "@/hooks";
 
 type SongProps = { songList: API.Song[]; keyword: string; isShow: boolean };
 const Song: FC<SongProps> = (props) => {
-    const page = useRef(2);
     const [songList, setSongList] = useState(props.songList);
-    const [loading, setLoading] = useState<LoadingStatus>("loaded");
-
-    const handleLoadMore = async () => {
-        if (loading === "loading" || !props.isShow) {
-            return;
-        }
-        try {
-            setLoading("loading");
-            const res = await getSearch(props.keyword, SEARCH_TYPE.SONG, {
-                offset: (page.current - 1) * PAGE_SIZE,
-                limit: PAGE_SIZE,
-            });
-            setSongList((list) => [...list, ...res.result.songs]);
-            setLoading("loaded");
-            page.current = page.current + 1;
-            return res;
-        } catch (error) {
-            setLoading("loaded");
-        }
-    };
-
-    // useTouchBottom(handleLoadMore);
-    const loadData = async (params: { current: number; pageSize: number }) => {
-        return getSearch(props.keyword, SEARCH_TYPE.SONG, {
+    const loadData = async (
+        params: { current: number; pageSize: number },
+        dispatch: React.Dispatch<LoadingAction<any>>
+    ) => {
+        const res = await getSearch(props.keyword, SEARCH_TYPE.SONG, {
             offset: (params.current - 1) * params.pageSize,
             limit: params.pageSize,
         });
-        // const res = await getSearch(props.keyword, SEARCH_TYPE.SONG, {
-        //     offset: (params.current - 1) * params.pageSize,
-        //     limit: params.pageSize,
-        // });
-        // return res
-        // setSongList((list) => [...list, ...res.result.songs]);
+        if (res.result.songCount === 0) {
+            dispatch({ type: "nomore" });
+        }
+        console.log(res);
+        res.result.songCount > 0 &&
+            setSongList((list) => [...list, ...res.result.songs]);
+
+        return res;
     };
-    const data = useBottomLoad(loadData);
+
+    const { loading, data, page } = useBottomLoad(loadData);
+
+    console.log(page);
     console.log(data);
+    console.log(loading);
 
     return (
         <div className="pb-20">
