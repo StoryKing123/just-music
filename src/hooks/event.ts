@@ -78,6 +78,12 @@ export const useTouchBottom = (
     useEventListener("scroll", useFn);
 };
 
+export type LoadingAction<T> =
+    | { type: "loading" }
+    | { type: "fetched"; payload: T }
+    | { type: "error"; payload: Error }
+    | { type: "nomore" };
+
 export const useBottomLoad = <T>(fetchFn: (...args: any[]) => Promise<T>) => {
     // const page = useRef(2);
     // const [loading, setLoading] = useState<LoadingStatus>("loaded");
@@ -89,10 +95,7 @@ export const useBottomLoad = <T>(fetchFn: (...args: any[]) => Promise<T>) => {
         page: number;
     }
 
-    type Action<T> =
-        | { type: "loading" }
-        | { type: "fetched"; payload: T }
-        | { type: "error"; payload: Error };
+    type Action<T> = LoadingAction<T>;
 
     const initialState: State<T> = {
         loading: "loaded",
@@ -102,21 +105,33 @@ export const useBottomLoad = <T>(fetchFn: (...args: any[]) => Promise<T>) => {
         page: 2,
     };
     const fetchReducer = (state: State<T>, action: Action<T>): State<T> => {
+        // console.log("=======");
+        // console.log(action);
+        // console.log(state);
+        // console.log("=======");
+        if (state.loading === "nomore") {
+            return state;
+        }
         switch (action.type) {
             case "loading":
-                return { ...initialState };
+                return { ...state, loading: "loading" };
             case "fetched":
                 return {
-                    ...initialState,
+                    ...state,
                     data: action.payload,
                     page: state.page + 1,
                     loading: "loaded",
                 };
             case "error":
                 return {
-                    ...initialState,
+                    ...state,
                     error: action.payload,
                     loading: "loaded",
+                };
+            case "nomore":
+                return {
+                    ...state,
+                    loading: "nomore",
                 };
             default:
                 return state;
@@ -125,7 +140,9 @@ export const useBottomLoad = <T>(fetchFn: (...args: any[]) => Promise<T>) => {
     const [state, dispatch] = useReducer(fetchReducer, initialState);
 
     useTouchBottom(() => {
-        fetchFn({ current: state.page, pageSize: state.pageSize })
+        if (state.loading === "loading" || state.loading === "nomore") return;
+        dispatch({ type: "loading" });
+        fetchFn({ current: state.page, pageSize: state.pageSize }, dispatch)
             .then((res) => {
                 dispatch({ type: "fetched", payload: res as T });
             })

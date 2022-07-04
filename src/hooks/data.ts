@@ -43,8 +43,6 @@ export const useFetch = <T>(request: () => Promise<T>) => {
             dispatch({ type: "loading" });
             request()
                 .then((res) => {
-                    console.log("res");
-                    console.log(res);
                     dispatch({ type: "fetched", payload: res as T });
                 })
                 .catch((err) => dispatch({ type: "error", payload: err }));
