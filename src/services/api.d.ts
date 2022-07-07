@@ -808,6 +808,83 @@ declare namespace API {
         songs: Song[];
         songCount: number;
     }
+    export interface Album {
+        resourceState: boolean;
+        songs:         Song[];
+        code:          number;
+        album:         AlbumClass;
+    }
+    
+    export interface AlbumClass {
+        songs:           any[];
+        paid:            boolean;
+        onSale:          boolean;
+        mark:            number;
+        alias:           string[];
+        artists:         Artist[];
+        copyrightId:     number;
+        picId:           number;
+        artist:          Artist;
+        publishTime:     number;
+        company:         string;
+        briefDesc:       string;
+        picUrl:          string;
+        commentThreadId: string;
+        pic:             number;
+        blurPicUrl:      string;
+        companyId:       number;
+        tags:            string;
+        description:     string;
+        status:          number;
+        subType:         string;
+        name:            string;
+        id:              number;
+        type:            string;
+        size:            number;
+        picId_str:       string;
+        info:            Info;
+    }
+    
+    
+    export interface Info {
+        commentThread:    CommentThread;
+        latestLikedUsers: null;
+        liked:            boolean;
+        comments:         null;
+        resourceType:     number;
+        resourceId:       number;
+        commentCount:     number;
+        likedCount:       number;
+        shareCount:       number;
+        threadId:         string;
+    }
+    
+    export interface CommentThread {
+        id:               string;
+        resourceInfo:     ResourceInfo;
+        resourceType:     number;
+        commentCount:     number;
+        likedCount:       number;
+        shareCount:       number;
+        hotCount:         number;
+        latestLikedUsers: null;
+        resourceOwnerId:  number;
+        resourceTitle:    string;
+        resourceId:       number;
+    }
+    
+    export interface ResourceInfo {
+        id:        number;
+        userId:    number;
+        name:      string;
+        imgUrl:    string;
+        creator:   null;
+        encodedId: null;
+        subTitle:  null;
+        webUrl:    null;
+    }
+  
+    
 
     // export interface Experts {}
 

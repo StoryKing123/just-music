@@ -19,9 +19,10 @@ const Playlist: FC = () => {
     const { playSong } = useAudio();
     const params = useParams();
     const id = params.id;
-    const { data, error, loading } = useFetch(() =>
-        Promise.all([getListInfo(+id!), getListSong(+id!)])
-    );
+    const getData = () => {
+        return Promise.all([getListInfo(+id!), getListSong(+id!)]);
+    };
+    const { data, error, loading } = useFetch(getData);
     console.log(data);
     const playlist = data ? data[0].playlist : undefined;
     const songList = data ? data[1].songs : undefined;
@@ -42,7 +43,6 @@ const Playlist: FC = () => {
     }, [songList]);
 
     if (loading) {
-    // if (1 == 1) {
         return (
             <div className={name + " p-20 select-none"}>
                 <div className="flex">
@@ -75,7 +75,6 @@ const Playlist: FC = () => {
                         <div className="flex gap-2 mt-5">
                             {/* <SkeletonWrapper variant="text" /> */}
                         </div>
-                        {/* <div></div> */}
                     </div>
                 </div>
                 {Array(20)

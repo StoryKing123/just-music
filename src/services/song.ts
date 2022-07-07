@@ -112,3 +112,7 @@ export const getSearch = async (
         `/cloudsearch?keywords=${keyword}&type=${type}&limit=${config.limit}&offset=${config.offset}`
     );
 };
+
+export const getAlbum = async (id: number) => {
+    return axios.requestGet<API.Album>(`/album?id=${id}`);
+};
