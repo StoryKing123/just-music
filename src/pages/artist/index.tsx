@@ -9,11 +9,12 @@ import {
 } from "@/services/song";
 import musicState from "@/store/music";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useSetRecoilState } from "recoil";
 
 const ArtistDetail = () => {
     const params = useParams();
+    const navigate = useNavigate();
     const id = params.id;
     const setMusic = useSetRecoilState(musicState);
     const [artist, setArtist] = useState<API.ArtistDetail["data"]>();
@@ -112,6 +113,9 @@ const ArtistDetail = () => {
                                         key={item.id}
                                         title={item.name}
                                         cover={item.picUrl}
+                                        onClick={() =>
+                                            navigate(`/album/${item.id}`)
+                                        }
                                     ></PlayListCard>
                                 ))}
                         </div>

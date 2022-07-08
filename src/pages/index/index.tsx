@@ -21,7 +21,6 @@ const Index: FC = () => {
     const navigate = useNavigate();
     let user = checkLogin();
 
-
     useEffect(() => {
         const initData = async () => {
             const res = await getRecommedPlaylist();
@@ -64,7 +63,6 @@ const Index: FC = () => {
 
     return (
         <div className="font-bold   pb-20 px-8  ">
-
             <div className="flex z-0  justify-center flex-wrap gap-10 ">
                 {recommendList.length > 0 && (
                     <>

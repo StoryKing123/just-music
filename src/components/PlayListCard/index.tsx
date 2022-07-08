@@ -17,10 +17,17 @@ const PlayListCard: FC<PlayListCardProps> = (props) => {
     const className = props.className ?? "";
     return (
         <div className={`${name}  ${className}`} onClick={props.onClick}>
-            <div className={`${bem("background")}`}>
+            <div
+                className={`${bem("background")} `}
+                style={
+                    {
+                        // paddingBottom: props.cover === "blank" ? "100%" : "0",
+                    }
+                }
+            >
                 {props.children}
                 <div className={`w-full  rounded-md overflow-hidden  `}>
-                    <img 
+                    <img
                         className={`w-full rounded-md ${
                             props.blur ? "blur-md" : ""
                         }  overflow-hidden   ${bem("background-img")}`}

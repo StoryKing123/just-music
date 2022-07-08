@@ -7,7 +7,7 @@ import { useSetRecoilState } from "recoil";
 import { useAudio } from "@/hooks";
 import { useParams } from "react-router-dom";
 import { praseTimestampIntoDate } from "@/utils/date";
-import { getListInfo, getListSong } from "@/services/song";
+import { getAlbum, getListInfo, getListSong } from "@/services/song";
 import { useFetch } from "@/hooks/data";
 import Stack from "@mui/material/Stack";
 import Skeleton from "@mui/material/Skeleton";
@@ -15,7 +15,7 @@ import SkeletonWrapper from "@/components/SkeletonWrapper";
 
 const Playlist: FC = () => {
     const setMusic = useSetRecoilState(musicState);
-    const [name, bem] = createNamespace("play-list");
+    // const [name, bem] = createNamespace("play-list");
     const { playSong } = useAudio();
     const params = useParams();
     const id = params.id;
@@ -44,7 +44,7 @@ const Playlist: FC = () => {
 
     if (loading) {
         return (
-            <div className={name + " p-20 select-none"}>
+            <div className={" p-20 select-none"}>
                 <div className="flex">
                     <div className={`w-60 shrink-0  h-auto `}>
                         <SkeletonWrapper
@@ -138,11 +138,7 @@ const Playlist: FC = () => {
                     <div></div>
                 </div>
             </div>
-            <Suspense fallback={<div>loading</div>}>
-                {songList && (
-                    <PlayListDetail songList={songList}></PlayListDetail>
-                )}
-            </Suspense>
+            {songList && <PlayListDetail songList={songList}></PlayListDetail>}
         </div>
     );
 };

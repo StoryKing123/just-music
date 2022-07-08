@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 type CalendarType = {
     text: "now" | string;
     className: string;
-    cover: string;
+    cover: string | "blank";
 };
 
 const Calendar: FC<CalendarType> = (props) => {
@@ -15,9 +15,7 @@ const Calendar: FC<CalendarType> = (props) => {
         <div className={`${props.className ?? ""} relative`}>
             <PlayListCard
                 className="w-full"
-                cover={
-                    props.cover
-                }
+                cover={props.cover}
                 blur
                 onClick={() => navigate("/recommend")}
                 title="每日推荐"
