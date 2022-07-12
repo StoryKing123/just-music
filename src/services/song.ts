@@ -108,7 +108,7 @@ export const getSearch = async (
     type: SEARCH_TYPE,
     config: { limit?: number; offset?: number } = { limit: 30, offset: 0 }
 ) => {
-    return axios.requestGet<API.SearchSong>(
+    return axios.requestGet<API.SearchResult[SEARCH_TYPE]>(
         `/cloudsearch?keywords=${keyword}&type=${type}&limit=${config.limit}&offset=${config.offset}`
     );
 };

@@ -15,7 +15,7 @@ const Song: FC<SongProps> = (props) => {
         const res = await getSearch(props.keyword, SEARCH_TYPE.SONG, {
             offset: (params.current - 1) * params.pageSize,
             limit: params.pageSize,
-        });
+        }) as API.SearchSong;
         if (res.result.songCount === 0) {
             dispatch({ type: "nomore" });
         }

@@ -38,12 +38,12 @@ const search = () => {
     if (data[0].status === "rejected") {
         return <></>;
     }
-    if (!qqData) {
-        return <></>;
-    }
-    if (qqData[0].status === "rejected") {
-        return <></>;
-    }
+    // if (!qqData) {
+    //     return <></>;
+    // }
+    // if (qqData[0].status === "rejected") {
+    //     return <></>;
+    // }
     if (data) {
         if (data[0].status === "fulfilled") {
             data[0].value;
@@ -73,15 +73,15 @@ const search = () => {
             {/* <Cloud></Cloud> */}
             {/* </TabPanel> */}
             <TabPanel index={1} value={tabIndex}>
-                <Album></Album>
+                <Album isShow={1 === tabIndex} keyword={keyword}></Album>
             </TabPanel>
-            <TabPanel index={2} value={tabIndex}>
+            {/* <TabPanel index={2} value={tabIndex}>
                 <QQSong
                     isShow={2 === tabIndex}
                     keyword={keyword}
                     songList={qqData[0].value.data.song.list}
                 ></QQSong>
-            </TabPanel>
+            </TabPanel> */}
         </div>
     );
 };
