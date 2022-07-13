@@ -6,7 +6,9 @@ import { getQQAllTypeSearch } from "@/services/qq/song";
 import { getAllTypeSearch, getSearch, SEARCH_TYPE } from "@/services/song";
 import { useState } from "react";
 import { useParams } from "react-router";
+import Artist from "./components/Artist";
 import Album from "./components/Album";
+import Playlist from "./components/Playlist";
 import QQSong from "./components/QQSong";
 import Song from "./components/Song";
 
@@ -55,18 +57,18 @@ const search = () => {
             <Tabs value={tabIndex} onChange={handleChange}>
                 <Tab label="歌曲"></Tab>
                 <Tab label="专辑"></Tab>
-                {/* <Tab label="歌手"></Tab>
+                <Tab label="歌手"></Tab>
                 <Tab label="歌单"></Tab>
-                  <Tab label="QQ音乐歌单"></Tab> */}
+                {/* <Tab label="QQ音乐歌单"></Tab> */}
 
-                <Tab label="QQ音乐歌曲"></Tab>
+                {/* <Tab label="QQ音乐歌曲"></Tab> */}
             </Tabs>
             <TabPanel index={0} value={tabIndex}>
                 {/* <Playlist></Playlist> */}
                 <Song
                     isShow={0 === tabIndex}
                     keyword={keyword}
-                    songList={data[0].value.result.songs}
+                    // songList={data[0].value.result.songs}
                 ></Song>
             </TabPanel>
             {/* <TabPanel index={1} value={tabIndex}> */}
@@ -74,6 +76,12 @@ const search = () => {
             {/* </TabPanel> */}
             <TabPanel index={1} value={tabIndex}>
                 <Album isShow={1 === tabIndex} keyword={keyword}></Album>
+            </TabPanel>
+            <TabPanel index={2} value={tabIndex}>
+                <Artist keyword={keyword} isShow={2 === tabIndex}></Artist>
+            </TabPanel>
+            <TabPanel index={3} value={tabIndex}>
+                <Playlist keyword={keyword} isShow={2 === tabIndex}></Playlist>
             </TabPanel>
             {/* <TabPanel index={2} value={tabIndex}>
                 <QQSong

@@ -802,8 +802,9 @@ declare namespace API {
         1: SearchSong;
         10: SearchAlbum;
         100: undefined;
-        1000: undefined;
+        1000: SearchPlaylist;
     }
+  
     export interface SearchSong {
         result: SearchSongResult;
         code: number;

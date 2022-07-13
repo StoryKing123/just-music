@@ -7,57 +7,39 @@ import { getSearch, SEARCH_TYPE } from "@/services/song";
 import { FC, useState } from "react";
 import { useNavigate } from "react-router";
 
-type AlbumProps = {
-    isShow: boolean;
-    keyword: string;
-};
-const Album: FC<AlbumProps> = (props) => {
+type PlaylistProps = { keyword: string; isShow: boolean };
+const Playlist: FC<PlaylistProps> = (props) => {
     const navigate = useNavigate();
-
-    const [albumList, setAlbumList] = useState<API.AlbumClass[]>([]);
+    const [playlist, setPlaylist] = useState<API.Playlist[]>([]);
     // const { data, loading } = useFetch(getData);
 
     const loadMoreData = async (
         params: { current: number; pageSize: number },
         dispatch: React.Dispatch<LoadingAction<any>>
     ) => {
-        const res = (await getSearch(props.keyword, SEARCH_TYPE.ALBUM, {
+        const res = (await getSearch(props.keyword, SEARCH_TYPE.PLAYLIST, {
             offset: (params.current - 1) * params.pageSize,
             limit: params.pageSize,
-        })) as API.SearchAlbum;
-        if (res.result.albumCount === 0) {
+        })) as API.SearchPlaylist;
+        if (res.result.playlistCount === 0) {
             dispatch({ type: "nomore" });
         }
-        console.log("=======");
         console.log(res);
-        res.result.albumCount > 0 &&
-            setAlbumList((list) => [...list, ...res.result.albums]);
+        res.result.playlistCount > 0 &&
+            setPlaylist((list) => [...list, ...res.result.playlists]);
         return res;
     };
+
     const { loading, data, page } = useBottomLoad(loadMoreData);
-    console.log(albumList);
-    // const { loading, data, page } = useBottomLoad(loadMoreData);
-    // const getData = () => {
-    //     return getSearch(props.keyword, SEARCH_TYPE.ALBUM);
-    // };
-    // const { data, loading } = useFetch(getData);
-    // console.log(data);
-    // if (loading) {
-    //     return <CircularProgressWrapper />;
-    // }
-    // if (data?.code !== 200) {
-    //     return <>error</>;
-    // }
-    // const list = (data as API.SearchAlbum).result.albums;
     return (
         <div className="flex z-0  justify-center flex-wrap gap-10 pb-20 pt-10">
-            {albumList.map((item) => (
+            {playlist.map((item) => (
                 <PlayListCard
                     className="w-1/6"
-                    cover={item.picUrl}
+                    cover={item.coverImgUrl}
                     title={item.name}
                     key={item.id}
-                    onClick={() => navigate(`/album/${item.id}`)}
+                    onClick={() => navigate(`/playlist/${item.id}`)}
                 ></PlayListCard>
             ))}
             <div>
@@ -66,4 +48,5 @@ const Album: FC<AlbumProps> = (props) => {
         </div>
     );
 };
-export default Album;
+
+export default Playlist;
