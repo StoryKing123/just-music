@@ -28,8 +28,8 @@ const Album: FC<AlbumProps> = (props) => {
         if (res.result.albumCount === 0) {
             dispatch({ type: "nomore" });
         }
-        console.log("=======");
-        console.log(res);
+        // console.log("=======");
+        // console.log(res);
         res.result.albumCount > 0 &&
             setAlbumList((list) => [...list, ...res.result.albums]);
         return res;

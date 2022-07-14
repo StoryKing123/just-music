@@ -56,6 +56,11 @@ export const getArtistTopSong = async (id: number) => {
         `/artist/top/song?id=${id}`
     );
 };
+export const getArtistSong = async (id: number) => {
+    return await axios.get<null, API.ArtistTopSong>(
+        `/artist/songs?id=${id}&limit=999`
+    );
+};
 
 export const getArtistAlbumn = async (id: number) => {
     return await axios.requestGet<API.ArtistAlbum>(`/artist/album?id=${id}`);

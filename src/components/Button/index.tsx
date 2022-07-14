@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler, useRef } from "react";
+import React, { FC, MouseEventHandler, PropsWithChildren, useRef } from "react";
 import { debounce } from "lodash";
 import { useEventListener } from "@/hooks";
 import "./index.less";
@@ -8,7 +8,7 @@ type ButtonProps = {
     className?: string;
     onClick?: MouseEventHandler<HTMLButtonElement>;
 };
-const Button: FC<ButtonProps> = (props) => {
+const Button: FC<PropsWithChildren<ButtonProps>> = (props) => {
     const event =
         props.onClick && debounce(props.onClick, 500, { leading: true });
     const buttonRef = useRef<HTMLButtonElement>(null);
