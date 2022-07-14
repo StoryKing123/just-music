@@ -5,6 +5,7 @@ import { useAudio } from "@/hooks";
 import {
     getArtistAlbumn,
     getArtistDetail,
+    getArtistSong,
     getArtistTopSong,
 } from "@/services/song";
 import musicState from "@/store/music";
@@ -22,9 +23,6 @@ const ArtistDetail = () => {
     const [albumn, setAlbumn] = useState<API.ArtistAlbum["hotAlbums"]>([]);
     const [deploymentDesc, setDeploymentDesc] = useState<boolean>(false);
     const { playSong } = useAudio();
-    const handlePlaySong = async (song: API.Song) => {
-        playSong(song);
-    };
     const playSongList = () => {
         if (!topSong) return;
         playSong(topSong[0]);
@@ -36,7 +34,7 @@ const ArtistDetail = () => {
             if (!id) return;
             const res = await Promise.allSettled([
                 getArtistDetail(+id),
-                getArtistTopSong(+id),
+                getArtistSong(+id),
                 getArtistAlbumn(+id),
             ]);
             if (res[0].status === "fulfilled") {
@@ -96,7 +94,7 @@ const ArtistDetail = () => {
                         <div>
                             <PlayListDetail
                                 songList={topSong.filter(
-                                    (_, index) => index < 10
+                                    (_, index) => index < 20
                                 )}
                             />
                         </div>
@@ -106,7 +104,7 @@ const ArtistDetail = () => {
                         </div>
                         <div className="grid gap-10 grid-cols-4">
                             {albumn
-                                .filter((_, index) => index < 4)
+                                .filter((_, index) => index < 8)
                                 .map((item) => (
                                     <PlayListCard
                                         className=""
