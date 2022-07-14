@@ -1,10 +1,10 @@
-import { FC, useState } from "react";
+import { FC, PropsWithChildren, useState } from "react";
 import ReactModal from "react-modal";
 import "@/index.css";
 type ModalProps = {
     onClose: Function;
 };
-const ModalElement: FC<ModalProps> = (props) => {
+const ModalElement: FC<PropsWithChildren<ModalProps>> = (props) => {
     console.log("modal render");
     const [visiable, setVisiable] = useState(true);
     const handleCloseModal = () => {
