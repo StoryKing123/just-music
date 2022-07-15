@@ -17,8 +17,6 @@ const ModalElement: FC<PropsWithChildren<ModalProps>> = (props) => {
             ariaHideApp={false}
             shouldCloseOnEsc={true}
             onRequestClose={handleCloseModal}
-            // className="scroll-bar-hide"
-            // className="abc"
             className={{ afterOpen: "abc", base: "aaa", beforeClose: "bbb" }}
             overlayClassName="bg-base scroll-bar-hide"
             style={{
@@ -27,7 +25,6 @@ const ModalElement: FC<PropsWithChildren<ModalProps>> = (props) => {
             }}
         >
             {props.children}
-            {/* 123 */}
         </ReactModal>
     );
     // return <div>123</div>;

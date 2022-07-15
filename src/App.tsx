@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import PlayList from "./pages/playlist";

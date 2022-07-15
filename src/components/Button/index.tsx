@@ -18,7 +18,6 @@ const Button: FC<PropsWithChildren<ButtonProps>> = (props) => {
         "click",
         (event) => {
             const target = buttonRef.current!;
-            // var ripple = document.createElement("span");
             const ripple = rippleRef.current!;
             ripple.classList.add("ripple");
             var max = Math.max(target.offsetWidth, target.offsetHeight);
@@ -26,9 +25,7 @@ const Button: FC<PropsWithChildren<ButtonProps>> = (props) => {
             var rect = target.getBoundingClientRect();
             ripple.style.left = event.clientX - rect.left - max + "px";
             ripple.style.top = event.clientY - rect.top - max + "px";
-            // target.appendChild(ripple);
             setTimeout(() => {
-                // target.removeChild(ripple);
                 ripple.classList.remove("ripple");
             }, 1000);
         },

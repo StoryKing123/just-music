@@ -85,10 +85,7 @@ export type LoadingAction<T> =
     | { type: "error"; payload: Error }
     | { type: "nomore" };
 
-export const useBottomLoad = <T>(
-    fetchFn: (...args: any[]) => Promise<T>,
-    config?: { fetchInEffect: boolean }
-) => {
+export const useBottomLoad = <T>(fetchFn: (...args: any[]) => Promise<T>) => {
     interface State<T> {
         data?: T;
         error?: Error;
