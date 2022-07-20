@@ -1,4 +1,5 @@
 import { PAGE_SIZE } from "@/const";
+import { Console } from "console";
 import { throttle } from "lodash";
 import {
     RefObject,
@@ -135,6 +136,7 @@ export const useBottomLoad = <T>(fetchFn: (...args: any[]) => Promise<T>) => {
     const [state, dispatch] = useReducer(fetchReducer, initialState);
 
     const bottomHandler = async () => {
+        console.log("bottom handler");
         if (state.loading === "loading" || state.loading === "nomore") return;
         dispatch({ type: "loading" });
         fetchFn({ current: state.page, pageSize: state.pageSize }, dispatch)

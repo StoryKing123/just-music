@@ -13,6 +13,7 @@ import Calendar from "./component/Calendar";
 import { checkLogin } from "@/utils";
 
 const Index: FC = () => {
+    console.log("----index----");
     const [recommendList, setRecommedSongList] = useState<
         API.RecommendPlaylist[]
     >([]);

@@ -59,7 +59,6 @@ const Playlist: FC = () => {
                     </div>
                     <div className=" m-4 w-3/4">
                         <div className="text-5xl font-bold text-left ">
-                            {/* {playlist?.name} */}
                             <SkeletonWrapper />
                         </div>
                         <div>
@@ -76,9 +75,7 @@ const Playlist: FC = () => {
                             <SkeletonWrapper variant="text" />
                             <SkeletonWrapper variant="text" />
                         </div>
-                        <div className="flex gap-2 mt-5">
-                            {/* <SkeletonWrapper variant="text" /> */}
-                        </div>
+                        <div className="flex gap-2 mt-5"></div>
                     </div>
                 </div>
                 {Array(20)
