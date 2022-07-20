@@ -20,6 +20,7 @@ const Login: FC<LoginProps> = (props) => {
     useEventListener(
         "keyup",
         (e) => {
+            // console.log(e);
             if (e.key === "Enter") {
                 handleLogin();
             }
@@ -51,7 +52,7 @@ const Login: FC<LoginProps> = (props) => {
                 window.location.reload();
             }, 2000);
         } else {
-            toast.error(res.msg || res.message);
+            toast.error(res.msg);
         }
     };
     const style = props.isShow

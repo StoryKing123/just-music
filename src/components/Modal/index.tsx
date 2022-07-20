@@ -22,8 +22,11 @@ import ModalElement from "./modal";
 
 class Modal {
     private container?: HTMLDivElement;
+    // private abc?: any;
     constructor(private id: string) {
         this.initContainer();
+        // this.abc = "1231231";
+        // this.id = id;
     }
     private initContainer() {
         console.log("init container");

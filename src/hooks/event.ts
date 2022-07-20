@@ -1,5 +1,4 @@
 import { PAGE_SIZE } from "@/const";
-import { Console } from "console";
 import { throttle } from "lodash";
 import {
     RefObject,
@@ -9,7 +8,6 @@ import {
     useRef,
     useState,
 } from "react";
-import { useFetch } from "./data";
 
 export function useEventListener<K extends keyof WindowEventMap>(
     eventName: K,
@@ -87,6 +85,8 @@ export type LoadingAction<T> =
     | { type: "nomore" };
 
 export const useBottomLoad = <T>(fetchFn: (...args: any[]) => Promise<T>) => {
+    // const page = useRef(2);
+    // const [loading, setLoading] = useState<LoadingStatus>("loaded");
     interface State<T> {
         data?: T;
         error?: Error;
@@ -102,9 +102,13 @@ export const useBottomLoad = <T>(fetchFn: (...args: any[]) => Promise<T>) => {
         data: undefined,
         error: undefined,
         pageSize: PAGE_SIZE,
-        page: 1,
+        page: 2,
     };
     const fetchReducer = (state: State<T>, action: Action<T>): State<T> => {
+        // console.log("=======");
+        // console.log(action);
+        // console.log(state);
+        // console.log("=======");
         if (state.loading === "nomore") {
             return state;
         }
@@ -135,8 +139,7 @@ export const useBottomLoad = <T>(fetchFn: (...args: any[]) => Promise<T>) => {
     };
     const [state, dispatch] = useReducer(fetchReducer, initialState);
 
-    const bottomHandler = async () => {
-        console.log("bottom handler");
+    useTouchBottom(() => {
         if (state.loading === "loading" || state.loading === "nomore") return;
         dispatch({ type: "loading" });
         fetchFn({ current: state.page, pageSize: state.pageSize }, dispatch)
@@ -144,11 +147,7 @@ export const useBottomLoad = <T>(fetchFn: (...args: any[]) => Promise<T>) => {
                 dispatch({ type: "fetched", payload: res as T });
             })
             .catch((err) => dispatch({ type: "error", payload: err }));
-    };
-    // if (config?.fetchInEffect) {
-    useFetch(bottomHandler);
-    // }
-    useTouchBottom(bottomHandler);
+    });
     return state;
 };
 // export const useEventListener = <K extends keyof WindowEventMap>(

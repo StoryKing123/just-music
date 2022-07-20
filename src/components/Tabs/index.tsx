@@ -1,10 +1,4 @@
-import React, {
-    EventHandler,
-    FC,
-    MouseEventHandler,
-    PropsWithChildren,
-    ReactNode,
-} from "react";
+import React, { EventHandler, FC, MouseEventHandler, ReactNode } from "react";
 import Tab from "./Tab";
 
 type TabsProps = {
@@ -12,10 +6,11 @@ type TabsProps = {
     onChange: (event: MouseEvent, newValue: number) => void;
 };
 
-const Tabs: FC<PropsWithChildren<TabsProps>> = (props) => {
+
+const Tabs: FC<TabsProps> = (props) => {
     const renderTab = (node: React.ReactNode, index: number) => {
         if (node && (node as React.ReactElement).type === Tab) {
-            const element = node as unknown as typeof Tab;
+            const element = node as typeof Tab;
             const tabProps = {
                 ...(node as React.ReactElement).props,
                 className: `${element.propTypes?.className ?? ""} ${

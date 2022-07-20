@@ -7,7 +7,7 @@ import { useSetRecoilState } from "recoil";
 import { useAudio } from "@/hooks";
 import { useParams } from "react-router-dom";
 import { praseTimestampIntoDate } from "@/utils/date";
-import { getAlbum, getListInfo, getListSong } from "@/services/song";
+import { getListInfo, getListSong } from "@/services/song";
 import { useFetch } from "@/hooks/data";
 import Stack from "@mui/material/Stack";
 import Skeleton from "@mui/material/Skeleton";
@@ -15,14 +15,13 @@ import SkeletonWrapper from "@/components/SkeletonWrapper";
 
 const Playlist: FC = () => {
     const setMusic = useSetRecoilState(musicState);
-    // const [name, bem] = createNamespace("play-list");
+    const [name, bem] = createNamespace("play-list");
     const { playSong } = useAudio();
     const params = useParams();
     const id = params.id;
-    const getData = () => {
-        return Promise.all([getListInfo(+id!), getListSong(+id!)]);
-    };
-    const { data, error, loading } = useFetch(getData);
+    const { data, error, loading } = useFetch(() =>
+        Promise.all([getListInfo(+id!), getListSong(+id!)])
+    );
     console.log(data);
     const playlist = data ? data[0].playlist : undefined;
     const songList = data ? data[1].songs : undefined;
@@ -43,8 +42,9 @@ const Playlist: FC = () => {
     }, [songList]);
 
     if (loading) {
+    // if (1 == 1) {
         return (
-            <div className={" p-20 select-none"}>
+            <div className={name + " p-20 select-none"}>
                 <div className="flex">
                     <div className={`w-60 shrink-0  h-auto `}>
                         <SkeletonWrapper
@@ -75,6 +75,7 @@ const Playlist: FC = () => {
                         <div className="flex gap-2 mt-5">
                             {/* <SkeletonWrapper variant="text" /> */}
                         </div>
+                        {/* <div></div> */}
                     </div>
                 </div>
                 {Array(20)
@@ -138,7 +139,11 @@ const Playlist: FC = () => {
                     <div></div>
                 </div>
             </div>
-            {songList && <PlayListDetail songList={songList}></PlayListDetail>}
+            <Suspense fallback={<div>loading</div>}>
+                {songList && (
+                    <PlayListDetail songList={songList}></PlayListDetail>
+                )}
+            </Suspense>
         </div>
     );
 };

@@ -16,7 +16,6 @@ import { PLAY_MODE } from "@/const";
 import { throttle } from "lodash";
 import Voice from "./Voice";
 import appState from "@/store/app";
-import PlaySort from "./PlaySort";
 
 const Player: FC = (props) => {
     const [isShowPlayList, setShowPlayList] = useState(false);
@@ -127,15 +126,12 @@ const Player: FC = (props) => {
                     />
                 </div>
                 <div className="flex gap-4  ml-auto relative ">
-                    <PlaySort></PlaySort>
-
                     <img
                         className="w-4"
                         onClick={handlePlayListClick}
                         src={playlistSVG}
                         alt=""
                     />
-
                     {/* <Voice></Voice> */}
                     <VoiceMemo />
                 </div>

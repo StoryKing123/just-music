@@ -1,18 +1,20 @@
+import React from "react";
+import ReactDOM from "react-dom";
 import "./index.less";
 import App from "./App";
 import { RecoilRoot } from "recoil";
+import { BrowserRouter } from "react-router-dom";
 import "mac-scrollbar/dist/mac-scrollbar.css";
 import { GlobalScrollbar } from "mac-scrollbar";
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
 
-const rootElement = document.getElementById("root");
-const root = createRoot(rootElement!);
-root.render(
-    // <StrictMode>
-    <RecoilRoot>
-        <GlobalScrollbar />
-        <App />
-    </RecoilRoot>
-    // </StrictMode>
+ReactDOM.render(
+    <React.StrictMode>
+        <RecoilRoot>
+            <GlobalScrollbar />
+            {/* <BrowserRouter> */}
+            <App />
+        </RecoilRoot>
+        {/* </BrowserRouter> */}
+    </React.StrictMode>,
+    document.getElementById("root")
 );

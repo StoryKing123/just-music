@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import logo from "./logo.svg";
 import "./App.css";
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import PlayList from "./pages/playlist";
@@ -16,7 +17,6 @@ import Explore from "./pages/explore";
 import DailyRecommend from "./pages/dailyRecommend";
 import Detail from "./components/Detail";
 import Search from "./pages/search";
-import Album from "./pages/album";
 
 function App() {
     const initTheme = useInitTheme();
@@ -58,7 +58,6 @@ function App() {
                         path="artist/:id"
                         element={<Artist></Artist>}
                     ></Route>
-                    <Route path="album/:id" element={<Album></Album>}></Route>
                     <Route
                         path="search/:keyword"
                         element={<Search></Search>}

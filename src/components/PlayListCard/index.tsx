@@ -1,5 +1,5 @@
 import { createNamespace } from "@/utils";
-import { FC, MouseEventHandler, PropsWithChildren } from "react";
+import { FC, MouseEventHandler } from "react";
 import { useNavigate } from "react-router";
 import playWhiteSVG from "@/assets/icons/play-white.svg";
 import "./index.less";
@@ -12,22 +12,15 @@ type PlayListCardProps = {
     onClick?: MouseEventHandler;
     blur?: boolean;
 };
-const PlayListCard: FC<PropsWithChildren<PlayListCardProps>> = (props) => {
+const PlayListCard: FC<PlayListCardProps> = (props) => {
     const [name, bem] = createNamespace("playlist-card");
     const className = props.className ?? "";
     return (
         <div className={`${name}  ${className}`} onClick={props.onClick}>
-            <div
-                className={`${bem("background")} `}
-                style={
-                    {
-                        // paddingBottom: props.cover === "blank" ? "100%" : "0",
-                    }
-                }
-            >
+            <div className={`${bem("background")}`}>
                 {props.children}
                 <div className={`w-full  rounded-md overflow-hidden  `}>
-                    <img
+                    <img 
                         className={`w-full rounded-md ${
                             props.blur ? "blur-md" : ""
                         }  overflow-hidden   ${bem("background-img")}`}

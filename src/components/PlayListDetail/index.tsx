@@ -8,8 +8,7 @@ type PlayListDetailProps = {
     play?: (song: Song) => any;
 };
 const PlayListDetail: FC<PlayListDetailProps> = (props) => {
-    // console.log("current props");
-    // console.log(props);
+    console.log(props);
     const { songList } = props;
     const { playSong } = useAudio();
     const navigate = useNavigate();

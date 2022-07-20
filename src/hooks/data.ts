@@ -11,10 +11,7 @@ type Action<T> =
     | { type: "fetched"; payload: T }
     | { type: "error"; payload: Error };
 
-export const useFetch = <T>(
-    request: () => Promise<T>,
-    deps: React.DependencyList = []
-) => {
+export const useFetch = <T>(request: () => Promise<T>) => {
     const initialState: State<T> = {
         error: undefined,
         data: undefined,
@@ -51,6 +48,6 @@ export const useFetch = <T>(
                 .catch((err) => dispatch({ type: "error", payload: err }));
         };
         fetchData();
-    }, deps);
+    }, []);
     return state;
 };
