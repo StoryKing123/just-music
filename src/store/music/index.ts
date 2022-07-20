@@ -5,7 +5,7 @@ export type MusicStateType = {
     currentSong?: Song;
     currentIndex?: number;
     playList?: Song[];
-    mode?: PLAY_MODE;
+    mode: PLAY_MODE;
     isPlaying: boolean;
 };
 const musicState = atom<MusicStateType>({

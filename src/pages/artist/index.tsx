@@ -2,18 +2,22 @@ import Button from "@/components/Button";
 import PlayListCard from "@/components/PlayListCard";
 import PlayListDetail from "@/components/PlayListDetail";
 import { useAudio } from "@/hooks";
+import { useFetch } from "@/hooks/data";
 import {
     getArtistAlbumn,
     getArtistDetail,
+    getArtistSong,
     getArtistTopSong,
 } from "@/services/song";
 import musicState from "@/store/music";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useSetRecoilState } from "recoil";
+import SkeletonWrapper from "@/components/SkeletonWrapper";
 
 const ArtistDetail = () => {
     const params = useParams();
+    const navigate = useNavigate();
     const id = params.id;
     const setMusic = useSetRecoilState(musicState);
     const [artist, setArtist] = useState<API.ArtistDetail["data"]>();
@@ -21,35 +25,110 @@ const ArtistDetail = () => {
     const [albumn, setAlbumn] = useState<API.ArtistAlbum["hotAlbums"]>([]);
     const [deploymentDesc, setDeploymentDesc] = useState<boolean>(false);
     const { playSong } = useAudio();
-    const handlePlaySong = async (song: API.Song) => {
-        playSong(song);
-    };
     const playSongList = () => {
         if (!topSong) return;
         playSong(topSong[0]);
         setMusic((music) => ({ ...music, playList: topSong }));
     };
 
-    useEffect(() => {
-        const initData = async () => {
-            if (!id) return;
-            const res = await Promise.allSettled([
-                getArtistDetail(+id),
-                getArtistTopSong(+id),
-                getArtistAlbumn(+id),
-            ]);
-            if (res[0].status === "fulfilled") {
-                setArtist(res[0].value.data);
-            }
-            if (res[1].status === "fulfilled") {
-                setTopSong(res[1].value.songs);
-            }
-            if (res[2].status === "fulfilled") {
-                setAlbumn(res[2].value.hotAlbums);
-            }
-        };
-        initData();
-    }, [id]);
+    // useEffect(() => {
+    const initData = async () => {
+        if (!id) return;
+        const res = await Promise.allSettled([
+            getArtistDetail(+id),
+            getArtistSong(+id),
+            getArtistAlbumn(+id),
+        ]);
+        if (res[0].status === "fulfilled") {
+            setArtist(res[0].value.data);
+        }
+        if (res[1].status === "fulfilled") {
+            setTopSong(res[1].value.songs);
+        }
+        if (res[2].status === "fulfilled") {
+            setAlbumn(res[2].value.hotAlbums);
+        }
+    };
+    const { loading } = useFetch(initData, [id]);
+    if (loading) {
+        return (
+            <div className="bg-base">
+                <div className="absolute bg-base -z-10  pb-96 w-full top-0 left-0 bg-no-repeat bg-cover">
+                    <div className=" relative top-60 px-10 w-full flex flex-col">
+                        <div className=" text-left  text-6xl font-bold">
+                            {/* {artist?.artist.name} */}
+                            <SkeletonWrapper variant="text" width="10rem" />
+                        </div>
+                        <div
+                            className={`text-left mt-5  w-5/12 ${
+                                deploymentDesc ? "" : "line-clamp-2"
+                            }`}
+                        >
+                            {/* {artist?.artist.briefDesc} */}
+                            <SkeletonWrapper />
+                        </div>
+                        <div className="text-left  text-lg font-semibold inline-block ">
+                            <span className="cursor-pointer">
+                                {/* {deploymentDesc ? "收起" : "展开"} */}
+                                <SkeletonWrapper />
+                            </span>
+                        </div>
+                        <div className="text-left mt-5">
+                            {/* <Button onClick={playSongList}>播放歌曲</Button> */}
+                            <SkeletonWrapper width="15rem" height="5rem" />
+                        </div>
+
+                        <div>
+                            <div className=" mt-20 font-bold text-2xl  my-4 text-left">
+                                {/* 歌曲 */}
+                                <SkeletonWrapper />
+                            </div>
+                            <div>
+                                {/* <PlayListDetail
+                                    songList={topSong.filter(
+                                        (_, index) => index < 20
+                                    )}
+                                /> */}
+                            </div>
+
+                            <div className="mt-20 font-bold text-2xl  my-4 text-left">
+                                {/* 专辑 */}
+                                <SkeletonWrapper />
+                            </div>
+                            <div className="grid gap-10 grid-cols-4">
+                                <SkeletonWrapper />
+                                {/* {albumn
+                                    .filter((_, index) => index < 8)
+                                    .map((item) => (
+                                        <PlayListCard
+                                            className=""
+                                            key={item.id}
+                                            title={item.name}
+                                            cover={item.picUrl}
+                                            onClick={() =>
+                                                navigate(`/album/${item.id}`)
+                                            }
+                                        ></PlayListCard>
+                                    ))} */}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="p-20"></div>
+                    {/* <img src="" alt="" /> */}
+                </div>
+            </div>
+            // <SkeletonWrapper />
+            // <SkeletonWrapper
+            //     variant="rectangular"
+            //     height={"15rem"}
+            //     width={"15rem"}
+            // />
+        );
+    }
+
+    // initData();
+    // }, [id]);
+
     return (
         <div className="bg-base">
             <div className="absolute bg-base -z-10  pb-96 w-full top-0 left-0 bg-no-repeat bg-cover">
@@ -95,7 +174,7 @@ const ArtistDetail = () => {
                         <div>
                             <PlayListDetail
                                 songList={topSong.filter(
-                                    (_, index) => index < 10
+                                    (_, index) => index < 20
                                 )}
                             />
                         </div>
@@ -105,13 +184,16 @@ const ArtistDetail = () => {
                         </div>
                         <div className="grid gap-10 grid-cols-4">
                             {albumn
-                                .filter((_, index) => index < 4)
+                                .filter((_, index) => index < 8)
                                 .map((item) => (
                                     <PlayListCard
                                         className=""
                                         key={item.id}
                                         title={item.name}
                                         cover={item.picUrl}
+                                        onClick={() =>
+                                            navigate(`/album/${item.id}`)
+                                        }
                                     ></PlayListCard>
                                 ))}
                         </div>

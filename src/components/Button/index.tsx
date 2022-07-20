@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler, useRef } from "react";
+import React, { FC, MouseEventHandler, PropsWithChildren, useRef } from "react";
 import { debounce } from "lodash";
 import { useEventListener } from "@/hooks";
 import "./index.less";
@@ -8,7 +8,7 @@ type ButtonProps = {
     className?: string;
     onClick?: MouseEventHandler<HTMLButtonElement>;
 };
-const Button: FC<ButtonProps> = (props) => {
+const Button: FC<PropsWithChildren<ButtonProps>> = (props) => {
     const event =
         props.onClick && debounce(props.onClick, 500, { leading: true });
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -18,7 +18,6 @@ const Button: FC<ButtonProps> = (props) => {
         "click",
         (event) => {
             const target = buttonRef.current!;
-            // var ripple = document.createElement("span");
             const ripple = rippleRef.current!;
             ripple.classList.add("ripple");
             var max = Math.max(target.offsetWidth, target.offsetHeight);
@@ -26,9 +25,7 @@ const Button: FC<ButtonProps> = (props) => {
             var rect = target.getBoundingClientRect();
             ripple.style.left = event.clientX - rect.left - max + "px";
             ripple.style.top = event.clientY - rect.top - max + "px";
-            // target.appendChild(ripple);
             setTimeout(() => {
-                // target.removeChild(ripple);
                 ripple.classList.remove("ripple");
             }, 1000);
         },

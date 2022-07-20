@@ -1,7 +1,7 @@
 {
   "name": "just-music",
   "private": true,
-  "version": "0.2.5",
+  "version": "0.2.9",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -9,10 +9,10 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.8.1",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
     "@material-ui/styles": "^4.11.5",
-    "@mui/material": "^5.8.1",
+    "@mui/material": "^5.9.0",
     "@tailwindcss/line-clamp": "^0.4.0",
     "@tauri-apps/api": "^1.0.0-rc.1",
     "axios": "^0.26.0",
@@ -22,21 +22,21 @@
     "mac-scrollbar": "^0.10.1",
     "md5": "^2.3.0",
     "md5-hex": "^4.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-modal": "^3.14.4",
     "react-router": "^6.2.1",
     "react-router-dom": "^6.2.2",
     "react-toastify": "^8.2.0",
-    "recoil": "^0.6.1"
+    "recoil": "^0.7.4"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.0.0-rc.13",
     "@types/lodash": "^4.14.180",
     "@types/md5": "^2.3.2",
     "@types/node": "^17.0.21",
-    "@types/react": "^17.0.33",
-    "@types/react-dom": "^17.0.10",
+    "@types/react": "^18.0.14",
+    "@types/react-dom": "18.0.6",
     "@types/react-modal": "^3.13.1",
     "@vitejs/plugin-react": "^1.0.7",
     "autoprefixer": "^10.4.2",

@@ -15,17 +15,21 @@ import SkeletonWrapper from "@/components/SkeletonWrapper";
 
 const Playlist: FC = () => {
     const setMusic = useSetRecoilState(musicState);
-    // const [name, bem] = createNamespace("play-list");
+    const [name, bem] = createNamespace("play-list");
     const { playSong } = useAudio();
     const params = useParams();
     const id = params.id;
     const getData = () => {
-        return Promise.all([getListInfo(+id!), getListSong(+id!)]);
+        // return Promise.all([getListInfo(+id!), getListSong(+id!)]);
+        return getAlbum(+id!);
     };
     const { data, error, loading } = useFetch(getData);
     console.log(data);
-    const playlist = data ? data[0].playlist : undefined;
-    const songList = data ? data[1].songs : undefined;
+    // const playlist = data ? data[0].playlist : undefined;
+    // const songList = data ? data[1].songs : undefined;
+    // data?.songs
+    const songList = data?.songs;
+    const album = data?.album;
 
     const totalDuration = useMemo(() => {
         if (!songList) {
@@ -44,7 +48,7 @@ const Playlist: FC = () => {
 
     if (loading) {
         return (
-            <div className={" p-20 select-none"}>
+            <div className={name + " p-20 select-none"}>
                 <div className="flex">
                     <div className={`w-60 shrink-0  h-auto `}>
                         <SkeletonWrapper
@@ -55,7 +59,6 @@ const Playlist: FC = () => {
                     </div>
                     <div className=" m-4 w-3/4">
                         <div className="text-5xl font-bold text-left ">
-                            {/* {playlist?.name} */}
                             <SkeletonWrapper />
                         </div>
                         <div>
@@ -72,9 +75,7 @@ const Playlist: FC = () => {
                             <SkeletonWrapper variant="text" />
                             <SkeletonWrapper variant="text" />
                         </div>
-                        <div className="flex gap-2 mt-5">
-                            {/* <SkeletonWrapper variant="text" /> */}
-                        </div>
+                        <div className="flex gap-2 mt-5"></div>
                     </div>
                 </div>
                 {Array(20)
@@ -85,9 +86,12 @@ const Playlist: FC = () => {
             </div>
         );
     }
-    if (data?.every((value) => value.code !== 200)) {
-        return <div>发生错误</div>;
+    if (!songList) {
+        return <>error</>;
     }
+    // if (data?.every((value) => value.code !== 200)) {
+    // return <div>发生错误</div>;
+    // }
 
     const handlePlayPlayList = async () => {
         if (!songList) return;
@@ -108,28 +112,25 @@ const Playlist: FC = () => {
                 <div className={`w-60 shrink-0  h-auto `}>
                     <img
                         className=" "
-                        src={`${playlist?.coverImgUrl}?param=512y512`}
+                        src={`${album?.picUrl}?param=512y512`}
                         alt=""
                     />
                 </div>
                 <div className=" m-4 w-3/4">
                     <div className="text-5xl font-bold text-left ">
-                        {playlist?.name}
+                        {album?.name}
                     </div>
                     <div>
                         <div className="text-left ">
-                            播放列表 • {playlist?.creator.nickname} •{" "}
-                            {praseTimestampIntoDate(
-                                playlist?.updateTime,
-                                false
-                            )}
+                            播放列表 • {album?.artist.name} •{" "}
+                            {praseTimestampIntoDate(album?.publishTime, false)}
                         </div>
                         <div className="text-left ">
-                            {playlist?.trackIds.length} 首歌曲 • {totalDuration}
+                            {songList.length} 首歌曲 • {totalDuration}
                         </div>
                     </div>
                     <div className="py-4 text-left pb-0 overflow-hidden line-clamp-2">
-                        {playlist?.description}
+                        {album?.description}
                     </div>
                     <div className="flex gap-2 mt-5">
                         <Button onClick={handlePlayPlayList}>播放歌曲</Button>
@@ -138,7 +139,11 @@ const Playlist: FC = () => {
                     <div></div>
                 </div>
             </div>
-            {songList && <PlayListDetail songList={songList}></PlayListDetail>}
+            <Suspense fallback={<div>loading</div>}>
+                {songList && (
+                    <PlayListDetail songList={songList}></PlayListDetail>
+                )}
+            </Suspense>
         </div>
     );
 };

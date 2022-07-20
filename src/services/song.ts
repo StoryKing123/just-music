@@ -56,6 +56,11 @@ export const getArtistTopSong = async (id: number) => {
         `/artist/top/song?id=${id}`
     );
 };
+export const getArtistSong = async (id: number) => {
+    return await axios.get<null, API.ArtistTopSong>(
+        `/artist/songs?id=${id}&limit=999`
+    );
+};
 
 export const getArtistAlbumn = async (id: number) => {
     return await axios.requestGet<API.ArtistAlbum>(`/artist/album?id=${id}`);
@@ -108,7 +113,11 @@ export const getSearch = async (
     type: SEARCH_TYPE,
     config: { limit?: number; offset?: number } = { limit: 30, offset: 0 }
 ) => {
-    return axios.requestGet<API.SearchSong>(
+    return axios.requestGet<API.SearchResult[SEARCH_TYPE]>(
         `/cloudsearch?keywords=${keyword}&type=${type}&limit=${config.limit}&offset=${config.offset}`
     );
+};
+
+export const getAlbum = async (id: number) => {
+    return axios.requestGet<API.Album>(`/album?id=${id}`);
 };

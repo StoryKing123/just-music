@@ -13,6 +13,7 @@ import Calendar from "./component/Calendar";
 import { checkLogin } from "@/utils";
 
 const Index: FC = () => {
+    console.log("----index----");
     const [recommendList, setRecommedSongList] = useState<
         API.RecommendPlaylist[]
     >([]);
@@ -20,7 +21,6 @@ const Index: FC = () => {
         useState<API.RecommendSong["data"]["dailySongs"]>();
     const navigate = useNavigate();
     let user = checkLogin();
-
 
     useEffect(() => {
         const initData = async () => {
@@ -64,7 +64,6 @@ const Index: FC = () => {
 
     return (
         <div className="font-bold   pb-20 px-8  ">
-
             <div className="flex z-0  justify-center flex-wrap gap-10 ">
                 {recommendList.length > 0 && (
                     <>
