@@ -13,14 +13,12 @@ type AlbumProps = {
 };
 const Album: FC<AlbumProps> = (props) => {
     const navigate = useNavigate();
-
     const [albumList, setAlbumList] = useState<API.AlbumClass[]>([]);
-    // const { data, loading } = useFetch(getData);
-
     const loadMoreData = async (
         params: { current: number; pageSize: number },
         dispatch: React.Dispatch<LoadingAction<any>>
     ) => {
+        if (!props.isShow && params.current > 1) throw Error;
         const res = (await getSearch(props.keyword, SEARCH_TYPE.ALBUM, {
             offset: (params.current - 1) * params.pageSize,
             limit: params.pageSize,
@@ -28,8 +26,6 @@ const Album: FC<AlbumProps> = (props) => {
         if (res.result.albumCount === 0) {
             dispatch({ type: "nomore" });
         }
-        // console.log("=======");
-        // console.log(res);
         res.result.albumCount > 0 &&
             setAlbumList((list) => [...list, ...res.result.albums]);
         return res;

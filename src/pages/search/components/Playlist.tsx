@@ -17,6 +17,7 @@ const Playlist: FC<PlaylistProps> = (props) => {
         params: { current: number; pageSize: number },
         dispatch: React.Dispatch<LoadingAction<any>>
     ) => {
+        if (!props.isShow && params.current > 1) throw Error;
         const res = (await getSearch(props.keyword, SEARCH_TYPE.PLAYLIST, {
             offset: (params.current - 1) * params.pageSize,
             limit: params.pageSize,

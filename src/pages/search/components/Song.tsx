@@ -12,6 +12,7 @@ const Song: FC<SongProps> = (props) => {
         params: { current: number; pageSize: number },
         dispatch: React.Dispatch<LoadingAction<any>>
     ) => {
+        if (!props.isShow && params.current > 1) throw Error;
         const res = (await getSearch(props.keyword, SEARCH_TYPE.SONG, {
             offset: (params.current - 1) * params.pageSize,
             limit: params.pageSize,
@@ -19,7 +20,9 @@ const Song: FC<SongProps> = (props) => {
         if (res.result.songCount === 0) {
             dispatch({ type: "nomore" });
         }
-        console.log(res);
+        // console.log("==========");
+        // console.trace("==========");
+        // console.log(res);
         res.result.songCount > 0 &&
             setSongList((list) => [...list, ...res.result.songs]);
 
@@ -28,9 +31,9 @@ const Song: FC<SongProps> = (props) => {
 
     const { loading, data, page } = useBottomLoad(loadData);
 
-    console.log(page);
-    console.log(data);
-    console.log(loading);
+    // console.log(page);
+    // console.log(data);
+    // console.log(loading);
 
     return (
         <div className="pb-20">
