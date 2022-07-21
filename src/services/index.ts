@@ -1,5 +1,6 @@
 // import { Login } from "@/declare";
 import Axios, { AxiosInstance } from "axios";
+import { toast } from "react-toastify";
 
 const generateReqKey = (config: {
     method: string;
@@ -72,7 +73,11 @@ axios.interceptors.response.use(
         }
     },
     (err) => {
-        console.log(err.response.data);
+        console.log(err?.response?.data);
+        if (err.response?.data?.code === 301) {
+            toast.info("请登录账号");
+        }
+
         // removePendingRequest(err.config || {}); // 从pendingRequest对象中移除请求
         if (Axios.isCancel(err)) {
             console.log("已取消的重复请求：" + err.message);
