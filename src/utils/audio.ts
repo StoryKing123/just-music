@@ -17,7 +17,7 @@ export const getAudio = (): HTMLAudioElement => {
 };
 const audio = getAudio();
 
-export const replaceHttpToHttps = (src: string) => src.replace("http", "https");
+export const replaceHttpToHttps = (src: string) => src.replace("http:", "https:");
 
 export const setAudioSrc = (src: string) => {
     audio.src = replaceHttpToHttps(src);

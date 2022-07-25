@@ -21,6 +21,8 @@ export const useAudio: () => UseAudioReturnType = () => {
     let isProcessing = false;
 
     const playSong: UseAudioReturnType["playSong"] = async (song, config) => {
+        console.log(song);
+        
         let src;
         if (config?.origin || isFreeSong(song)) {
             src = src = await getOriginSongUrl(song.id);
