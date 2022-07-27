@@ -1,12 +1,9 @@
 use std::{borrow::Cow, result};
 
-// use futures::executor::block_on;
-// use futures::FutureExt;
-// use serde::__private::de::Borrowed;
-// use std::borrow::Cow;
-// use unm_engine::executor::Executor;
-// use mimalloc::MiMalloc;
-// use unm_engine_bilibili::{BilibiliEngine, ENGINE_ID as BILIBILI_ENGINE_ID};
+use unm_engine_ytdl::ENGINE_ID as YTDL_ENGINE_ID;
+use unm_engine_bilibili::{BilibiliEngine, ENGINE_ID as BILIBILI_ENGINE_ID};
+use unm_engine_kugou::ENGINE_ID as KU_GOU_ENGINE_ID;
+use unm_engine_kuwo::ENGINE_ID as KU_WO_ENGINE_ID;
 use unm_engine_migu::ENGINE_ID as MIGU_ENGINE_ID;
 use unm_engine_pyncm::ENGINE_ID as NET_EAST_ENGINE_ID;
 // use unm_engine_qq::ENGINE_ID as QQ_ENGINE_ID;
@@ -27,21 +24,25 @@ pub async fn get_song_url(name: String, artist: String) -> Result<String, String
         .build();
 
     let context = ContextBuilder::default()
-        .enable_flac(std::env::var("ENABLE_FLAC").unwrap_or_else(|_| "".into()) == "true")
-        .search_mode(match std::env::var("SEARCH_MODE") {
-            Ok(v) if v == "fast_first" => SearchMode::FastFirst,
-            Ok(v) if v == "order_first" => SearchMode::OrderFirst,
-            _ => SearchMode::FastFirst,
-        })
+        .enable_flac(true)
+        .search_mode(SearchMode::OrderFirst)
         .build()
         .unwrap();
 
     let executor = unm_api_utils::executor::build_full_executor();
-    let engines_to_use = std::env::var("ENGINES")
-        .unwrap_or_else(|_| executor.list().join(" "))
-        .split_whitespace()
-        .map(|v| Cow::Owned(v.to_string()))
-        .collect::<Vec<Cow<'static, str>>>();
+    // let engines_to_use = std::env::var("ENGINES")
+    //     .unwrap_or_else(|_| executor.list().join(" "))
+    //     .split_whitespace()
+    //     .map(|v| Cow::Owned(v.to_string()))
+    //     .collect::<Vec<Cow<'static, str>>>();
+    let engines_to_use = [
+        std::borrow::Cow::Borrowed(MIGU_ENGINE_ID),
+        std::borrow::Cow::Borrowed(NET_EAST_ENGINE_ID),
+        // std::borrow::Cow::Borrowed(BILIBILI_ENGINE_ID),
+        std::borrow::Cow::Borrowed(KU_GOU_ENGINE_ID),
+        std::borrow::Cow::Borrowed(YTDL_ENGINE_ID)
+        // std::borrow::Cow::Borrowed(KU_WO_ENGINE_ID),
+    ];
 
     let search_result = executor.search(&engines_to_use, &song, &context).await;
 
