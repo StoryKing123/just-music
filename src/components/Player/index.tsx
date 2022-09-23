@@ -10,7 +10,7 @@ import musicState from "@/store/music";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { extractObjectArrayAttr } from "@/utils";
 import { parseTimestampIntoMinute } from "@/utils/date";
-import { getAudio } from "@/utils/audio";
+import { getAudio, player } from "@/utils/audio";
 import { useAudio } from "@/hooks";
 import { PLAY_MODE } from "@/const";
 import { throttle } from "lodash";
@@ -32,10 +32,14 @@ const Player: FC = (props) => {
     const handlePlayListClick = () => {
         setShowPlayList(!isShowPlayList);
     };
-    const audio = getAudio();
+    // const audio = getAudio();
 
     const handleTimeUpEvent = () => {
-        setCurrentTime(+audio.currentTime * 1000);
+        console.log("seek");
+        if (!player) {
+            return;
+        }
+        setCurrentTime(+player?.seek() * 1000);
     };
 
     const handlePlayOrPause = () => {
@@ -52,16 +56,25 @@ const Player: FC = (props) => {
             await handlePlayPreviousOrNextSong("next");
         }
     };
+    const handleUpdateTime = () => {
+        setCurrentTime(player.seek() * 1000);
+        setTimeout(handleUpdateTime,500);
+    };
 
     const handleTimeUpEventThrottle = throttle(handleTimeUpEvent, 1000);
     useEffect(() => {
-        audio.addEventListener("timeupdate", handleTimeUpEventThrottle);
-        audio.addEventListener("ended", handleEnded);
+        player.on("end", handleEnded);
+        player.on("seek", handleTimeUpEventThrottle);
+        handleUpdateTime();
+        // audio.addEventListener("timeupdate", handleTimeUpEventThrottle);
+        // audio.addEventListener("ended", handleEnded);
         return () => {
-            audio.removeEventListener("timeupdate", handleTimeUpEventThrottle);
-            audio.removeEventListener("ended", handleEnded);
+            player.off("end", handleEnded);
+            player.off("seek", handleTimeUpEventThrottle);
+            // audio.removeEventListener("timeupdate", handleTimeUpEventThrottle);
+            // audio.removeEventListener("ended", handleEnded);
         };
-    });
+    }, []);
 
     return (
         <div className="select-none z-50 fixed h-16 bottom-0 w-screen bg-base-player ">
@@ -94,9 +107,9 @@ const Player: FC = (props) => {
                             </div>
                             <div>
                                 {parseTimestampIntoMinute(currentTime)} /{" "}
-                                {audio.duration
+                                {player.duration()
                                     ? parseTimestampIntoMinute(
-                                          audio.duration * 1000
+                                          player.duration() * 1000
                                       )
                                     : parseTimestampIntoMinute(
                                           music.currentSong.dt

@@ -17,7 +17,9 @@ import DailyRecommend from "./pages/dailyRecommend";
 import Detail from "./components/Detail";
 import Search from "./pages/search";
 import Album from "./pages/album";
+import { initAudio } from "./utils/audio";
 
+initAudio();
 function App() {
     const initTheme = useInitTheme();
     const initMusic = useInitMusic();

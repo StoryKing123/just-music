@@ -6,6 +6,8 @@ import { useRecoilState } from "recoil";
 import { validateMP3Url } from "@/utils/http";
 import { toast } from "react-toastify";
 import { isFreeSong } from "@/utils";
+import axios from "axios";
+import { Howl, Howler } from 'howler';
 
 type UseAudioReturnType = {
     playSong: (song: Song, config?: { origin: boolean }) => void;
@@ -22,10 +24,10 @@ export const useAudio: () => UseAudioReturnType = () => {
 
     const playSong: UseAudioReturnType["playSong"] = async (song, config) => {
         console.log(song);
-        
-        let src;
+
+        let src, blobObj;
         if (config?.origin || isFreeSong(song)) {
-            src = src = await getOriginSongUrl(song.id);
+            src = await getOriginSongUrl(song.id);
         } else {
             src = await getSongUrl(song.id, song.name, song.ar[0].name);
             console.log(src);
@@ -34,9 +36,23 @@ export const useAudio: () => UseAudioReturnType = () => {
                 console.log("播放原版歌曲");
                 src = await getOriginSongUrl(song.id);
             }
+            // const data: any = await axios.get(src)
+            // console.log(data)
+            // console.log(await data.blob())
+            // src = await data.blob();
+            // const blob = new Blob([data.data], { type: 'audio/mpeg' });
+            // const blob = new Blob([data.data]);
+            // src = data.blob() as unknown as string;
+            // .then(src => res.blob())
+            // blobObj = window.URL.createObjectURL(blob) as unknown as string;
         }
         let index = -1;
+        // src = 'http://ch.sycdn.kuwo.cn/3c04651f98b4fc322793060d2d2d690b/62fee233/resource/n3/78/82/3483396756.mp3';
+        // console.log(blobObj)
+        // console.log(src);
         playAudio(src);
+
+   
         if (musicRef.current!.playList) {
             index = musicRef.current!.playList.findIndex(
                 (item) => item.id === song.id

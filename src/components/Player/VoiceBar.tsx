@@ -1,6 +1,6 @@
 import appState from "@/store/app";
 import audioState from "@/store/audio";
-import { getAudio } from "@/utils/audio";
+import { getAudio, player } from "@/utils/audio";
 import { FC, MouseEventHandler, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -12,10 +12,11 @@ const VoiceBar: FC<VoiceBarProps> = (props) => {
     const [audio, setAudio] = useRecoilState(audioState);
 
     console.log("set audio volumne:" + audio.volume);
-    const audioElement = getAudio();
+    // const audioElement = getAudio();
 
     useEffect(() => {
-        audioElement.volume = audio.volume;
+        player.volume(audio.volume);
+        // audioElement.volume = audio.volume;
     }, [audio.volume]);
 
     const setVolume = (volume: number) => {

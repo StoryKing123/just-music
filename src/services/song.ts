@@ -24,12 +24,14 @@ export const getSongUrl = async (id: number, name: string, artist: string) => {
         let res = await invoke("get_song_url", {
             name,
             artist,
+            id
         });
-        console.log(res);
+        // console.log(res);
 
         return res as string;
     } catch (error) {
-        // console.log(error)
+
+        console.log(error)
         const songUrl = await getOriginSongUrl(id);
         toast("歌曲不存在，播放原版歌曲");
         return songUrl;

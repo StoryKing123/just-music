@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import Calendar from "./component/Calendar";
 
 import { checkLogin } from "@/utils";
+import { Command } from "@tauri-apps/api/shell";
 
 const Index: FC = () => {
     // console.log("----index----");
@@ -67,6 +68,35 @@ const Index: FC = () => {
             className="font-bold   pb-20 px-8  "
             // style={{ paddingBottom: "100%" }}
         >
+            <button
+                onClick={async () => {
+                    const command = Command.sidecar(
+                        "binaries/server",
+                        "--SONG_ID=418602084",
+                        { env: { SONG_ID: "418602084" } }
+                    );
+                    console.log(command);
+                    command.stdout.on("data", (res) => {
+                        console.log(res);
+                    });
+                    console.log("=====");
+                    command.on("close", (res) => {
+                        console.log("close");
+                        console.log(res);
+                    });
+                    // command.on("ddd" as "close", (res) => {
+                    //     console.log(res);
+                    // });
+                    command.stdout.on("aaa" as unknown as "data", (res) => {
+                        console.log(res);
+                    });
+                    const output = await command.execute();
+                    console.log(output);
+                    // console.log(output.stdout);
+                }}
+            >
+                2
+            </button>
             <div className="flex z-0  justify-center flex-wrap gap-10 ">
                 {recommendList.length > 0 && (
                     <>

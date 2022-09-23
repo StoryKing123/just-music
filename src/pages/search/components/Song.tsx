@@ -20,16 +20,12 @@ const Song: FC<SongProps> = (props) => {
         if (res.result.songCount === 0) {
             dispatch({ type: "nomore" });
         }
-        // console.log("==========");
-        // console.trace("==========");
-        // console.log(res);
         res.result.songCount > 0 &&
             setSongList((list) => [...list, ...res.result.songs]);
-
         return res;
     };
 
-    const { loading, data, page } = useBottomLoad(loadData);
+    const { loading, page } = useBottomLoad(loadData);
 
     // console.log(page);
     // console.log(data);

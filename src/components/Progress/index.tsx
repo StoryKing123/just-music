@@ -1,5 +1,5 @@
 import musicState from "@/store/music";
-import { getAudio, setAudioCurrentTime } from "@/utils/audio";
+import { getAudio, setAudioCurrentTime,player } from "@/utils/audio";
 import { FC, MouseEvent, useEffect, useLayoutEffect } from "react";
 import { useRecoilState } from "recoil";
 

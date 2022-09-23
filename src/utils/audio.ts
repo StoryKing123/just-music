@@ -1,6 +1,28 @@
 import { audioDir } from "@tauri-apps/api/path";
+import { Howl } from "howler";
 
-export const initAudio = () => {};
+export let player: Howl;
+
+export const initAudio = () => {
+    player = new Howl({
+        src: [""],
+        html5: true,
+        preload: true,
+        format: ['mp3', 'flac'],
+        onend: () => {
+            // this._nextTrackCallback();
+        },
+    });
+    // player
+    // howl.play()
+};
+
+export const changeSrc = (src: string) => {
+    if (!player) return;
+    player.unload();
+    (player as any)._src = src;
+    player.load();
+}
 
 export const getAudio = (): HTMLAudioElement => {
     const element = document.getElementById(
@@ -25,19 +47,24 @@ export const setAudioSrc = (src: string) => {
 
 export const playAudio = async (src?: string) => {
     if (src) {
-        audio.src = replaceHttpToHttps(src);
-        audio.play();
+        // audio.src = replaceHttpToHttps(src);
+        audio.src = src
+        changeSrc(src)
+        player?.play()
+        // audio.play();
     } else {
-        audio.play();
+        player?.play()
+        // audio.play();
     }
 };
 export const pauseAudio = () => {
-    audio.pause();
+    player.pause();
 };
 
 export const setAudioCurrentTime = (Proportion: number) => {
     console.log(audio.duration * Proportion);
-    audio.currentTime = audio.duration * Proportion;
+    player.seek(audio.duration * Proportion)
+    // audio.currentTime = audio.duration * Proportion;
 };
 
 // export const ;

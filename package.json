@@ -1,7 +1,7 @@
 {
   "name": "just-music",
   "private": true,
-  "version": "0.2.11",
+  "version": "0.2.12",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -17,6 +17,7 @@
     "@tauri-apps/api": "^1.0.0-rc.1",
     "axios": "^0.26.0",
     "dexie": "^3.2.2",
+    "howler": "^2.2.3",
     "less": "^4.1.2",
     "lodash": "^4.17.21",
     "mac-scrollbar": "^0.10.1",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.0.0-rc.13",
+    "@types/howler": "^2.2.7",
     "@types/lodash": "^4.14.180",
     "@types/md5": "^2.3.2",
     "@types/node": "^17.0.21",
@@ -40,6 +42,7 @@
     "@types/react-modal": "^3.13.1",
     "@vitejs/plugin-react": "^1.0.7",
     "autoprefixer": "^10.4.2",
+    "execa": "^6.1.0",
     "postcss": "^8.4.7",
     "tailwindcss": "^3.0.23",
     "typescript": "^4.5.4",
